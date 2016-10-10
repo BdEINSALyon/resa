@@ -1,0 +1,4 @@
+dj-database-url==0.4.1
+Django==1.10.2
+django-autofixture==0.12.1
+django-crispy-forms==1.6.0
