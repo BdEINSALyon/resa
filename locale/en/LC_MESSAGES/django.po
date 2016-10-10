@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 21:32+0000\n"
+"POT-Creation-Date: 2016-10-10 21:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bookings/apps.py:7 bookings/models.py:77
-msgid "réservations"
-msgstr "bookings"
+#: bookings/apps.py:7
+msgid "Réservations"
+msgstr "Bookings"
 
 #: bookings/models.py:7
 msgid "catégorie de ressource"
@@ -84,6 +84,10 @@ msgstr "booking categories"
 #: bookings/models.py:76
 msgid "réservation"
 msgstr "booking"
+
+#: bookings/models.py:77
+msgid "réservations"
+msgstr "bookings"
 
 #: resa/settings.py:156
 msgid "French"
