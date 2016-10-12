@@ -8,6 +8,11 @@ class ResourceCategory(models.Model):
         verbose_name_plural = _('catégories de ressource')
 
     name = models.CharField(max_length=150)
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        null=True
+    )
 
     def __str__(self):
         return self.name
@@ -21,9 +26,13 @@ class Resource(models.Model):
     name = models.CharField(max_length=150)
     category = models.ForeignKey(
         ResourceCategory,
-        on_delete=models.CASCADE
+        on_delete=models.SET_NULL,
+        null=True
     )
     available = models.BooleanField()
+    granularity = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -84,7 +93,8 @@ class Booking(models.Model):
     )
     category = models.ForeignKey(
         BookingCategory,
-        on_delete=models.CASCADE
+        on_delete=models.SET_NULL,
+        null=True
     )
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
