@@ -90,7 +90,8 @@ class Booking(models.Model):
 
 class BookingOccurrence(models.Model):
     class Meta:
-        pass
+        verbose_name = _('occurrence de réservation')
+        verbose_name_plural = _('occurrences de réservation')
 
     start = models.DateTimeField(verbose_name=_('date et heure de début'))
     end = models.DateTimeField(verbose_name=_('date et heure de fin'))
@@ -102,6 +103,10 @@ class BookingOccurrence(models.Model):
 
 
 class RessourceLock(models.Model):
+    class Meta:
+        verbose_name = _('verrou de ressource')
+        verbose_name_plural = _('verrous de ressource')
+
     start = models.DateTimeField(verbose_name=_('date de début'))
     end = models.DateTimeField(verbose_name=_('date de fin'))
     resource = models.ForeignKey(

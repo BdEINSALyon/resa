@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-13 11:43+0000\n"
+"POT-Creation-Date: 2016-10-13 12:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,23 +95,39 @@ msgstr ""
 msgid "propriétaire"
 msgstr ""
 
-#: bookings/models.py:95
-msgid "date et heure de début"
+#: bookings/models.py:93
+msgid "occurrence de réservation"
+msgstr ""
+
+#: bookings/models.py:94
+msgid "occurrences de réservation"
 msgstr ""
 
 #: bookings/models.py:96
-msgid "date et heure de fin"
+msgid "date et heure de début"
 msgstr ""
 
 #: bookings/models.py:97
+msgid "date et heure de fin"
+msgstr ""
+
+#: bookings/models.py:98
 msgid "valide"
 msgstr ""
 
-#: bookings/models.py:105
+#: bookings/models.py:107
+msgid "verrou de ressource"
+msgstr ""
+
+#: bookings/models.py:108
+msgid "verrous de ressource"
+msgstr ""
+
+#: bookings/models.py:110
 msgid "date de début"
 msgstr ""
 
-#: bookings/models.py:106
+#: bookings/models.py:111
 msgid "date de fin"
 msgstr ""
 

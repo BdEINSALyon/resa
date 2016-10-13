@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-13 11:43+0000\n"
+"POT-Creation-Date: 2016-10-13 12:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,16 +22,12 @@ msgid "Réservations"
 msgstr "Bookings"
 
 #: bookings/models.py:7
-#, fuzzy
-#| msgid "catégorie de réservation"
 msgid "propriétaire de réservation"
-msgstr "booking category"
+msgstr "booking owner"
 
 #: bookings/models.py:8
-#, fuzzy
-#| msgid "catégories de réservation"
 msgid "propriétaires de réservation"
-msgstr "booking categories"
+msgstr "booking owners"
 
 #: bookings/models.py:10 bookings/models.py:22 bookings/models.py:39
 #: bookings/models.py:71
@@ -98,23 +94,39 @@ msgstr "details"
 msgid "propriétaire"
 msgstr "owner"
 
-#: bookings/models.py:95
+#: bookings/models.py:93
+msgid "occurrence de réservation"
+msgstr "booking occurrence"
+
+#: bookings/models.py:94
+msgid "occurrences de réservation"
+msgstr "booking occurrences"
+
+#: bookings/models.py:96
 msgid "date et heure de début"
 msgstr "start date and time"
 
-#: bookings/models.py:96
+#: bookings/models.py:97
 msgid "date et heure de fin"
 msgstr "end date and time"
 
-#: bookings/models.py:97
+#: bookings/models.py:98
 msgid "valide"
 msgstr "valid"
 
-#: bookings/models.py:105
+#: bookings/models.py:107
+msgid "verrou de ressource"
+msgstr "resource lock"
+
+#: bookings/models.py:108
+msgid "verrous de ressource"
+msgstr "resource locks"
+
+#: bookings/models.py:110
 msgid "date de début"
 msgstr "start date"
 
-#: bookings/models.py:106
+#: bookings/models.py:111
 msgid "date de fin"
 msgstr "end date"
 
