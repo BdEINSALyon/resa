@@ -70,9 +70,8 @@ class Booking(models.Model):
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
     details = models.TextField(verbose_name=_('détails'))
-    resource = models.ForeignKey(
+    resource = models.ManyToManyField(
         Resource,
-        on_delete=models.CASCADE,
         verbose_name=_('ressource')
     )
     category = models.ForeignKey(
@@ -89,42 +88,23 @@ class Booking(models.Model):
     )
 
 
-class BookingPlan(models.Model):
+class BookingOccurrence(models.Model):
     class Meta:
         pass
 
-    start = models.DateField(verbose_name=_('date de début'))
-    end = models.DateField(verbose_name=_('date de fin'))
+    start = models.DateTimeField(verbose_name=_('date et heure de début'))
+    end = models.DateTimeField(verbose_name=_('date et heure de fin'))
     is_valid = models.BooleanField(default=True, verbose_name=_('valide'))
-
-    DAILY = 'DA'
-    WEEKLY = 'WE1'
-    ONE_WEEK_OVER_TWO = 'WE2'
-    ONE_WEEK_OVER_THREE = 'WE3'
-    ONE_WEEK_OVER_FOUR = 'WE4'
-    ONE_WEEK_OVER_FIVE = 'WE5'
-    MONTHLY = 'MO'
-    YEARLY = 'YE'
-
-    PERIODICITY_CHOICES = (
-        (DAILY, _('chaque jour')),
-        (WEEKLY, _('chaque semaine')),
-        (ONE_WEEK_OVER_TWO, _('une semaine sur deux')),
-        (ONE_WEEK_OVER_THREE, _('une semaine sur trois')),
-        (ONE_WEEK_OVER_FOUR, _('une semaine sur quatre')),
-        (ONE_WEEK_OVER_FIVE, _('une semaine sur cinq')),
-        (MONTHLY, _('chaque mois')),
-        (YEARLY, _('chaque année'))
+    booking = models.ForeignKey(
+        Booking,
+        on_delete=models.CASCADE
     )
-
-    periodicity = models.CharField(max_length=4, choices=PERIODICITY_CHOICES, null=True, verbose_name=_('périodicité'))
-
-
-class LocationTime(models.Model):
-    start = models.TimeField(verbose_name=_('heure de début'))
-    end = models.TimeField(verbose_name=_('heure de fin'))
 
 
 class RessourceLock(models.Model):
     start = models.DateTimeField(verbose_name=_('date de début'))
     end = models.DateTimeField(verbose_name=_('date de fin'))
+    resource = models.ForeignKey(
+        Resource,
+        on_delete=models.CASCADE
+    )
