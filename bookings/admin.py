@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOwner, BookingOccurrence, RessourceLock
+from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOwner, BookingOccurrence, ResourceLock
 
 
 @admin.register(Resource)
@@ -13,4 +13,4 @@ admin.site.register(BookingOwner)
 admin.site.register(BookingCategory)
 admin.site.register(BookingOccurrence)
 admin.site.register(Booking)
-admin.site.register(RessourceLock)
+admin.site.register(ResourceLock)

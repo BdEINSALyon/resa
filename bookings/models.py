@@ -102,7 +102,7 @@ class BookingOccurrence(models.Model):
     )
 
 
-class RessourceLock(models.Model):
+class ResourceLock(models.Model):
     class Meta:
         verbose_name = _('verrou de ressource')
         verbose_name_plural = _('verrous de ressource')
