@@ -68,9 +68,9 @@ class Booking(models.Model):
         verbose_name = _('réservation')
         verbose_name_plural = _('réservations')
 
-    name = models.CharField(max_length=150, verbose_name=_('nom'))
+    reason = models.CharField(max_length=150, verbose_name=_('raison'))
     details = models.TextField(verbose_name=_('détails'))
-    resource = models.ManyToManyField(
+    resources = models.ManyToManyField(
         Resource,
         verbose_name=_('ressource')
     )
