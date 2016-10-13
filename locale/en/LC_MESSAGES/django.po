@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-10 21:46+0000\n"
+"POT-Creation-Date: 2016-10-13 11:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -22,72 +22,101 @@ msgid "Réservations"
 msgstr "Bookings"
 
 #: bookings/models.py:7
+#, fuzzy
+#| msgid "catégorie de réservation"
+msgid "propriétaire de réservation"
+msgstr "booking category"
+
+#: bookings/models.py:8
+#, fuzzy
+#| msgid "catégories de réservation"
+msgid "propriétaires de réservation"
+msgstr "booking categories"
+
+#: bookings/models.py:10 bookings/models.py:22 bookings/models.py:39
+#: bookings/models.py:71
+msgid "nom"
+msgstr "name"
+
+#: bookings/models.py:11
+msgid "code barre"
+msgstr "barcode"
+
+#: bookings/models.py:19
 msgid "catégorie de ressource"
 msgstr "resource category"
 
-#: bookings/models.py:8
+#: bookings/models.py:20
 msgid "catégories de ressource"
 msgstr "resource categories"
 
-#: bookings/models.py:18
+#: bookings/models.py:27
+msgid "catégorie parente"
+msgstr "parent category"
+
+#: bookings/models.py:36 bookings/models.py:75
 msgid "ressource"
 msgstr "resource"
 
-#: bookings/models.py:19
+#: bookings/models.py:37
 msgid "ressources"
 msgstr "resources"
 
-#: bookings/models.py:34
-msgid "créneau"
-msgstr "planning slot"
-
-#: bookings/models.py:35
-msgid "créneaux"
-msgstr "planning slots"
+#: bookings/models.py:44
+msgid "catégorie"
+msgstr "category"
 
 #: bookings/models.py:46
-msgid "Lundi"
-msgstr "Monday"
+msgid "disponible"
+msgstr "available"
 
 #: bookings/models.py:47
-msgid "Mardi"
-msgstr "Tuesday"
+msgid "granularité"
+msgstr "granularity"
 
-#: bookings/models.py:48
-msgid "Mercredi"
-msgstr "Wednesday"
-
-#: bookings/models.py:49
-msgid "Jeudi"
-msgstr "Thursday"
-
-#: bookings/models.py:50
-msgid "Vendredi"
-msgstr "Friday"
-
-#: bookings/models.py:51
-msgid "Samedi"
-msgstr "Saturday"
-
-#: bookings/models.py:52
-msgid "Dimanche"
-msgstr "Sunday"
-
-#: bookings/models.py:68
+#: bookings/models.py:57 bookings/models.py:81
 msgid "catégorie de réservation"
 msgstr "booking category"
 
-#: bookings/models.py:69
+#: bookings/models.py:58
 msgid "catégories de réservation"
 msgstr "booking categories"
 
-#: bookings/models.py:76
+#: bookings/models.py:68
 msgid "réservation"
 msgstr "booking"
 
-#: bookings/models.py:77
+#: bookings/models.py:69
 msgid "réservations"
 msgstr "bookings"
+
+#: bookings/models.py:72
+msgid "détails"
+msgstr "details"
+
+#: bookings/models.py:87
+msgid "propriétaire"
+msgstr "owner"
+
+#: bookings/models.py:95
+msgid "date et heure de début"
+msgstr "start date and time"
+
+#: bookings/models.py:96
+msgid "date et heure de fin"
+msgstr "end date and time"
+
+#: bookings/models.py:97
+msgid "valide"
+msgstr "valid"
+
+#: bookings/models.py:105
+msgid "date de début"
+msgstr "start date"
+
+#: bookings/models.py:106
+msgid "date de fin"
+msgstr "end date"
 
 #: resa/settings.py:156
 msgid "French"
