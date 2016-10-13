@@ -57,7 +57,7 @@ class BookingCategory(models.Model):
         verbose_name = _('catégorie de réservation')
         verbose_name_plural = _('catégories de réservation')
 
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, verbose_name=_('nom'))
 
     def __str__(self):
         return self.name
@@ -87,6 +87,12 @@ class Booking(models.Model):
         verbose_name=_('propriétaire')
     )
 
+    def __str__(self):
+        return _('Réservation par %(owner)s pour %(reason)s') % {
+            'owner': self.owner.name,
+            'reason': self.reason
+        }
+
 
 class BookingOccurrence(models.Model):
     class Meta:
@@ -98,8 +104,16 @@ class BookingOccurrence(models.Model):
     is_valid = models.BooleanField(default=True, verbose_name=_('valide'))
     booking = models.ForeignKey(
         Booking,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name=_('réservation')
     )
+
+    def __str__(self):
+        return _('%(booking)s du %(start)s au %(end)s') % {
+            'booking': self.booking,
+            'start': self.start,
+            'end': self.end
+        }
 
 
 class ResourceLock(models.Model):
@@ -111,5 +125,9 @@ class ResourceLock(models.Model):
     end = models.DateTimeField(verbose_name=_('date de fin'))
     resource = models.ForeignKey(
         Resource,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name=_('ressource')
     )
+
+    def __str__(self):
+        return _('Verrou du %(start)s au %(end)s.') % {'start': self.start, 'end': self.end}
