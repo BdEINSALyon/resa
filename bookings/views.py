@@ -19,4 +19,7 @@ class AllResourcesView(ListView):
 class AllResourceCategoriesView(ListView):
     template_name = 'bookings/all_resource_categories.html'
     context_object_name = 'resource_category_list'
-    model = ResourceCategory
+
+    def get_queryset(self):
+        return ResourceCategory.objects.order_by('name')
+
