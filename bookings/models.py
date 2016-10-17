@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -24,8 +25,12 @@ class ResourceCategory(models.Model):
         'self',
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         verbose_name=_('catégorie parente')
     )
+
+    def get_absolute_url(self):
+        return reverse('bookings:resource-category-calendar', kwargs={'id': str(self.id)})
 
     def __str__(self):
         return self.name
@@ -41,6 +46,7 @@ class Resource(models.Model):
         ResourceCategory,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         verbose_name=_('catégorie')
     )
     available = models.BooleanField(verbose_name=_('disponible'))
@@ -78,6 +84,7 @@ class Booking(models.Model):
         BookingCategory,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         verbose_name=_('catégorie de réservation')
     )
     owner = models.ForeignKey(

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>
+        {% block title %}
+            Toutes les catégories de ressource
+        {% endblock title %}
+    </h1>
+    <div class="col-md-12 list-group">
+        {% for category in resource_category_list %}
+            <a href="{{ category.get_absolute_url }}" class="list-group-item">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+{% endblock content %}
