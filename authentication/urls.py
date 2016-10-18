@@ -1,6 +1,7 @@
 from authentication.views import password_change_done
 from django.conf.urls import url
 from django.contrib.auth.views import login, logout, password_change
+from resa.settings import LOGOUT_REDIRECT_URL
 
 urlpatterns = [
     url(
@@ -18,7 +19,7 @@ urlpatterns = [
     url(
         r'^logout/$',
         logout,
-        {'next_page': 'codes:home'},
+        {'next_page': LOGOUT_REDIRECT_URL},
         name='logout'
     ),
     url(
