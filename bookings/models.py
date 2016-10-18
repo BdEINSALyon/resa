@@ -58,8 +58,8 @@ class ResourceCategory(models.Model):
         # Allow 23:59:59 for end of day
         while time + delta <= end + dt.timedelta(seconds=1):
             slots.append({
-                'start': time.time(),
-                'end': (time + delta).time()
+                'start': time,
+                'end': time + delta
             })
             time += delta
 

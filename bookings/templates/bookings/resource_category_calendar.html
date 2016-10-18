@@ -20,13 +20,13 @@
                     </tr>
                     {% for slot in category.get_slots %}
                         <tr>
-                            <td class="text-center active">{{ slot.start }} - {{ slot.end }}</td>
+                            <td class="text-center active">{{ slot.start|date:'H:i' }} - {{ slot.end|date:'H:i' }}</td>
                             {% for resource in resource_list %}
                                 <th class="text-center">
                                     <a href="#">Add</a>
                                 </th>
                             {% endfor %}
-                            <td class="text-center active">{{ slot.start }} - {{ slot.end }}</td>
+                            <td class="text-center active">{{ slot.start|date:'H:i' }} - {{ slot.end|date:'H:i' }}</td>
                         </tr>
                     {% endfor %}
                 </table>
