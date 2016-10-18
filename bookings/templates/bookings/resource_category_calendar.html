@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bookings_extras %}
 
 {% block content %}
     <h1>
@@ -37,7 +38,7 @@
         {% for resource in resource_list %}
             <li>{{ resource.name }}</li>
             <ul>
-                {% for occurrence in resource.get_occurrences %}
+                {% for occurrence in occurrences|get_item:resource.id %}
                     <li>{{ occurrence }}</li>
                 {% endfor %}
             </ul>

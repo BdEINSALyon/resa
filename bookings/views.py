@@ -1,3 +1,5 @@
+import datetime as dt
+
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 
@@ -15,6 +17,20 @@ class ResourceCategoryDayView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ResourceCategoryDayView, self).get_context_data(**kwargs)
         context['category'] = self.category
+
+        resources = self.get_queryset()
+        day = self.request.GET.get('day', dt.date.today().day)
+        month = self.request.GET.get('month', dt.date.today().month)
+        year = self.request.GET.get('year', dt.date.today().year)
+
+        occurrences = {}
+
+        for resource in resources:
+            occurrences[resource.id] = []
+            for occurrence in resource.get_occurrences(year=year, month=month, day=day):
+                occurrences[resource.id].append(occurrence)
+
+        context['occurrences'] = occurrences
         return context
 
 
