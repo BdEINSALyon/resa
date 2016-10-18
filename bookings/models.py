@@ -42,11 +42,17 @@ class ResourceCategory(models.Model):
     def get_slots(self):
         time = dt.datetime.combine(dt.date.today(), self.day_start)
         end = dt.datetime.combine(dt.date.today(), self.day_end)
+
+        # Allow midnight for end of day
+        if self.day_end == dt.time(0, 0):
+            end += dt.timedelta(days=1)
+
         delta = dt.timedelta(minutes=self.granularity)
 
         slots = []
 
-        while time + delta <= end:
+        # Allow 23:59:59 for end of day
+        while time + delta <= end + dt.timedelta(seconds=1):
             slots.append({
                 'start': time.time(),
                 'end': (time + delta).time()
