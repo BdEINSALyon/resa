@@ -1,0 +1,8 @@
+<p>
+    Catégories de ressource :
+</p>
+<ul>
+    {% for resource_category in all_resource_categories %}
+        <li><a href="{{ resource_category.get_absolute_url }}">{{ resource_category.name }}</a></li>
+    {% endfor %}
+</ul>
