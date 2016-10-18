@@ -5,7 +5,7 @@ from django.views.generic import ListView
 from bookings.models import ResourceCategory, Resource
 
 
-class ResourceCategoryCalendarView(ListView):
+class ResourceCategoryDayView(ListView):
     template_name = 'bookings/resource_category_calendar.html'
     context_object_name = 'resource_list'
 
@@ -14,7 +14,7 @@ class ResourceCategoryCalendarView(ListView):
         return Resource.objects.filter(category=self.category)
 
     def get_context_data(self, **kwargs):
-        context = super(ResourceCategoryCalendarView, self).get_context_data(**kwargs)
+        context = super(ResourceCategoryDayView, self).get_context_data(**kwargs)
         context['category'] = self.category
         return context
 
