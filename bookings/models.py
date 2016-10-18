@@ -1,7 +1,11 @@
 import datetime as dt
+import logging
+
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+
+log = logging.getLogger(__name__)
 
 
 class BookingOwner(models.Model):
@@ -85,6 +89,10 @@ class Resource(models.Model):
     def __str__(self):
         return self.name
 
+    def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
+        occurrences = BookingOccurrence.objects.filter(booking__resources__exact=self)
+        log.error(occurrences)
+
 
 class BookingCategory(models.Model):
     class Meta:
@@ -103,7 +111,7 @@ class Booking(models.Model):
         verbose_name_plural = _('réservations')
 
     reason = models.CharField(max_length=150, verbose_name=_('raison'))
-    details = models.TextField(verbose_name=_('détails'))
+    details = models.TextField(verbose_name=_('détails'), blank=True)
     resources = models.ManyToManyField(
         Resource,
         verbose_name=_('ressource')
