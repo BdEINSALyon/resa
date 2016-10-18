@@ -1,8 +1,12 @@
+{% if category %}
 <p>
     Ressources :
 </p>
 <ul>
     {% for resource in all_resources %}
+        {% ifequal resource.category category %}
         <li><a href="{{ resource.get_absolute_url }}">{{ resource.name }}</a></li>
+        {% endifequal %}
     {% endfor %}
 </ul>
+{% endif %}
