@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 
 from bookings.models import ResourceCategory, Resource
@@ -21,12 +20,4 @@ class ResourceCategoryDayView(ListView):
 
 class AllResourcesView(ListView):
     model = Resource
-
-
-class AllResourceCategoriesView(ListView):
-    template_name = 'bookings/all_resource_categories.html'
-    context_object_name = 'resource_category_list'
-
-    def get_queryset(self):
-        return ResourceCategory.objects.order_by('name')
 
