@@ -3,12 +3,34 @@
 {% block content %}
     <h1>
         {% block title %}
-            Toutes les catégories de ressource
+            {{ category.name }}
         {% endblock title %}
     </h1>
-    <div class="col-md-12 list-group">
-        {% for item in object_list %}
-            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
-        {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-condensed table-bordered">
+                    <tr>
+                        <th class="text-center active">Heure</th>
+                        {% for resource in resource_list %}
+                            <th class="text-center"><a href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
+                            </th>
+                        {% endfor %}
+                        <th class="text-center active">Heure</th>
+                    </tr>
+                    {% for slot in category.get_slots %}
+                        <tr>
+                            <td class="text-center active">{{ slot.start }} - {{ slot.end }}</td>
+                            {% for resource in resource_list %}
+                                <th class="text-center">
+                                    <a href="#">Add</a>
+                                </th>
+                            {% endfor %}
+                            <td class="text-center active">{{ slot.start }} - {{ slot.end }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock content %}

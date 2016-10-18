@@ -1,3 +1,4 @@
+import datetime as dt
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -9,7 +10,7 @@ class BookingOwner(models.Model):
         verbose_name_plural = _('propriétaires de réservation')
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
-    barcode = models.CharField(max_length=20, verbose_name=_('code barre'))
+    barcode = models.CharField(max_length=20, verbose_name=_('code barre'), blank=True)
 
     def __str__(self):
         return self.name
@@ -28,12 +29,31 @@ class ResourceCategory(models.Model):
         blank=True,
         verbose_name=_('catégorie parente')
     )
+    day_start = models.TimeField(verbose_name=_('début de journée'))
+    day_end = models.TimeField(verbose_name=_('fin de journée'))
+    granularity = models.PositiveIntegerField(verbose_name=_('granularité'), help_text=_('en minutes'))
 
     def get_absolute_url(self):
         return reverse('bookings:resource-category-calendar', kwargs={'id': str(self.id)})
 
     def __str__(self):
         return self.name
+
+    def get_slots(self):
+        time = dt.datetime.combine(dt.date.today(), self.day_start)
+        end = dt.datetime.combine(dt.date.today(), self.day_end)
+        delta = dt.timedelta(minutes=self.granularity)
+
+        slots = []
+
+        while time + delta <= end:
+            slots.append({
+                'start': time.time(),
+                'end': (time + delta).time()
+            })
+            time += delta
+
+        return slots
 
 
 class Resource(models.Model):
@@ -50,9 +70,11 @@ class Resource(models.Model):
         verbose_name=_('catégorie')
     )
     available = models.BooleanField(verbose_name=_('disponible'))
-    granularity = models.PositiveIntegerField(verbose_name=_('granularité'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse('bookings:resource', kwargs={'id': str(self.id)})
 
     def __str__(self):
         return self.name

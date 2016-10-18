@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-13 13:13+0000\n"
+"POT-Creation-Date: 2016-10-18 12:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,133 +21,145 @@ msgstr ""
 msgid "Réservations"
 msgstr "Bookings"
 
-#: bookings/models.py:7
+#: bookings/models.py:9
 msgid "propriétaire de réservation"
 msgstr "booking owner"
 
-#: bookings/models.py:8
+#: bookings/models.py:10
 msgid "propriétaires de réservation"
 msgstr "booking owners"
 
-#: bookings/models.py:10 bookings/models.py:22 bookings/models.py:39
-#: bookings/models.py:60
+#: bookings/models.py:12 bookings/models.py:24 bookings/models.py:51
+#: bookings/models.py:75
 msgid "nom"
 msgstr "name"
 
-#: bookings/models.py:11
+#: bookings/models.py:13
 msgid "code barre"
 msgstr "barcode"
 
-#: bookings/models.py:19
+#: bookings/models.py:21
 msgid "catégorie de ressource"
 msgstr "resource category"
 
-#: bookings/models.py:20
+#: bookings/models.py:22
 msgid "catégories de ressource"
 msgstr "resource categories"
 
-#: bookings/models.py:27
+#: bookings/models.py:30
 msgid "catégorie parente"
 msgstr "parent category"
 
-#: bookings/models.py:36 bookings/models.py:75 bookings/models.py:129
-msgid "ressource"
-msgstr "resource"
+#: bookings/models.py:32
+msgid "début de journée"
+msgstr "day start"
 
-#: bookings/models.py:37
-msgid "ressources"
-msgstr "resources"
+#: bookings/models.py:33
+msgid "fin de journée"
+msgstr "day end"
 
-#: bookings/models.py:44
-msgid "catégorie"
-msgstr "category"
-
-#: bookings/models.py:46
-msgid "disponible"
-msgstr "available"
-
-#: bookings/models.py:47
+#: bookings/models.py:34
 msgid "granularité"
 msgstr "granularity"
 
-#: bookings/models.py:57 bookings/models.py:81
+#: bookings/models.py:34
+msgid "en minutes"
+msgstr "in minutes"
+
+#: bookings/models.py:48 bookings/models.py:90 bookings/models.py:145
+msgid "ressource"
+msgstr "resource"
+
+#: bookings/models.py:49
+msgid "ressources"
+msgstr "resources"
+
+#: bookings/models.py:57
+msgid "catégorie"
+msgstr "category"
+
+#: bookings/models.py:59
+msgid "disponible"
+msgstr "available"
+
+#: bookings/models.py:72 bookings/models.py:97
 msgid "catégorie de réservation"
 msgstr "booking category"
 
-#: bookings/models.py:58
+#: bookings/models.py:73
 msgid "catégories de réservation"
 msgstr "booking categories"
 
-#: bookings/models.py:68 bookings/models.py:108
+#: bookings/models.py:83 bookings/models.py:124
 msgid "réservation"
 msgstr "booking"
 
-#: bookings/models.py:69
+#: bookings/models.py:84
 msgid "réservations"
 msgstr "bookings"
 
-#: bookings/models.py:71
+#: bookings/models.py:86
 msgid "raison"
 msgstr "reason"
 
-#: bookings/models.py:72
+#: bookings/models.py:87
 msgid "détails"
 msgstr "details"
 
-#: bookings/models.py:87
+#: bookings/models.py:103
 msgid "propriétaire"
 msgstr "owner"
 
-#: bookings/models.py:91
+#: bookings/models.py:107
 #, python-format
 msgid "Réservation par %(owner)s pour %(reason)s"
 msgstr "Booking by %(owner)s for %(reason)s"
 
-#: bookings/models.py:99
+#: bookings/models.py:115
 msgid "occurrence de réservation"
 msgstr "booking occurrence"
 
-#: bookings/models.py:100
+#: bookings/models.py:116
 msgid "occurrences de réservation"
 msgstr "booking occurrences"
 
-#: bookings/models.py:102
+#: bookings/models.py:118
 msgid "date et heure de début"
 msgstr "start date and time"
 
-#: bookings/models.py:103
+#: bookings/models.py:119
 msgid "date et heure de fin"
 msgstr "end date and time"
 
-#: bookings/models.py:104
+#: bookings/models.py:120
 msgid "valide"
 msgstr "valid"
 
-#: bookings/models.py:112
+#: bookings/models.py:128
 #, python-format
 msgid "%(booking)s du %(start)s au %(end)s"
 msgstr "%(booking)s from %(start)s to %(end)s"
 
-#: bookings/models.py:121
+#: bookings/models.py:137
 msgid "verrou de ressource"
 msgstr "resource lock"
 
-#: bookings/models.py:122
+#: bookings/models.py:138
 msgid "verrous de ressource"
 msgstr "resource locks"
 
-#: bookings/models.py:124
+#: bookings/models.py:140
 msgid "date de début"
 msgstr "start date"
 
-#: bookings/models.py:125
+#: bookings/models.py:141
 msgid "date de fin"
 msgstr "end date"
 
-#: bookings/models.py:133
+#: bookings/models.py:149
 #, python-format
 msgid "Verrou du %(start)s au %(end)s."
-msgstr ""
+msgstr "Lock from %(start)s to %(end)s."
 
 #: resa/settings.py:156
 msgid "French"
