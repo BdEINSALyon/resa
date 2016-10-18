@@ -33,4 +33,14 @@
             </div>
         </div>
     </div>
+    <ul>
+        {% for resource in resource_list %}
+            <li>{{ resource.name }}</li>
+            <ul>
+                {% for occurrence in resource.get_occurrences %}
+                    <li>{{ occurrence }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
 {% endblock content %}
