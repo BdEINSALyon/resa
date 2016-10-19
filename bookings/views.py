@@ -3,7 +3,9 @@ import datetime as dt
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from django.views.generic import ListView
+from django.views.generic import UpdateView
 
+from bookings.forms import BookingForm
 from bookings.models import ResourceCategory, Resource, Slot, Booking
 
 import logging
@@ -95,6 +97,7 @@ class ResourceDetailView(DetailView):
     model = Resource
 
 
-class BookingDetailView(DetailView):
+class BookingDetailView(UpdateView):
     model = Booking
+    form_class = BookingForm
     template_name = 'bookings/booking.html'

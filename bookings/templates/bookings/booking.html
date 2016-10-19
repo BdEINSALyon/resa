@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block add-content %}
     <h1>
@@ -8,10 +9,10 @@
             {{ title|title }}
         {% endblock title %}
     </h1>
-    <div class="row">
-        <div class="col-md-3">
-            <strong>{% trans 'raison' as reason %}{{ reason|title }} :</strong>
-        </div>
-    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
 
 {% endblock add-content %}
