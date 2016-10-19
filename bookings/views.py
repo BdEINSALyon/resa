@@ -19,9 +19,11 @@ class ResourceCategoryDayView(ListView):
         context['category'] = self.category
 
         resources = self.get_queryset()
-        day = self.request.GET.get('day', dt.date.today().day)
-        month = self.request.GET.get('month', dt.date.today().month)
-        year = self.request.GET.get('year', dt.date.today().year)
+        day = int(self.request.GET.get('day', dt.date.today().day))
+        month = int(self.request.GET.get('month', dt.date.today().month))
+        year = int(self.request.GET.get('year', dt.date.today().year))
+
+        context['date'] = dt.date(day=day, month=month, year=year)
 
         occurrences = {}
 
