@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block add-content %}
     <h1>
         {% block title %}
             Toutes les catégories de ressource
@@ -11,4 +11,4 @@
             <a href="{{ category.get_absolute_url }}" class="list-group-item">{{ category.name }}</a>
         {% endfor %}
     </div>
-{% endblock content %}
+{% endblock add-content %}

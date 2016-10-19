@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block content %}
+{% block add-content %}
     <h1>
         {% block title %}
             {{ category.name }} - {{ date }}
@@ -31,14 +32,24 @@
                             {% for cell in line.cells %}
                                 {% if cell.type == 'start' %}
                                     <td class="text-center info" rowspan="{{ cell.rowspan }}">
-                                        <a href="{{ cell.occurrence.booking.get_absolute_url }}">
-                                            {{ cell.occurrence.booking.reason }}
-                                        </a>
+                                        {% if user.is_authenticated %}
+                                            <a href="{{ cell.occurrence.booking.get_absolute_url }}">
+                                                {{ cell.occurrence.booking.reason }}
+                                            </a>
+                                        {% else %}
+                                            {% trans "Réservé" %}
+                                        {% endif %}
                                     </td>
                                 {% elif cell.type == 'free' %}
-                                    <td class="text-center">
-                                        <a href="#">Add</a>
-                                    </td>
+                                    {% if user.is_authenticated %}
+                                        <td class="text-center">
+                                            <a href="#">
+                                                {% trans "Ajouter" %}
+                                            </a>
+                                        </td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
 
@@ -51,4 +62,4 @@
             </div>
         </div>
     </div>
-{% endblock content %}
+{% endblock add-content %}
