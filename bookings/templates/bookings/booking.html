@@ -11,18 +11,58 @@
     </h1>
     <div class="row">
         <div class="col-md-6">
-            <h2>{% trans 'Informations' %}</h2>
-            <form action="" method="post">
-                {% csrf_token %}
-                {% crispy form %}
-            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-edit"></span> {% trans 'Informations' %}
+                    </h3>
+                </div>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
+                    </div>
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-comment"></span> {{ booking.details }}
+                    </div>
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                        {% for resource in booking.resources.all %}
+                            {{ resource }}
+                            {% if not forloop.last %}
+                                -
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-tag"></span> {{ booking.category }}
+                    </div>
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-user"></span> {{ booking.owner }}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
-            <h2>{% trans 'Occurrences' %}</h2>
-            <div class="list-group">
-                {% for occurrence in booking.bookingoccurrence_set.all %}
-                    <a href="#" class="list-group-item">{{ occurrence }}</a>
-                {% endfor %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
+                    </h3>
+                </div>
+                <div class="list-group">
+                    {% for occurrence in booking.bookingoccurrence_set.all %}
+                        <a href="#" class="list-group-item">
+                            <span class="glyphicon glyphicon-time"></span>
+                            {% ifequal occurrence.start.date occurrence.end.date %}
+                                {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_t=occurrence.end|date:'H:i' %}
+                                    Le {{ start_d }} de {{ start_t }} à {{ end_t }}
+                                {% endblocktrans %}
+                            {% else %}
+                                {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
+                                    Du {{ start_d }} ({{ start_t }}) au {{ end_d }} ({{ end_t }})
+                                {% endblocktrans %}
+                            {% endifequal %}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

@@ -98,9 +98,8 @@ class ResourceDetailView(DetailView):
     model = Resource
 
 
-class BookingDetailView(UpdateView):
+class BookingDetailView(DetailView):
     model = Booking
-    form_class = BookingForm
     template_name = 'bookings/booking.html'
 
     @method_decorator(login_required)
