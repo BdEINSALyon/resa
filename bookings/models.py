@@ -36,6 +36,8 @@ class ResourceCategory(models.Model):
     day_start = models.TimeField(verbose_name=_('début de journée'))
     day_end = models.TimeField(verbose_name=_('fin de journée'))
     granularity = models.PositiveIntegerField(verbose_name=_('granularité'), help_text=_('en minutes'))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
         return reverse('bookings:resource-category-calendar', kwargs={'id': str(self.id)})
@@ -114,6 +116,8 @@ class BookingCategory(models.Model):
         verbose_name_plural = _('catégories de réservation')
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -138,6 +142,8 @@ class Booking(models.Model):
         verbose_name=_('catégorie de réservation')
     )
     owner = models.CharField(max_length=100, blank=True, verbose_name=_('propriétaire'))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return _('%(reason)s') % {
@@ -161,6 +167,8 @@ class BookingOccurrence(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('réservation')
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return _('%(booking)s du %(start)s au %(end)s') % {
@@ -185,6 +193,8 @@ class ResourceLock(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('ressource')
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return _('Verrou du %(start)s au %(end)s.') % {'start': self.start, 'end': self.end}
