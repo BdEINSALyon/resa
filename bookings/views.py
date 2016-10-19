@@ -91,10 +91,6 @@ class ResourceCategoryDayView(ListView):
         return count
 
 
-class AllResourcesView(ListView):
-    model = Resource
-
-
 class ResourceDetailView(DetailView):
     model = Resource
 
