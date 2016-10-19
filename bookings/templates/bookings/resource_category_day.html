@@ -45,7 +45,7 @@
                                     <td class="text-center info" rowspan="{{ cell.rowspan }}">
                                         {% if user.is_authenticated %}
                                             <a href="{{ cell.occurrence.booking.get_absolute_url }}">
-                                                {{ cell.occurrence.booking.reason }}
+                                                <strong>{{ cell.occurrence.booking.reason }}</strong>
                                             </a>
                                         {% else %}
                                             {% trans "Réservé" %}
