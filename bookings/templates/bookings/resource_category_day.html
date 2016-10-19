@@ -47,6 +47,18 @@
                                             <a href="{{ cell.occurrence.booking.get_absolute_url }}">
                                                 <strong>{{ cell.occurrence.booking.reason }}</strong>
                                             </a>
+                                            <br>
+                                            <small>
+                                                {% with occurrence=cell.occurrence %}
+                                                    {% ifnotequal occurrence.start.date occurrence.end.date %}
+                                                        <span class="glyphicon glyphicon-time"></span>
+                                                        {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
+                                                            {{ start_d }} ({{ start_t }}) -
+                                                            {{ end_d }} ({{ end_t }})
+                                                        {% endblocktrans %}
+                                                    {% endifnotequal %}
+                                                {% endwith %}
+                                            </small>
                                         {% else %}
                                             {% trans "Réservé" %}
                                         {% endif %}
