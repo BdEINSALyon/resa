@@ -1,8 +1,9 @@
-<p>
-    Catégories de ressource :
-</p>
-<ul>
+<ul class="nav nav-tabs">
     {% for resource_category in all_resource_categories %}
-        <li><a href="{{ resource_category.get_absolute_url }}">{{ resource_category.name }}</a></li>
+        {% if category and resource_category == category %}
+            <li class="active"><a href="{{ resource_category.get_absolute_url }}">{{ resource_category.name }}</a></li>
+        {% else %}
+            <li><a href="{{ resource_category.get_absolute_url }}">{{ resource_category.name }}</a></li>
+        {% endif %}
     {% endfor %}
 </ul>
