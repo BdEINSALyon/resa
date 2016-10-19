@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load admin_urls %}
 
 {% block add-content %}
     <h1>
@@ -16,7 +17,13 @@
 
                         {% for resource in resource_list %}
                             <th class="text-center active">
-                                <a href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
+                                {% if user.is_staff %}
+                                    <a href="{% url 'admin:bookings_resource_change' resource.id %}">
+                                        {{ resource.name }}
+                                    </a>
+                                {% else %}
+                                    {{ resource.name }}
+                                {% endif %}
                             </th>
                         {% endfor %}
 
