@@ -8,6 +8,18 @@ from django.utils.translation import ugettext_lazy as _
 log = logging.getLogger(__name__)
 
 
+class Slot:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __str__(self):
+        return _('de %(start)s à %(end)s') % {
+            'start': self.start,
+            'end': self.end
+        }
+
+
 class BookingOwner(models.Model):
     class Meta:
         verbose_name = _('propriétaire de réservation')
@@ -43,9 +55,9 @@ class ResourceCategory(models.Model):
     def __str__(self):
         return self.name
 
-    def get_slots(self):
-        time = dt.datetime.combine(dt.date.today(), self.day_start)
-        end = dt.datetime.combine(dt.date.today(), self.day_end)
+    def get_slots(self, date):
+        time = dt.datetime.combine(date, self.day_start)
+        end = dt.datetime.combine(date, self.day_end)
 
         # Allow midnight for end of day
         if self.day_end == dt.time(0, 0):
@@ -57,10 +69,7 @@ class ResourceCategory(models.Model):
 
         # Allow 23:59:59 for end of day
         while time + delta <= end + dt.timedelta(seconds=1):
-            slots.append({
-                'start': time,
-                'end': time + delta
-            })
+            slots.append(Slot(time, time + delta))
             time += delta
 
         return slots
@@ -90,16 +99,25 @@ class Resource(models.Model):
         return self.name
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
-        occurrences = BookingOccurrence.objects\
-            .filter(booking__resources__exact=self)\
-            .filter(start__year__lte=year)\
-            .filter(end__year__gte=year)\
-            .filter(start__month__lte=month)\
-            .filter(end__month__gte=month)\
-            .filter(start__day__lte=day)\
+        occurrences = BookingOccurrence.objects \
+            .filter(booking__resources__exact=self) \
+            .filter(start__year__lte=year) \
+            .filter(end__year__gte=year) \
+            .filter(start__month__lte=month) \
+            .filter(end__month__gte=month) \
+            .filter(start__day__lte=day) \
             .filter(end__day__gte=day)
 
         return occurrences
+
+    def get_occurrence(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day,
+                       hour=dt.datetime.now().hour, minute=dt.datetime.now().minute):
+        return self.get_occurrences(year=year, month=month, day=day) \
+            .filter(start__hour__lte=hour)\
+            .filter(end__hour__gte=hour)\
+            .filter(start__minute__lte=minute)\
+            .filter(end__minute__gte=minute)\
+            .first()
 
 
 class BookingCategory(models.Model):
@@ -167,7 +185,7 @@ class BookingOccurrence(models.Model):
         }
 
     def contains_slot(self, slot):
-        return slot['start'] >= self.start and slot['end'] <= self.end
+        return slot.start >= self.start and slot.end <= self.end
 
 
 class ResourceLock(models.Model):

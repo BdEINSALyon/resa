@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load bookings_extras %}
 
 {% block content %}
     <h1>
@@ -10,38 +9,34 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-hover table-condensed table-bordered">
+                <table class="table table-striped table-condensed table-bordered">
                     <tr>
                         <th class="text-center active">Heure</th>
                         {% for resource in resource_list %}
-                            <th class="text-center"><a href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
+                            <th class="text-center active"><a href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
                             </th>
                         {% endfor %}
                         <th class="text-center active">Heure</th>
                     </tr>
-                    {% for slot in category.get_slots %}
+                    {% for line in lines %}
                         <tr>
-                            <td class="text-center active">{{ slot.start|date:'H:i' }} - {{ slot.end|date:'H:i' }}</td>
-                            {% for resource in resource_list %}
-                                <th class="text-center">
-                                    <a href="#">Add</a>
-                                </th>
+                            <td class="text-center active">{{ line.slot.start|date:'H:i' }} - {{ line.slot.end|date:'H:i' }}</td>
+                            {% for cell in line.cells %}
+                                {% if cell.type == 'start' %}
+                                    <td class="text-center info" rowspan="{{ cell.rowspan }}">
+                                        <a href="#">{{ cell.occurrence.booking.reason }}</a>
+                                    </td>
+                                {% elif cell.type == 'free' %}
+                                    <td class="text-center">
+                                        <a href="#">Add</a>
+                                    </td>
+                                {% endif %}
                             {% endfor %}
-                            <td class="text-center active">{{ slot.start|date:'H:i' }} - {{ slot.end|date:'H:i' }}</td>
+                            <td class="text-center active">{{ line.slot.start|date:'H:i' }} - {{ line.slot.end|date:'H:i' }}</td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
         </div>
     </div>
-    <ul>
-        {% for resource in resource_list %}
-            <li>{{ resource.name }}</li>
-            <ul>
-                {% for occurrence in occurrences|get_item:resource.id %}
-                    <li>{{ occurrence }}</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </ul>
 {% endblock content %}
