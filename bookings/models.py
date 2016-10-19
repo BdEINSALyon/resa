@@ -71,7 +71,7 @@ class Resource(models.Model):
         verbose_name_plural = _('ressources')
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
-    description = models.CharField(max_length=500, verbose_name=_('description'))
+    description = models.CharField(max_length=500, blank=True, verbose_name=_('description'))
     category = models.ForeignKey(
         ResourceCategory,
         on_delete=models.SET_NULL,
