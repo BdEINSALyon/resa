@@ -166,6 +166,9 @@ class BookingOccurrence(models.Model):
             'end': self.end
         }
 
+    def contains_slot(self, slot):
+        return slot['start'] >= self.start and slot['end'] <= self.end
+
 
 class ResourceLock(models.Model):
     class Meta:
