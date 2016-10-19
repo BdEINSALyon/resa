@@ -9,6 +9,7 @@ class BookingForm(forms.ModelForm):
         fields = ['reason', 'details', 'resources', 'category', 'owner']
 
     reason = forms.CharField(disabled=True)
+    owner = forms.CharField(disabled=True)
     details = forms.CharField(disabled=True, widget=forms.Textarea)
     resources = forms.MultipleChoiceField(disabled=True)
     category = forms.ChoiceField(widget=forms.Select(attrs={'disabled': 'disabled'}))
