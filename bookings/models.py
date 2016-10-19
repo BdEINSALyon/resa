@@ -20,18 +20,6 @@ class Slot:
         }
 
 
-class BookingOwner(models.Model):
-    class Meta:
-        verbose_name = _('propriétaire de réservation')
-        verbose_name_plural = _('propriétaires de réservation')
-
-    name = models.CharField(max_length=150, verbose_name=_('nom'))
-    barcode = models.CharField(max_length=20, verbose_name=_('code barre'), blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class ResourceCategory(models.Model):
     class Meta:
         verbose_name = _('catégorie de ressource')
@@ -149,16 +137,10 @@ class Booking(models.Model):
         blank=True,
         verbose_name=_('catégorie de réservation')
     )
-    owner = models.ForeignKey(
-        BookingOwner,
-        on_delete=models.CASCADE,
-        null=True,
-        verbose_name=_('propriétaire')
-    )
+    owner = models.CharField(max_length=100, blank=True, verbose_name=_('propriétaire'))
 
     def __str__(self):
-        return _('Réservation par %(owner)s pour %(reason)s') % {
-            'owner': self.owner.name,
+        return _('%(reason)s') % {
             'reason': self.reason
         }
 
