@@ -13,10 +13,10 @@
             <div class="table-responsive">
                 <table class="table table-striped table-condensed table-bordered">
                     <tr>
-                        <th class="text-center active">Heure</th>
+                        <th class="text-center active col-md-1">Heure</th>
 
                         {% for resource in resource_list %}
-                            <th class="text-center active">
+                            <th class="text-center active col-md-1">
                                 {% if user.is_staff and perms.bookings.change_resource %}
                                     <a href="{% url 'admin:bookings_resource_change' resource.id %}">
                                         {{ resource.name }} <span class="glyphicon glyphicon-edit"></span>
@@ -31,7 +31,7 @@
                             </th>
                         {% endfor %}
 
-                        <th class="text-center active">Heure</th>
+                        <th class="text-center active col-md-1">Heure</th>
                     </tr>
 
                     {% for line in lines %}
@@ -75,7 +75,7 @@
 
                         {% for resource in resource_list %}
                             <th class="text-center active">
-                                    {{ resource.name }}
+                                {{ resource.name }}
                             </th>
                         {% endfor %}
 
