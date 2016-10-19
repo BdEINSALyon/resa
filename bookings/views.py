@@ -97,3 +97,4 @@ class ResourceDetailView(DetailView):
 
 class BookingDetailView(DetailView):
     model = Booking
+    template_name = 'bookings/booking.html'
