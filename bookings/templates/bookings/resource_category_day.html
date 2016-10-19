@@ -24,6 +24,10 @@
                                 {% else %}
                                     {{ resource.name }}
                                 {% endif %}
+                                {% if resource.description %}
+                                    <br>
+                                    <span class="small">{{ resource.description }}</span>
+                                {% endif %}
                             </th>
                         {% endfor %}
 
@@ -65,6 +69,18 @@
                             </td>
                         </tr>
                     {% endfor %}
+
+                    <tr>
+                        <th class="text-center active">Heure</th>
+
+                        {% for resource in resource_list %}
+                            <th class="text-center active">
+                                    {{ resource.name }}
+                            </th>
+                        {% endfor %}
+
+                        <th class="text-center active">Heure</th>
+                    </tr>
                 </table>
             </div>
         </div>
