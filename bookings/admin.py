@@ -7,6 +7,7 @@ class ResourceAdmin(admin.ModelAdmin):
     list_display = 'name',
     list_display_links = 'name',
     search_fields = 'name',
+    list_filter = ['category', 'available']
 
 admin.site.register(ResourceCategory)
 admin.site.register(BookingCategory)
