@@ -93,7 +93,7 @@ class Resource(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse('bookings:resource', kwargs={'id': str(self.id)})
+        return reverse('bookings:resource', kwargs={'pk': str(self.id)})
 
     def __str__(self):
         return self.name
@@ -161,6 +161,9 @@ class Booking(models.Model):
             'owner': self.owner.name,
             'reason': self.reason
         }
+
+    def get_absolute_url(self):
+        return reverse('bookings:booking', kwargs={'pk': str(self.id)})
 
 
 class BookingOccurrence(models.Model):

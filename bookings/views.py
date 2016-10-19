@@ -1,9 +1,10 @@
 import datetime as dt
 
 from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView
 from django.views.generic import ListView
 
-from bookings.models import ResourceCategory, Resource, Slot
+from bookings.models import ResourceCategory, Resource, Slot, Booking
 
 import logging
 
@@ -92,3 +93,11 @@ class ResourceCategoryDayView(ListView):
 
 class AllResourcesView(ListView):
     model = Resource
+
+
+class ResourceDetailView(DetailView):
+    model = Resource
+
+
+class BookingDetailView(DetailView):
+    model = Booking
