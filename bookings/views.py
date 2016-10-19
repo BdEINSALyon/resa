@@ -1,14 +1,15 @@
 import datetime as dt
+import logging
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
 from bookings.forms import BookingForm
-from bookings.models import ResourceCategory, Resource, Slot, Booking
-
-import logging
+from bookings.models import ResourceCategory, Resource, Booking
 
 log = logging.getLogger(__name__)
 
@@ -101,3 +102,7 @@ class BookingDetailView(UpdateView):
     model = Booking
     form_class = BookingForm
     template_name = 'bookings/booking.html'
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return super(BookingDetailView, self).get(request, *args, **kwargs)
