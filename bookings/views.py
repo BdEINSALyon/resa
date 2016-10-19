@@ -77,8 +77,6 @@ class ResourceCategoryDayView(ListView):
             line['cells'] = cells
             lines.append(line)
 
-        log.error(lines)
-
         context['lines'] = lines
 
         return context
