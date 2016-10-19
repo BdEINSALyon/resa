@@ -19,7 +19,7 @@
                             <th class="text-center active">
                                 {% if user.is_staff and perms.bookings.change_resource %}
                                     <a href="{% url 'admin:bookings_resource_change' resource.id %}">
-                                        {{ resource.name }}
+                                        {{ resource.name }} <span class="glyphicon glyphicon-edit"></span>
                                     </a>
                                 {% else %}
                                     {{ resource.name }}
