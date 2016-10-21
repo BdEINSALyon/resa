@@ -16,41 +16,48 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="text-center">
-                <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'-1' }}&day={{ 1 }}"
-                   class="btn btn-default btn-sm pull-left"><span class="">&laquo;</span></a>
-                <strong><span class="glyphicon glyphicon-calendar"></span> {{ date|date:'F'|title }}</strong>
-                <a href="{{ category.get_absolute_url }}?year={{ today.year }}&month={{ today.month }}&day={{ today.day }}"
-                   class="btn btn-default btn-sm">{% trans "Aujourd'hui" %}</a>
-                <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'1' }}&day={{ 1 }}"
-                   class="btn btn-default btn-sm pull-right"><span class="">&raquo;</span></a>
-            </div>
-            <table class="table table-bordered table-condensed table-striped">
-                <tr>
-                    <th class="text-center">Lu</th>
-                    <th class="text-center">Ma</th>
-                    <th class="text-center">Me</th>
-                    <th class="text-center">Je</th>
-                    <th class="text-center">Ve</th>
-                    <th class="text-center">Sa</th>
-                    <th class="text-center">Di</th>
-                </tr>
-                {% for week in weeks %}
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'-1' }}&day={{ 1 }}"
+                       class="btn btn-default btn-sm pull-left"><span class="">&laquo;</span></a>
+
+                    <div class="btn-group">
+                    <span class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-calendar"></span> {{ date|date:'F'|title }}
+                    </span>
+                        <a href="{{ category.get_absolute_url }}?year={{ today.year }}&month={{ today.month }}&day={{ today.day }}"
+                           class="btn btn-default btn-sm">{% trans "Aujourd'hui" %}</a>
+                    </div>
+                    <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'1' }}&day={{ 1 }}"
+                       class="btn btn-default btn-sm pull-right"><span class="">&raquo;</span></a>
+                </div>
+                <table class="table table-bordered table-condensed table-striped">
                     <tr>
-                        {% for day in week %}
-                            <td class="text-center{% if day == date %} success{% endif %}">
-                                <a href="{{ category.get_absolute_url }}?year={{ day.year }}&month={{ day.month }}&day={{ day.day }}">
-                                    {% if day.month != date.month %}
-                                        {{ day.day }}
-                                    {% else %}
-                                        <strong>{{ day.day }}</strong>
-                                    {% endif %}
-                                </a>
-                            </td>
-                        {% endfor %}
+                        <th class="text-center">Lu</th>
+                        <th class="text-center">Ma</th>
+                        <th class="text-center">Me</th>
+                        <th class="text-center">Je</th>
+                        <th class="text-center">Ve</th>
+                        <th class="text-center">Sa</th>
+                        <th class="text-center">Di</th>
                     </tr>
-                {% endfor %}
-            </table>
+                    {% for week in weeks %}
+                        <tr>
+                            {% for day in week %}
+                                <td class="text-center{% if day == date %} warning{% endif %}">
+                                    <a href="{{ category.get_absolute_url }}?year={{ day.year }}&month={{ day.month }}&day={{ day.day }}">
+                                        {% if day.month != date.month %}
+                                            {{ day.day }}
+                                        {% else %}
+                                            <strong>{{ day.day }}</strong>
+                                        {% endif %}
+                                    </a>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
     <div class="row">
