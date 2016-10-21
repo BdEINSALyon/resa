@@ -21,9 +21,11 @@
                     <div class="list-group-item">
                         <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
                     </div>
-                    <div class="list-group-item">
-                        <span class="glyphicon glyphicon-comment"></span> {{ booking.details|linebreaks }}
-                    </div>
+                    {% if booking.details %}
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-comment"></span> {{ booking.details|linebreaks }}
+                        </div>
+                    {% endif %}
                     <div class="list-group-item">
                         <span class="glyphicon glyphicon-list"></span>
                         {% for resource in booking.resources.all %}
