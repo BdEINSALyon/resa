@@ -44,6 +44,8 @@ class ResourceCategoryDayView(ListView):
         self.date = dt.date(day=day, month=month, year=year)
         context['date'] = self.date
 
+        context['today'] = dt.date.today()
+
         # Month calendar
         cal = calendar.Calendar()
         days_in_month = cal.itermonthdates(year, month)

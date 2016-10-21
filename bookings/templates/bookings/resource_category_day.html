@@ -17,7 +17,13 @@
         </div>
         <div class="col-md-3">
             <div class="text-center">
-                <strong>{{ date|date:'F' }}</strong>
+                <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'-1' }}&day={{ 1 }}"
+                   class="btn btn-default btn-sm pull-left"><span class="">&laquo;</span></a>
+                <strong><span class="glyphicon glyphicon-calendar"></span> {{ date|date:'F'|title }}</strong>
+                <a href="{{ category.get_absolute_url }}?year={{ today.year }}&month={{ today.month }}&day={{ today.day }}"
+                   class="btn btn-default btn-sm">{% trans "Aujourd'hui" %}</a>
+                <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'1' }}&day={{ 1 }}"
+                   class="btn btn-default btn-sm pull-right"><span class="">&raquo;</span></a>
             </div>
             <table class="table table-bordered table-condensed table-striped">
                 <tr>
