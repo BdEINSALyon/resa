@@ -1,4 +1,5 @@
 import datetime as dt
+import calendar
 import logging
 
 from django.contrib.auth.decorators import login_required
@@ -42,6 +43,19 @@ class ResourceCategoryDayView(ListView):
         year = int(self.request.GET.get('year', dt.date.today().year))
         self.date = dt.date(day=day, month=month, year=year)
         context['date'] = self.date
+
+        # Month calendar
+        cal = calendar.Calendar()
+        days_in_month = cal.itermonthdates(year, month)
+        weeks = []
+        week_index = 0
+        for month_day in days_in_month:
+            weeks.append([])
+            weeks[week_index].append(month_day)
+            if month_day.weekday() == 6:
+                week_index += 1
+        log.error(weeks)
+        context['weeks'] = weeks
 
         # Booking occurrences
         occurrences = {}

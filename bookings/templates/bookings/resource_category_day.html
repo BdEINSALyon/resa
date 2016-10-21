@@ -1,12 +1,52 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block add-content %}
-    <h2>
-        {% block title %}
-            {{ category.name }} - {{ date }}
-        {% endblock title %}
-    </h2>
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="col-md-12">
+                {% include 'bookings/resource_category_nav.html' %}
+            </div>
+            <div class="col-md-12">
+                <h2>
+                    {% block title %}
+                        {{ category.name }} - {{ date }}
+                    {% endblock title %}
+                </h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-center">
+                <strong>{{ date|date:'F' }}</strong>
+            </div>
+            <table class="table table-bordered table-condensed table-striped">
+                <tr>
+                    <th class="text-center">Lu</th>
+                    <th class="text-center">Ma</th>
+                    <th class="text-center">Me</th>
+                    <th class="text-center">Je</th>
+                    <th class="text-center">Ve</th>
+                    <th class="text-center">Sa</th>
+                    <th class="text-center">Di</th>
+                </tr>
+                {% for week in weeks %}
+                    <tr>
+                        {% for day in week %}
+                            <td class="text-center">
+                                <a href="{{ category.get_absolute_url }}?year={{ day.year }}&month={{ day.month }}&day={{ day.day }}">
+                                    {% if day.month != date.month %}
+                                        {{ day.day }}
+                                    {% else %}
+                                        <strong>{{ day.day }}</strong>
+                                    {% endif %}
+                                </a>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
@@ -96,4 +136,4 @@
             </div>
         </div>
     </div>
-{% endblock add-content %}
+{% endblock content %}
