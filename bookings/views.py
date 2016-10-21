@@ -41,6 +41,9 @@ class ResourceCategoryDayView(ListView):
         day = int(self.request.GET.get('day', dt.date.today().day))
         month = int(self.request.GET.get('month', dt.date.today().month))
         year = int(self.request.GET.get('year', dt.date.today().year))
+        while month > 12:
+            year += 1
+            month -= 12
         self.date = dt.date(day=day, month=month, year=year)
         context['date'] = self.date
 
