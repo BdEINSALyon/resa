@@ -54,7 +54,6 @@ class ResourceCategoryDayView(ListView):
             weeks[week_index].append(month_day)
             if month_day.weekday() == 6:
                 week_index += 1
-        log.error(weeks)
         context['weeks'] = weeks
 
         # Booking occurrences
