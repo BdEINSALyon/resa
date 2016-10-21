@@ -32,7 +32,7 @@
                 {% for week in weeks %}
                     <tr>
                         {% for day in week %}
-                            <td class="text-center">
+                            <td class="text-center{% if day == date %} success{% endif %}">
                                 <a href="{{ category.get_absolute_url }}?year={{ day.year }}&month={{ day.month }}&day={{ day.day }}">
                                     {% if day.month != date.month %}
                                         {{ day.day }}
