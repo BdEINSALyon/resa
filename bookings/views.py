@@ -100,7 +100,7 @@ class ResourceDetailView(DetailView):
 
 class BookingDetailView(DetailView):
     model = Booking
-    template_name = 'bookings/booking.html'
+    template_name = 'bookings/booking_detail.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
