@@ -32,17 +32,20 @@ class ResourceCategoryDayView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ResourceCategoryDayView, self).get_context_data(**kwargs)
+
+        # Category
         context['category'] = self.category
 
-        resources = self.get_queryset()
+        # Date
         day = int(self.request.GET.get('day', dt.date.today().day))
         month = int(self.request.GET.get('month', dt.date.today().month))
         year = int(self.request.GET.get('year', dt.date.today().year))
         self.date = dt.date(day=day, month=month, year=year)
         context['date'] = self.date
 
+        # Booking occurrences
         occurrences = {}
-
+        resources = self.get_queryset()
         for resource in resources:
             occurrences[resource.id] = []
             for occurrence in resource.get_occurrences(year=year, month=month, day=day):
