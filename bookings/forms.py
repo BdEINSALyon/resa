@@ -40,4 +40,12 @@ class BookingOccurrenceForm(forms.ModelForm):
             self.cleaned_data['booking'] = booking
             self.instance.booking = booking
 
+        occurrences = []
+        for resource in self.instance.booking.resources.all():
+            for occurrence in resource.get_occurrences_period(self.cleaned_data['start'], self.cleaned_data['end']):
+                occurrences.append(occurrence)
+
+        if len(occurrences) > 0:
+            self.add_error(None, 'Réservations en conflit !')
+
         return super(BookingOccurrenceForm, self).clean()

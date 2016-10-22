@@ -155,10 +155,12 @@ class BookingOccurrenceCreateView(CreateView):
 
         if form.is_valid():
             form.save()
-            booking = form.instance.booking
 
-            messages.success(request, 'Occurrence created successfully')
-            return redirect('bookings:booking-details', pk=booking.pk)
+            messages.success(request, 'Occurrence créée avec succès')
+            return redirect('bookings:booking-details', pk=kwargs['booking_pk'])
+        else:
+            messages.error(request, 'Erreur')
+            return redirect('bookings:booking-details', pk=kwargs['booking_pk'])
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):

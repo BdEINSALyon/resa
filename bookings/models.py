@@ -2,6 +2,7 @@ import datetime as dt
 import logging
 
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -97,6 +98,14 @@ class Resource(models.Model):
             .filter(end__day__gte=day)
 
         return occurrences
+
+    def get_occurrences_period(self, start_p, end_p):
+        return BookingOccurrence.objects\
+            .filter(booking__resources__exact=self)\
+            .filter((Q(start__lte=start_p) & Q(end__gte=end_p)) |  # Commence avant et finit après la période
+                    (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gte=start_p)) |  # Commence avant et finit pendant
+                    (Q(start__gte=start_p) & Q(start__lte=end_p) & Q(end__gte=end_p)) |  # Commence pendant et finit après
+                    (Q(start__gte=start_p) & Q(start__lte=end_p) & Q(end__lte=end_p) & Q(end__gte=start_p)))  # Commence et finit pendant
 
     def get_occurrence(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day,
                        hour=dt.datetime.now().hour, minute=dt.datetime.now().minute):
