@@ -57,6 +57,10 @@
                     <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
                     </h3>
                 </div>
+
+                {% block occurrence_form %}
+                {% endblock occurrence_form %}
+
                 <div class="list-group">
                     {% for occurrence in booking.bookingoccurrence_set.all %}
                         <a href="#" class="list-group-item">
