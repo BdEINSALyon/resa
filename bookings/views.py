@@ -160,7 +160,7 @@ class BookingOccurrenceUpdateView(UpdateView):
     model = BookingOccurrence
     form_class = BookingOccurrenceForm
     template_name = 'bookings/occurrence_edit.html'
-    decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
+    decorators = [login_required, permission_required('bookings.change_bookingoccurrence')]
 
     def get_success_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.kwargs.get('booking_pk'))})

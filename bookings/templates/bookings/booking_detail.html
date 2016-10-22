@@ -69,22 +69,34 @@
 
                 <div class="list-group">
                     {% for occurrence in booking.bookingoccurrence_set.all %}
-                        <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}" class="list-group-item">
-                            <span class="glyphicon glyphicon-time"></span>
-                            {% ifequal occurrence.start.date occurrence.end.date %}
-                                {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_t=occurrence.end|date:'H:i' %}
-                                    Le {{ start_d }} de {{ start_t }} à {{ end_t }}
-                                {% endblocktrans %}
-                            {% else %}
-                                {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
-                                    Du {{ start_d }} ({{ start_t }}) au {{ end_d }} ({{ end_t }})
-                                {% endblocktrans %}
-                            {% endifequal %}
-                        </a>
+                        {% if perms.bookings.change_bookingoccurrence %}
+                            <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}"
+                               class="list-group-item">
+                        {% else %}
+                            <div class="list-group-item">
+                        {% endif %}
+
+                        <span class="glyphicon glyphicon-time"></span>
+
+                        {% ifequal occurrence.start.date occurrence.end.date %}
+                            {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_t=occurrence.end|date:'H:i' %}
+                                Le {{ start_d }} de {{ start_t }} à {{ end_t }}
+                            {% endblocktrans %}
+                        {% else %}
+                            {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
+                                Du {{ start_d }} ({{ start_t }}) au {{ end_d }} ({{ end_t }})
+                            {% endblocktrans %}
+                        {% endifequal %}
+
+                        {% if perms.bookings.change_bookingoccurrence %}
+                            </a>
+                        {% else %}
+                            </div>
+                        {% endif %}
                     {% endfor %}
-                </div>
             </div>
         </div>
+    </div>
     </div>
 
 {% endblock add-content %}
