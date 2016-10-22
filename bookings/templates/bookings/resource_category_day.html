@@ -4,15 +4,19 @@
 {% block content %}
     <div class="row">
         <div class="col-md-9">
-            <div class="col-md-12">
-                {% include 'bookings/resource_category_nav.html' %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'bookings/resource_category_nav.html' %}
+                </div>
             </div>
-            <div class="col-md-12">
-                <h2>
-                    {% block title %}
-                        {{ category.name }} - {{ date }}
-                    {% endblock title %}
-                </h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        {% block title %}
+                            {{ category.name }} - {{ date }}
+                        {% endblock title %}
+                    </h2>
+                </div>
             </div>
         </div>
         <div class="col-md-3">
