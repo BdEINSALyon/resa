@@ -12,16 +12,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a href="{% url 'bookings:booking-update' pk=booking.pk %}"
-                       class="btn btn-xs btn-info pull-right">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                    <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-list-alt"></span> {% trans 'Informations' %}
-                    </h3>
-                </div>
                 {% block information %}
+                    <div class="panel-heading">
+                        <a href="{% url 'bookings:booking-update' pk=booking.pk %}"
+                           class="btn btn-xs btn-primary pull-right">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <h3 class="panel-title">
+                            <span class="glyphicon glyphicon-list-alt"></span> {% trans 'Informations' %}
+                        </h3>
+                    </div>
                     <div class="list-group">
                         <div class="list-group-item">
                             <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
@@ -53,18 +53,18 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    {% if perms.bookings.add_bookingoccurrence %}
-                        <a href="{% url 'bookings:occurrence-new' booking_pk=booking.id %}"
-                           class="btn btn-xs btn-success pull-right">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                    {% endif %}
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
-                    </h3>
-                </div>
-
                 {% block occurrence_form %}
+                    <div class="panel-heading">
+                        {% if perms.bookings.add_bookingoccurrence %}
+                            <a href="{% url 'bookings:occurrence-new' booking_pk=booking.id %}"
+                               class="btn btn-xs btn-success pull-right">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        {% endif %}
+                        <h3 class="panel-title"><span
+                                class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
+                        </h3>
+                    </div>
                 {% endblock occurrence_form %}
 
                 <div class="list-group">

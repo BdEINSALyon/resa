@@ -8,6 +8,15 @@
 {% endblock title %}
 
 {% block information %}
+    <div class="panel-heading">
+        <a href="{% url 'bookings:booking-details' pk=booking.pk %}"
+           class="btn btn-xs btn-danger pull-right">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-list-alt"></span> {% trans 'Informations' %}
+        </h3>
+    </div>
     <div class="panel-body">
         <form action="{% url 'bookings:booking-update' pk=booking.pk %}" method="post">
             {% csrf_token %}

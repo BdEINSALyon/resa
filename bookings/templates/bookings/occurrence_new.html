@@ -17,6 +17,16 @@
 {% block title %}{% trans 'Nouvelle occurrence' %}{% endblock %}
 
 {% block occurrence_form %}
+    <div class="panel-heading">
+        {% if perms.bookings.add_bookingoccurrence %}
+            <a href="{% url 'bookings:booking-details' pk=booking.pk %}"
+               class="btn btn-xs btn-danger pull-right">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        {% endif %}
+        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
+        </h3>
+    </div>
     <div class="panel-body">
         <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}" method="post">
             {% csrf_token %}
