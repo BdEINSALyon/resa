@@ -131,22 +131,31 @@ class BookingOccurrenceCreateView(CreateView):
     form_class = BookingOccurrenceForm
     template_name = 'bookings/occurrence_new.html'
     decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
+    booking = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        return super(BookingOccurrenceCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(BookingOccurrenceCreateView, self).get_context_data(**kwargs)
-        context['booking'] = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        context['booking'] = self.booking
 
         return context
 
+    def get_form(self, *args, form_class=BookingOccurrenceForm):
+        if form_class is BookingOccurrenceForm:
+            return form_class(*args, booking_pk=self.booking.id)
+
+        return form_class(*args)
+
     @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.get_form(request.POST)
 
         if form.is_valid():
-            occurrence = form.save()
-            booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
-            occurrence.booking = booking
-            occurrence.save()
+            form.save()
+            booking = form.instance.booking
 
             messages.success(request, 'Occurrence created successfully')
             return redirect('bookings:booking-details', pk=booking.pk)
