@@ -153,3 +153,19 @@ class BookingOccurrenceCreateView(CreateView):
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         return super(BookingOccurrenceCreateView, self).get(request, *args, **kwargs)
+
+
+class BookingUpdateView(UpdateView):
+    model = Booking
+    template_name = 'bookings/booking_edit.html'
+    fields = ['reason', 'details', 'resources', 'category', 'owner']
+
+    decorators = [login_required, permission_required('bookings.change_booking')]
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingUpdateView, self).get(request, *args, **kwargs)
+
+    @method_decorator(decorators)
+    def post(self, request, *args, **kwargs):
+        return super(BookingUpdateView, self).post(request, *args, **kwargs)

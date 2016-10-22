@@ -13,36 +13,42 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <a href="{% url 'bookings:booking-update' pk=booking.pk %}"
+                       class="btn btn-xs btn-info pull-right">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
                     <h3 class="panel-title">
                         <span class="glyphicon glyphicon-list-alt"></span> {% trans 'Informations' %}
                     </h3>
                 </div>
-                <div class="list-group">
-                    <div class="list-group-item">
-                        <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
-                    </div>
-                    {% if booking.details %}
+                {% block information %}
+                    <div class="list-group">
                         <div class="list-group-item">
-                            <span class="glyphicon glyphicon-comment"></span> {{ booking.details|linebreaks }}
+                            <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
                         </div>
-                    {% endif %}
-                    <div class="list-group-item">
-                        <span class="glyphicon glyphicon-list"></span>
-                        {% for resource in booking.resources.all %}
-                            {% if not forloop.last %}
-                                {{ resource }},
-                            {% elif forloop.last %}
-                                {{ resource }}
-                            {% endif %}
-                        {% endfor %}
+                        {% if booking.details %}
+                            <div class="list-group-item">
+                                <span class="glyphicon glyphicon-comment"></span> {{ booking.details|linebreaks }}
+                            </div>
+                        {% endif %}
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-list"></span>
+                            {% for resource in booking.resources.all %}
+                                {% if not forloop.last %}
+                                    {{ resource }},
+                                {% elif forloop.last %}
+                                    {{ resource }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-tag"></span> {{ booking.category }}
+                        </div>
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-user"></span> {{ booking.owner }}
+                        </div>
                     </div>
-                    <div class="list-group-item">
-                        <span class="glyphicon glyphicon-tag"></span> {{ booking.category }}
-                    </div>
-                    <div class="list-group-item">
-                        <span class="glyphicon glyphicon-user"></span> {{ booking.owner }}
-                    </div>
-                </div>
+                {% endblock information %}
             </div>
         </div>
         <div class="col-md-6">
