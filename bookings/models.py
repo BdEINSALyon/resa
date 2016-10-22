@@ -163,7 +163,8 @@ class BookingOccurrence(models.Model):
     booking = models.ForeignKey(
         Booking,
         on_delete=models.CASCADE,
-        verbose_name=_('réservation')
+        verbose_name=_('réservation'),
+        null=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

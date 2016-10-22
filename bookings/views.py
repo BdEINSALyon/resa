@@ -2,15 +2,17 @@ import datetime as dt
 import calendar
 import logging
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
+from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
-from bookings.forms import BookingForm
-from bookings.models import ResourceCategory, Resource, Booking
+from bookings.forms import BookingForm, BookingOccurrenceForm
+from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence
 
 log = logging.getLogger(__name__)
 
@@ -122,3 +124,32 @@ class BookingDetailView(DetailView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return super(BookingDetailView, self).get(request, *args, **kwargs)
+
+
+class BookingOccurrenceCreateView(CreateView):
+    form_class = BookingOccurrenceForm
+    template_name = 'bookings/occurrence_new.html'
+    decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingOccurrenceCreateView, self).get_context_data(**kwargs)
+        context['booking'] = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+
+        return context
+
+    @method_decorator(decorators)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            occurrence = form.save()
+            booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+            occurrence.booking = booking
+            occurrence.save()
+
+            messages.success(request, 'Occurrence created successfully')
+            return redirect('bookings:booking-details', pk=booking.pk)
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingOccurrenceCreateView, self).get(request, *args, **kwargs)

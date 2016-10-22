@@ -1,13 +1,10 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 {% load i18n %}
-{% load crispy_forms_tags %}
 
 {% block add-content %}
     <h2>
-        {% block title %}
-            {% trans 'réservation' as title %}
-            {{ title|title }}
-        {% endblock title %}
+        {% block title %}Nouvelle occurrence pour la réservation{% endblock %}
     </h2>
     <div class="row">
         <div class="col-md-6">
@@ -48,14 +45,17 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {% if perms.bookings.add_bookingoccurrence %}
-                        <a href="{% url 'bookings:occurrence-new' booking_pk=booking.id %}"
-                           class="btn btn-xs btn-success pull-right">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                    {% endif %}
                     <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
                     </h3>
+                </div>
+                <div class="panel-body">
+                    <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}" method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-success btn-block">
+                            <span class="glyphicon glyphicon-plus"></span> Ajouter
+                        </button>
+                    </form>
                 </div>
                 <div class="list-group">
                     {% for occurrence in booking.bookingoccurrence_set.all %}
@@ -75,6 +75,4 @@
                 </div>
             </div>
         </div>
-    </div>
-
-{% endblock add-content %}
+{% endblock %}
