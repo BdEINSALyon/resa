@@ -14,7 +14,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
 {% endblock add_style %}
 
-{% block title %}{% trans 'Nouvelle occurrence' %}{% endblock %}
+{% block title %}{% trans "Édition de l'occurrence" %}{% endblock %}
 
 {% block occurrence_form %}
     <div class="panel-heading">
@@ -26,11 +26,11 @@
         </h3>
     </div>
     <div class="panel-body">
-        <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}" method="post">
+        <form action="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=object.pk %}" method="post">
             {% csrf_token %}
             {{ form|crispy }}
             <button type="submit" class="btn btn-success btn-block">
-                <span class="glyphicon glyphicon-plus"></span> {% trans 'Ajouter' %}
+                <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
             </button>
         </form>
     </div>

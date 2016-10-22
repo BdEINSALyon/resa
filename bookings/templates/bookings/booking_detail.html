@@ -69,7 +69,7 @@
 
                 <div class="list-group">
                     {% for occurrence in booking.bookingoccurrence_set.all %}
-                        <a href="#" class="list-group-item">
+                        <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}" class="list-group-item">
                             <span class="glyphicon glyphicon-time"></span>
                             {% ifequal occurrence.start.date occurrence.end.date %}
                                 {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_t=occurrence.end|date:'H:i' %}
