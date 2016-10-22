@@ -40,7 +40,7 @@ class ResourceCategory(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse('bookings:resource-category-calendar', kwargs={'id': str(self.id)})
+        return reverse('bookings:resource-category-day', kwargs={'id': str(self.id)})
 
     def __str__(self):
         return self.name
@@ -149,7 +149,7 @@ class Booking(models.Model):
         }
 
     def get_absolute_url(self):
-        return reverse('bookings:booking', kwargs={'pk': str(self.id)})
+        return reverse('bookings:booking-details', kwargs={'pk': str(self.id)})
 
 
 class BookingOccurrence(models.Model):
