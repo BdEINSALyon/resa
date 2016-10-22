@@ -14,10 +14,9 @@ class BookingOccurrenceForm(forms.ModelForm):
             "format": "DD/MM/YYYY HH:mm",
             "sideBySide": True,
             "calendarWeeks": True,
-            "toolbarPlacement": 'top',
-            "showTodayButton": True,
-            "showClear": True,
-            "showClose": True,
+            "widgetPositioning": {
+                "vertical": "top"
+            },
         }
         model = BookingOccurrence
         fields = ['start', 'end']
