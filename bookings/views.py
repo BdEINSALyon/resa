@@ -115,10 +115,6 @@ class ResourceCategoryDayView(ListView):
         return count
 
 
-class ResourceDetailView(DetailView):
-    model = Resource
-
-
 class BookingDetailView(DetailView):
     model = Booking
     template_name = 'bookings/booking_detail.html'

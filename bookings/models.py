@@ -83,9 +83,6 @@ class Resource(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_absolute_url(self):
-        return reverse('bookings:resource', kwargs={'pk': str(self.id)})
-
     def __str__(self):
         return self.name
 
