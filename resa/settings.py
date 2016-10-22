@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'autofixture',
     'bookings',
+    'bootstrap3_datetime',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

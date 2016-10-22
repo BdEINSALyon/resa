@@ -1,18 +1,23 @@
+from bootstrap3_datetime.widgets import DateTimePicker
 from django import forms
 
-from bookings.models import Booking, Resource, BookingCategory, BookingOccurrence
+from bookings.models import BookingOccurrence
 
 
 class BookingOccurrenceForm(forms.ModelForm):
     class Meta:
         model = BookingOccurrence
         fields = ['start', 'end']
-
-    start = forms.SplitDateTimeField(
-        label=BookingOccurrence._meta.get_field('start').verbose_name.capitalize()
-    )
-
-    end = forms.SplitDateTimeField(
-        label=BookingOccurrence._meta.get_field('end').verbose_name.capitalize()
-    )
+        widgets = {
+            'start': DateTimePicker(
+                options={
+                    "format": "DD/MM/YYYY HH:mm"
+                }
+            ),
+            'end': DateTimePicker(
+                options={
+                    "format": "DD/MM/YYYY HH:mm"
+                }
+            ),
+        }
 

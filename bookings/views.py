@@ -1,5 +1,5 @@
-import datetime as dt
 import calendar
+import datetime as dt
 import logging
 
 from django.contrib import messages
@@ -11,8 +11,8 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
-from bookings.forms import BookingForm, BookingOccurrenceForm
-from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence
+from bookings.forms import BookingOccurrenceForm
+from bookings.models import ResourceCategory, Resource, Booking
 
 log = logging.getLogger(__name__)
 
