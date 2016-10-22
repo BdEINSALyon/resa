@@ -1,9 +1,13 @@
 <ul class="nav nav-tabs">
     {% for resource_category in all_resource_categories %}
         {% if category and resource_category == category %}
-            <li class="active"><a href="{{ resource_category.get_absolute_url }}">{{ resource_category.name }}</a></li>
+            <li class="active">
         {% else %}
-            <li><a href="{{ resource_category.get_absolute_url }}">{{ resource_category.name }}</a></li>
+            <li>
         {% endif %}
+        <a href="{{ resource_category.get_absolute_url }}{% if date %}?year={{ date.year }}&month={{ date.month }}&day={{ date.day }}{% endif %}">
+            {{ resource_category.name }}
+        </a>
+    </li>
     {% endfor %}
 </ul>
