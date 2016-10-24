@@ -4,13 +4,15 @@ import logging
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import get_object_or_404, redirect
+from django.core.paginator import Paginator, EmptyPage
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
+from django.views.generic.base import ContextMixin
 
 from bookings.forms import BookingOccurrenceForm
 from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence
@@ -118,16 +120,40 @@ class ResourceCategoryDayView(ListView):
         return count
 
 
-class BookingDetailView(DetailView):
+class BaseBookingView(ContextMixin):
+    booking = None
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseBookingView, self).get_context_data(**kwargs)
+        page = self.request.GET.get('occ_page', 1)
+
+        occurrences = self.booking.get_occurrences()
+        paginator = Paginator(occurrences, 10)
+
+        try:
+            occurrences = paginator.page(page)
+        except EmptyPage:
+            occurrences = paginator.page(paginator.num_pages)
+
+        context['occurrences'] = occurrences
+        return context
+
+
+class BookingDetailView(DetailView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_detail.html'
+    booking = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = get_object_or_404(Booking, pk=self.kwargs['pk'])
+        return super(BookingDetailView, self).dispatch(request, *args, **kwargs)
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return super(BookingDetailView, self).get(request, *args, **kwargs)
 
 
-class BookingOccurrenceCreateView(CreateView):
+class BookingOccurrenceCreateView(CreateView, BaseBookingView):
     form_class = BookingOccurrenceForm
     template_name = 'bookings/occurrence_new.html'
     decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
@@ -170,18 +196,23 @@ class BookingOccurrenceCreateView(CreateView):
         return super(BookingOccurrenceCreateView, self).get(request, *args, **kwargs)
 
 
-class BookingOccurrenceUpdateView(UpdateView):
+class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     model = BookingOccurrence
     form_class = BookingOccurrenceForm
     template_name = 'bookings/occurrence_edit.html'
     decorators = [login_required, permission_required('bookings.change_bookingoccurrence')]
+    booking = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        return super(BookingOccurrenceUpdateView, self).dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.kwargs.get('booking_pk'))})
 
     def get_context_data(self, **kwargs):
         context = super(BookingOccurrenceUpdateView, self).get_context_data(**kwargs)
-        context['booking'] = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        context['booking'] = self.booking
 
         return context
 
@@ -194,12 +225,16 @@ class BookingOccurrenceUpdateView(UpdateView):
         return super(BookingOccurrenceUpdateView, self).post(request, *args, **kwargs)
 
 
-class BookingUpdateView(UpdateView):
+class BookingUpdateView(UpdateView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_edit.html'
     fields = ['reason', 'details', 'resources', 'category', 'owner']
-
     decorators = [login_required, permission_required('bookings.change_booking')]
+    booking = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = get_object_or_404(Booking, pk=self.kwargs['pk'])
+        return super(BookingUpdateView, self).dispatch(request, *args, **kwargs)
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):

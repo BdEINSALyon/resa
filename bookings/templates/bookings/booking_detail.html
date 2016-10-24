@@ -68,7 +68,7 @@
                 {% endblock occurrence_form %}
 
                 <div class="list-group">
-                    {% for occurrence in booking.get_occurrences %}
+                    {% for occurrence in occurrences %}
                         {% if perms.bookings.change_bookingoccurrence %}
                             <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}"
                                class="list-group-item">
@@ -86,9 +86,31 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+                    {% if occurrences.has_other_pages %}
+                            <div class="list-group-item">
+
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="{% if occurrences.has_previous == False %}disabled{% endif %}">
+                                            <a href="?occ_page={{ occurrences.number|add:'-1' }}">&laquo;</a>
+                                        </li>
+
+                                        {% for page in occurrences.paginator.page_range %}
+                                            <li class="{% if page == occurrences.number %}active{% endif %}">
+                                                <a href="?occ_page={{ page }}">{{ page }}</a>
+                                            </li>
+                                        {% endfor %}
+
+                                        <li class="{% if occurrences.has_next == False %}disabled{% endif %}">
+                                            <a href="?occ_page={{ occurrences.number|add:'1' }}">&raquo;</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
 {% endblock add-content %}
