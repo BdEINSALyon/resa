@@ -132,6 +132,10 @@ class BookingOccurrenceCreateView(CreateView):
     template_name = 'bookings/occurrence_new.html'
     decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
     booking = None
+    object = None
+
+    def get_success_url(self):
+        return reverse('bookings:booking-details', kwargs={'pk': self.booking.id})
 
     def dispatch(self, request, *args, **kwargs):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
@@ -157,10 +161,9 @@ class BookingOccurrenceCreateView(CreateView):
             form.save()
 
             messages.success(request, 'Occurrence créée avec succès')
-            return redirect('bookings:booking-details', pk=kwargs['booking_pk'])
+            return self.form_valid(form)
         else:
-            messages.error(request, 'Erreur')
-            return redirect('bookings:booking-details', pk=kwargs['booking_pk'])
+            return self.form_invalid(form)
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
