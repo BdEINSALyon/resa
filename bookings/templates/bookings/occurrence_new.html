@@ -1,30 +1,10 @@
-{% extends 'bookings/booking_detail.html' %}
+{% extends 'bookings/occurrence_edit.html' %}
 {% load crispy_forms_filters %}
 {% load i18n %}
 
-{% block add_javascript %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
-            crossorigin="anonymous"></script>
-{% endblock add_javascript %}
-
-{% block add_style %}
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
-{% endblock add_style %}
-
 {% block title %}{% trans 'Nouvelle occurrence' %}{% endblock %}
 
-{% block occurrence_form %}
-    <div class="panel-heading">
-        <a href="{% url 'bookings:booking-details' pk=booking.pk %}"
-           class="btn btn-xs btn-danger pull-right">
-            <span class="glyphicon glyphicon-remove"></span>
-        </a>
-        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
-        </h3>
-    </div>
+{% block occurrence_panel_body %}
     <div class="panel-body">
         <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}" method="post">
             {% csrf_token %}
