@@ -160,6 +160,9 @@ class Booking(models.Model):
     def get_absolute_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.id)})
 
+    def get_occurrences(self):
+        return self.bookingoccurrence_set.all().order_by('start')
+
 
 class BookingOccurrence(models.Model):
     class Meta:

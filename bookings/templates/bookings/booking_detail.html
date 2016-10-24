@@ -68,7 +68,7 @@
                 {% endblock occurrence_form %}
 
                 <div class="list-group">
-                    {% for occurrence in booking.bookingoccurrence_set.all %}
+                    {% for occurrence in booking.get_occurrences %}
                         {% if perms.bookings.change_bookingoccurrence %}
                             <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}"
                                class="list-group-item">
