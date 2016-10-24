@@ -203,6 +203,12 @@ class BookingOccurrence(models.Model):
     def contains_slot(self, slot):
         return slot.start >= self.start and slot.end <= self.end
 
+    def __le__(self, other):
+        return self.start <= other.start
+
+    def __lt__(self, other):
+        return self.start < other.start
+
 
 class ResourceLock(models.Model):
     class Meta:
