@@ -66,6 +66,23 @@ class ResourceCategory(models.Model):
 
         return slots
 
+    def get_slot(self, datetime):
+        time = datetime
+        end = dt.datetime.combine(datetime.date, self.day_end)
+
+        # Allow midnight for end of day
+        if self.day_end == dt.time(0, 0):
+            end += dt.timedelta(days=1)
+
+        delta = dt.timedelta(minutes=self.granularity)
+
+        # Allow 23:59:59 for end of day
+        while time + delta <= end + dt.timedelta(seconds=1):
+            slot = Slot(time, time + delta)
+            if slot.start < datetime < slot.end:
+                return slot
+            time += delta
+
 
 class Resource(models.Model):
     class Meta:
