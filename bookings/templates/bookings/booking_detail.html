@@ -51,66 +51,68 @@
                 {% endblock information %}
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                {% block occurrence_form %}
-                    <div class="panel-heading">
-                        {% if perms.bookings.add_bookingoccurrence %}
-                            <a href="{% url 'bookings:occurrence-new' booking_pk=booking.id %}"
-                               class="btn btn-xs btn-success pull-right">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        {% endif %}
-                        <h3 class="panel-title"><span
-                                class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
-                        </h3>
-                    </div>
-                {% endblock occurrence_form %}
+        {% block occurrences %}
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    {% block occurrence_form %}
+                        <div class="panel-heading">
+                            {% if perms.bookings.add_bookingoccurrence %}
+                                <a href="{% url 'bookings:occurrence-new' booking_pk=booking.id %}"
+                                   class="btn btn-xs btn-success pull-right">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            {% endif %}
+                            <h3 class="panel-title"><span
+                                    class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
+                            </h3>
+                        </div>
+                    {% endblock occurrence_form %}
 
-                <div class="list-group">
-                    {% for occurrence in occurrences %}
-                        {% if perms.bookings.change_bookingoccurrence %}
-                            <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}"
-                               class="list-group-item">
-                        {% else %}
-                            <div class="list-group-item">
-                        {% endif %}
+                    <div class="list-group">
+                        {% for occurrence in occurrences %}
+                            {% if perms.bookings.change_bookingoccurrence %}
+                                <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}"
+                                   class="list-group-item">
+                            {% else %}
+                                <div class="list-group-item">
+                            {% endif %}
 
-                        <span class="glyphicon glyphicon-time"></span>
+                            <span class="glyphicon glyphicon-time"></span>
 
-                        {{ occurrence.str_dates|capfirst }}
+                            {{ occurrence.str_dates|capfirst }}
 
-                        {% if perms.bookings.change_bookingoccurrence %}
-                            </a>
-                        {% else %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    {% if occurrences.has_other_pages %}
-                            <div class="list-group-item">
+                            {% if perms.bookings.change_bookingoccurrence %}
+                                </a>
+                            {% else %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if occurrences.has_other_pages %}
+                                <div class="list-group-item">
 
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="{% if occurrences.has_previous == False %}disabled{% endif %}">
-                                            <a href="?occ_page={{ occurrences.number|add:'-1' }}">&laquo;</a>
-                                        </li>
-
-                                        {% for page in occurrences.paginator.page_range %}
-                                            <li class="{% if page == occurrences.number %}active{% endif %}">
-                                                <a href="?occ_page={{ page }}">{{ page }}</a>
+                                    <nav>
+                                        <ul class="pagination">
+                                            <li class="{% if occurrences.has_previous == False %}disabled{% endif %}">
+                                                <a href="?occ_page={{ occurrences.number|add:'-1' }}">&laquo;</a>
                                             </li>
-                                        {% endfor %}
 
-                                        <li class="{% if occurrences.has_next == False %}disabled{% endif %}">
-                                            <a href="?occ_page={{ occurrences.number|add:'1' }}">&raquo;</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                    {% endif %}
+                                            {% for page in occurrences.paginator.page_range %}
+                                                <li class="{% if page == occurrences.number %}active{% endif %}">
+                                                    <a href="?occ_page={{ page }}">{{ page }}</a>
+                                                </li>
+                                            {% endfor %}
+
+                                            <li class="{% if occurrences.has_next == False %}disabled{% endif %}">
+                                                <a href="?occ_page={{ occurrences.number|add:'1' }}">&raquo;</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endblock occurrences %}
     </div>
 
 {% endblock add-content %}

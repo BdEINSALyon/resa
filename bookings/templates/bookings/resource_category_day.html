@@ -122,7 +122,7 @@
                                 {% elif cell.type == 'free' %}
                                     {% if user.is_authenticated %}
                                         <td class="text-center">
-                                            <a href="#">
+                                            <a href="{% url 'bookings:booking-new' %}?year={{ date.year }}&month={{ date.month }}&day={{ date.day }}&start_h={{ line.slot.start.hour }}&start_m={{ line.slot.start.minute }}&end_h={{ line.slot.end.hour }}&end_m={{ line.slot.end.minute }}">
                                                 <span class="glyphicon glyphicon-plus-sign"></span>
                                             </a>
                                         </td>

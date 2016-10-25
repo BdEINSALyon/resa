@@ -301,3 +301,56 @@ class BookingDeleteView(DeleteView, BaseBookingView):
     @method_decorator(decorators)
     def delete(self, request, *args, **kwargs):
         return super(BookingDeleteView, self).delete(request, *args, **kwargs)
+
+
+class BookingCreateView(CreateView):
+    model = Booking
+    fields = ['reason', 'details', 'resources', 'category', 'owner']
+    template_name = 'bookings/booking_new.html'
+    decorators = [login_required, permission_required('bookings.add_booking')]
+    start = None
+    end = None
+    booking = None
+
+    def get_success_url(self):
+        return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk})
+
+    def dispatch(self, request, *args, **kwargs):
+        day = int(self.request.GET.get('day', dt.date.today().day))
+        month = int(self.request.GET.get('month', dt.date.today().month))
+        year = int(self.request.GET.get('year', dt.date.today().year))
+        while month > 12:
+            year += 1
+            month -= 12
+
+        start_h = int(self.request.GET.get('start_h', dt.datetime.now().hour))
+        end_h = int(self.request.GET.get('end_h', dt.datetime.now().hour))
+        start_m = int(self.request.GET.get('start_m', dt.datetime.now().hour))
+        end_m = int(self.request.GET.get('end_m', dt.datetime.now().minute))
+        self.start = dt.datetime(year, month, day, start_h, start_m)
+        self.start = dt.datetime(year, month, day, end_h, end_m)
+
+        return super(BookingCreateView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingCreateView, self).get_context_data(**kwargs)
+        context['start'] = self.start
+        context['end'] = self.end
+
+        return context
+
+    @method_decorator(decorators)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+
+        if form.is_valid():
+            self.booking = form.save()
+
+            messages.success(request, 'Réservation créée avec succès')
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingCreateView, self).get(request, *args, **kwargs)
