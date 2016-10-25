@@ -199,7 +199,7 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         if form.is_valid():
             form.save()
 
-            messages.success(request, 'Occurrence créée avec succès')
+            messages.success(request, _('Occurrence créée avec succès'))
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -359,7 +359,7 @@ class BookingCreateView(CreateView):
         if form.is_valid():
             self.booking = form.save()
 
-            messages.success(request, 'Réservation créée avec succès')
+            messages.success(request, _('Réservation créée avec succès'))
             return self.form_valid(form)
         else:
             return self.form_invalid(form)

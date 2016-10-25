@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 16:00+0000\n"
+"POT-Creation-Date: 2016-10-25 16:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,6 +284,14 @@ msgstr ""
 
 #: bookings/templates/bookings/resource_category_day.html:119
 msgid "Réservé"
+msgstr ""
+
+#: bookings/views.py:202
+msgid "Occurrence créée avec succès"
+msgstr ""
+
+#: bookings/views.py:362
+msgid "Réservation créée avec succès"
 msgstr ""
 
 #: resa/settings.py:173
