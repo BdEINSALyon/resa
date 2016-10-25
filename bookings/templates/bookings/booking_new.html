@@ -18,7 +18,7 @@
         </h3>
     </div>
     <div class="panel-body">
-        <form action="{% url 'bookings:booking-new' %}?start={{ start.isoformat }}&end={{ end.isoformat }}" method="post">
+        <form action="{% url 'bookings:booking-new' %}?start={{ start.isoformat }}&end={{ end.isoformat }}&resource={{ resource_id }}" method="post">
             {% csrf_token %}
             {{ form|crispy }}
         <div class="btn-group pull-right">

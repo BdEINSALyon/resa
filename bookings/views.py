@@ -102,7 +102,8 @@ class ResourceCategoryDayView(ListView):
                         })
                 else:
                     cells.append({
-                        'type': 'free'
+                        'type': 'free',
+                        'resource': resource
                     })
             line['cells'] = cells
             lines.append(line)
@@ -161,14 +162,20 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
     object = None
     start = None
     end = None
+    initial_resource = None
 
     def get_success_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': self.booking.id})
 
     def dispatch(self, request, *args, **kwargs):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
-        start = self.request.GET.get('start', None)
-        end = self.request.GET.get('end', None)
+        try:
+            self.initial_resource = get_object_or_404(Resource, pk=int(request.GET.get('resource')))
+        except TypeError:
+            pass
+
+        start = request.GET.get('start')
+        end = request.GET.get('end')
 
         if start is not None:
             self.start = dateutil.parser.parse(start)
@@ -188,7 +195,8 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         if form_class is BookingOccurrenceForm:
             return form_class(*args, booking_pk=self.booking.id, initial={
                 'start': self.start,
-                'end': self.end
+                'end': self.end,
+                'resources': [self.initial_resource]
             })
 
         return form_class(*args)
@@ -324,15 +332,19 @@ class BookingCreateView(CreateView):
     start = None
     end = None
     booking = None
+    resource_id = None
 
     def get_success_url(self):
         return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk}) \
                + '?start=' + str(self.start.isoformat()) \
-               + '&end=' + str(self.end.isoformat())
+               + '&end=' + str(self.end.isoformat())\
+               + '&resource=' + str(self.resource_id)
 
     def dispatch(self, request, *args, **kwargs):
-        start = self.request.GET.get('start', None)
-        end = self.request.GET.get('end', None)
+        self.resource_id = str(self.request.GET.get('resource'))
+
+        start = self.request.GET.get('start')
+        end = self.request.GET.get('end')
 
         if start is not None:
             self.start = dateutil.parser.parse(start)
@@ -350,6 +362,7 @@ class BookingCreateView(CreateView):
         context = super(BookingCreateView, self).get_context_data(**kwargs)
         context['start'] = self.start
         context['end'] = self.end
+        context['resource_id'] = self.resource_id
 
         return context
 

@@ -122,7 +122,7 @@
                                 {% elif cell.type == 'free' %}
                                     {% if user.is_authenticated %}
                                         <td class="text-center">
-                                            <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}">
+                                            <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}&resource={{ cell.resource.pk }}">
                                                 <span class="glyphicon glyphicon-plus-sign"></span>
                                             </a>
                                         </td>
