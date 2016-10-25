@@ -23,14 +23,6 @@ from bookings.models import ResourceCategory, Resource, Booking, BookingOccurren
 log = logging.getLogger(__name__)
 
 
-def get_occurrence_for_slot(occurrences, slot):
-    for occurrence in occurrences:
-        if occurrence.contains_slot(slot):
-            return occurrence
-
-    return None
-
-
 class ResourceCategoryDayView(ListView):
     template_name = 'bookings/resource_category_day.html'
     context_object_name = 'resource_list'
@@ -85,7 +77,7 @@ class ResourceCategoryDayView(ListView):
             }
             cells = []
             for resource in resources:
-                occurrence = get_occurrence_for_slot(occurrences[resource.id], slot)
+                occurrence = slot.get_occurrence(occurrences[resource.id])
                 if occurrence is not None:
                     if already_seen_occurrences.get(resource.id) is None:
                         already_seen_occurrences[resource.id] = []

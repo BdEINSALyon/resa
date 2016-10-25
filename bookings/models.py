@@ -21,6 +21,13 @@ class Slot:
             'end': self.end
         }
 
+    def get_occurrence(self, occurrences):
+        for occurrence in occurrences:
+            if occurrence.contains_slot(self):
+                return occurrence
+
+        return None
+
 
 class ResourceCategory(models.Model):
     class Meta:
