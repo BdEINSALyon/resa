@@ -71,6 +71,8 @@
 
                             {{ occ.resources_names|join:', ' }} : {{ occ.str_dates|capfirst }}
 
+                            <span class="badge">{{ occ.get_resources_count }}</span>
+
                             {% if perms.bookings.change_bookingoccurrence %}
                                 </a>
                             {% else %}
