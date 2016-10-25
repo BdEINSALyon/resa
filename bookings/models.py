@@ -207,7 +207,7 @@ class BookingOccurrence(models.Model):
 
     def __str__(self):
         dates = self.str_dates()
-        resources = ', '.join(map(str, self.resources.all()))
+        resources = ', '.join([r.name for r in self.resources.all()])
 
         return _('%(booking)s (%(resources)s) ' + dates) % {
             'booking': self.booking,
