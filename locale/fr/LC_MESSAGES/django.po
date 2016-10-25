@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 15:53+0000\n"
+"POT-Creation-Date: 2016-10-25 15:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,6 +236,34 @@ msgstr ""
 
 #: bookings/templates/bookings/resource_category_day.html:33
 msgid "Aujourd'hui"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:40
+msgid "Lu"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:41
+msgid "Ma"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:42
+msgid "Me"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:43
+msgid "Je"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:44
+msgid "Ve"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:45
+msgid "Sa"
+msgstr ""
+
+#: bookings/templates/bookings/resource_category_day.html:46
+msgid "Di"
 msgstr ""
 
 #: bookings/templates/bookings/resource_category_day.html:111

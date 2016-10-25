@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 15:53+0000\n"
+"POT-Creation-Date: 2016-10-25 15:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,8 +191,8 @@ msgid ""
 "Êtes-vous certain de vouloir supprimer la réservation suivante ? Toutes les "
 "occurrences liées seront supprimées."
 msgstr ""
-"Are you sure you want to delete the following booking ? All the "
-"linked occurrences will be deleted as well."
+"Are you sure you want to delete the following booking ? All the linked "
+"occurrences will be deleted as well."
 
 #: bookings/templates/bookings/booking_detail.html:56
 #: bookings/templates/bookings/occurrence_edit.html:25
@@ -238,6 +238,34 @@ msgstr "Add"
 #: bookings/templates/bookings/resource_category_day.html:33
 msgid "Aujourd'hui"
 msgstr "Today"
+
+#: bookings/templates/bookings/resource_category_day.html:40
+msgid "Lu"
+msgstr "Mo"
+
+#: bookings/templates/bookings/resource_category_day.html:41
+msgid "Ma"
+msgstr "Tu"
+
+#: bookings/templates/bookings/resource_category_day.html:42
+msgid "Me"
+msgstr "We"
+
+#: bookings/templates/bookings/resource_category_day.html:43
+msgid "Je"
+msgstr "Th"
+
+#: bookings/templates/bookings/resource_category_day.html:44
+msgid "Ve"
+msgstr "Fr"
+
+#: bookings/templates/bookings/resource_category_day.html:45
+msgid "Sa"
+msgstr "Sa"
+
+#: bookings/templates/bookings/resource_category_day.html:46
+msgid "Di"
+msgstr "Su"
 
 #: bookings/templates/bookings/resource_category_day.html:111
 #, python-format
