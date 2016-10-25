@@ -1,8 +1,8 @@
 import calendar
 import datetime as dt
 import logging
-import dateutil.parser
 
+import dateutil.parser
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage
@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import DetailView
