@@ -200,7 +200,7 @@ class BookingOccurrence(models.Model):
     )
     resources = models.ManyToManyField(
         Resource,
-        verbose_name=_('ressource')
+        verbose_name=_('ressources')
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
