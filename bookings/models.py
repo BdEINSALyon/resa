@@ -239,7 +239,14 @@ class BookingOccurrence(models.Model):
         return self.start < other.start
 
     def resources_names(self):
-        return [r.name for r in self.resources.all()]
+        total_count = self.resources.count()
+        count = 5
+        queryset = self.resources.all()[:count]
+        resources = [r.name for r in queryset]
+        if total_count > count:
+            resources.append('...')
+
+        return resources
 
 
 class ResourceLock(models.Model):
