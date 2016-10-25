@@ -10,7 +10,7 @@
 {% block information %}
     <div class="panel-heading">
         <a href="{% url 'bookings:booking-details' pk=booking.pk %}"
-           class="btn btn-xs btn-danger pull-right">
+           class="btn btn-xs btn-warning pull-right">
             <span class="glyphicon glyphicon-remove"></span> {% trans 'Annuler' %}
         </a>
         <h3 class="panel-title">
