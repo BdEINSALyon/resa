@@ -272,5 +272,4 @@ class BookingOccurrenceDeleteView(DeleteView):
 
     @method_decorator(decorators)
     def delete(self, request, *args, **kwargs):
-        log.error('LOL')
         return super(BookingOccurrenceDeleteView, self).delete(request, *args, **kwargs)
