@@ -54,7 +54,6 @@ SECRET_KEY = 'r6=0@#g#py60s2ujq=03^^w^8*mh_!a7wpou_fu7&&40p3r+(o'
 
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -103,6 +102,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'resa.wsgi.application'
 
+LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'bookings': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -116,7 +132,6 @@ DATABASES = {
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -135,7 +150,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
