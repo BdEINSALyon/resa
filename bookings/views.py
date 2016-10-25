@@ -1,6 +1,7 @@
 import calendar
 import datetime as dt
 import logging
+import dateutil.parser
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -161,12 +162,23 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
     decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
     booking = None
     object = None
+    start = None
+    end = None
 
     def get_success_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': self.booking.id})
 
     def dispatch(self, request, *args, **kwargs):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        start = self.request.GET.get('start', None)
+        end = self.request.GET.get('end', None)
+
+        if start is not None:
+            self.start = dateutil.parser.parse(start)
+
+        if end is not None:
+            self.end = dateutil.parser.parse(end)
+
         return super(BookingOccurrenceCreateView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -177,7 +189,10 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
 
     def get_form(self, *args, form_class=BookingOccurrenceForm):
         if form_class is BookingOccurrenceForm:
-            return form_class(*args, booking_pk=self.booking.id)
+            return form_class(*args, booking_pk=self.booking.id, initial={
+                'start': self.start,
+                'end': self.end
+            })
 
         return form_class(*args)
 
@@ -292,7 +307,8 @@ class BookingDeleteView(DeleteView, BaseBookingView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('bookings:resource-category-day', kwargs={'id': str(self.booking.resources.first().category.pk)})
+        return reverse_lazy('bookings:resource-category-day',
+                            kwargs={'id': str(self.booking.resources.first().category.pk)})
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
@@ -313,22 +329,23 @@ class BookingCreateView(CreateView):
     booking = None
 
     def get_success_url(self):
-        return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk})
+        return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk}) \
+               + '?start=' + str(self.start.isoformat()) \
+               + '&end=' + str(self.end.isoformat())
 
     def dispatch(self, request, *args, **kwargs):
-        day = int(self.request.GET.get('day', dt.date.today().day))
-        month = int(self.request.GET.get('month', dt.date.today().month))
-        year = int(self.request.GET.get('year', dt.date.today().year))
-        while month > 12:
-            year += 1
-            month -= 12
+        start = self.request.GET.get('start', None)
+        end = self.request.GET.get('end', None)
 
-        start_h = int(self.request.GET.get('start_h', dt.datetime.now().hour))
-        end_h = int(self.request.GET.get('end_h', dt.datetime.now().hour))
-        start_m = int(self.request.GET.get('start_m', dt.datetime.now().hour))
-        end_m = int(self.request.GET.get('end_m', dt.datetime.now().minute))
-        self.start = dt.datetime(year, month, day, start_h, start_m)
-        self.start = dt.datetime(year, month, day, end_h, end_m)
+        if start is not None:
+            self.start = dateutil.parser.parse(start)
+        else:
+            self.start = dt.datetime.now()
+
+        if end is not None:
+            self.end = dateutil.parser.parse(end)
+        else:
+            self.end = self.start
 
         return super(BookingCreateView, self).dispatch(request, *args, **kwargs)
 
