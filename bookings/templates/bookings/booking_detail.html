@@ -32,16 +32,6 @@
                             </div>
                         {% endif %}
                         <div class="list-group-item">
-                            <span class="glyphicon glyphicon-list"></span>
-                            {% for resource in booking.resources.all %}
-                                {% if not forloop.last %}
-                                    {{ resource }},
-                                {% elif forloop.last %}
-                                    {{ resource }}
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <div class="list-group-item">
                             <span class="glyphicon glyphicon-tag"></span> {{ booking.category }}
                         </div>
                         <div class="list-group-item">
@@ -79,7 +69,8 @@
 
                             <span class="glyphicon glyphicon-time"></span>
 
-                            {{ occurrence.str_dates|capfirst }}
+
+                            {{ occurrence.resources.all|join:', ' }} : {{ occurrence.str_dates|capfirst }}
 
                             {% if perms.bookings.change_bookingoccurrence %}
                                 </a>

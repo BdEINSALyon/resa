@@ -105,7 +105,7 @@ class Resource(models.Model):
         blank=True,
         verbose_name=_('catégorie')
     )
-    available = models.BooleanField(verbose_name=_('disponible'))
+    available = models.BooleanField(verbose_name=_('disponible'), default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -114,7 +114,7 @@ class Resource(models.Model):
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
         occurrences = BookingOccurrence.objects \
-            .filter(booking__resources__exact=self) \
+            .filter(resources__exact=self) \
             .filter(start__year__lte=year) \
             .filter(end__year__gte=year) \
             .filter(start__month__lte=month) \
@@ -126,7 +126,7 @@ class Resource(models.Model):
 
     def get_occurrences_period(self, start_p, end_p):
         return BookingOccurrence.objects\
-            .filter(booking__resources__exact=self)\
+            .filter(resources__exact=self)\
             .filter((Q(start__lte=start_p) & Q(end__gte=end_p)) |  # Commence avant et finit après la période
                     (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p)) |  # Commence avant et finit pendant
                     (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p)) |  # Commence pendant et finit après
@@ -162,15 +162,10 @@ class Booking(models.Model):
 
     reason = models.CharField(max_length=150, verbose_name=_('raison'))
     details = models.TextField(verbose_name=_('détails'), blank=True)
-    resources = models.ManyToManyField(
-        Resource,
-        verbose_name=_('ressource')
-    )
     category = models.ForeignKey(
         BookingCategory,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True,
         verbose_name=_('catégorie de réservation')
     )
     owner = models.CharField(max_length=100, blank=True, verbose_name=_('propriétaire'))
@@ -203,13 +198,20 @@ class BookingOccurrence(models.Model):
         verbose_name=_('réservation'),
         null=True
     )
+    resources = models.ManyToManyField(
+        Resource,
+        verbose_name=_('ressource')
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         dates = self.str_dates()
-        return _('%(booking)s : ' + dates) % {
-            'booking': self.booking
+        resources = ', '.join(map(str, self.resources.all()))
+
+        return _('%(booking)s (%(resources)s) ' + dates) % {
+            'booking': self.booking,
+            'resources': resources
         }
 
     def str_dates(self):

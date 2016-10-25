@@ -26,9 +26,13 @@ log = logging.getLogger(__name__)
 class ResourceCategoryDayView(ListView):
     template_name = 'bookings/resource_category_day.html'
     context_object_name = 'resource_list'
+    category = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.category = get_object_or_404(ResourceCategory, pk=kwargs['id'])
+        return super(ResourceCategoryDayView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        self.category = get_object_or_404(ResourceCategory, id=self.kwargs['id'])
         return Resource.objects.filter(category=self.category)
 
     def get_context_data(self, **kwargs):
@@ -44,8 +48,8 @@ class ResourceCategoryDayView(ListView):
         while month > 12:
             year += 1
             month -= 12
-        self.date = dt.date(day=day, month=month, year=year)
-        context['date'] = self.date
+        date = dt.date(day=day, month=month, year=year)
+        context['date'] = date
 
         context['today'] = dt.date.today()
 
@@ -71,7 +75,7 @@ class ResourceCategoryDayView(ListView):
 
         lines = []
         already_seen_occurrences = {}
-        for slot in self.category.get_slots(self.date):
+        for slot in self.category.get_slots(date):
             line = {
                 'slot': slot
             }
@@ -87,7 +91,7 @@ class ResourceCategoryDayView(ListView):
 
                         cells.append({
                             'type': 'start',
-                            'rowspan': self.get_number_of_slots_for_occurrence(occurrence),
+                            'rowspan': self.get_number_of_slots_for_occurrence(occurrence, date),
                             'occurrence': occurrence
                         })
 
@@ -106,9 +110,9 @@ class ResourceCategoryDayView(ListView):
 
         return context
 
-    def get_number_of_slots_for_occurrence(self, occurrence):
+    def get_number_of_slots_for_occurrence(self, occurrence, date):
         count = 0
-        for slot in self.category.get_slots(self.date):
+        for slot in self.category.get_slots(date):
             if occurrence.contains_slot(slot):
                 count += 1
 
@@ -237,7 +241,7 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 class BookingUpdateView(UpdateView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_edit.html'
-    fields = ['reason', 'details', 'resources', 'category', 'owner']
+    fields = ['reason', 'details', 'category', 'owner']
     decorators = [login_required, permission_required('bookings.change_booking')]
     booking = None
 
@@ -299,8 +303,7 @@ class BookingDeleteView(DeleteView, BaseBookingView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('bookings:resource-category-day',
-                            kwargs={'id': str(self.booking.resources.first().category.pk)})
+        return reverse_lazy('bookings:home')
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
@@ -313,7 +316,7 @@ class BookingDeleteView(DeleteView, BaseBookingView):
 
 class BookingCreateView(CreateView):
     model = Booking
-    fields = ['reason', 'details', 'resources', 'category', 'owner']
+    fields = ['reason', 'details', 'category', 'owner']
     template_name = 'bookings/booking_new.html'
     decorators = [login_required, permission_required('bookings.add_booking')]
     start = None

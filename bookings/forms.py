@@ -19,7 +19,7 @@ class BookingOccurrenceForm(forms.ModelForm):
             },
         }
         model = BookingOccurrence
-        fields = ['start', 'end']
+        fields = ['start', 'end', 'resources']
         widgets = {
             'start': DateTimePicker(
                 options=picker_options
@@ -40,7 +40,7 @@ class BookingOccurrenceForm(forms.ModelForm):
             self.instance.booking = booking
 
         occurrences = []
-        for resource in self.instance.booking.resources.all():
+        for resource in self.cleaned_data['resources'].all():
             for occurrence in resource.get_occurrences_period(self.cleaned_data['start'], self.cleaned_data['end']):
                 if occurrence.id != self.instance.id and occurrence not in occurrences:
                     occurrences.append(occurrence)
@@ -48,6 +48,6 @@ class BookingOccurrenceForm(forms.ModelForm):
         occurrences.sort()
 
         for occurrence in occurrences:
-            self.add_error(None, str(occurrence) + ' est en conflit !')
+            self.add_error(None, 'Conflit : ' + str(occurrence))
 
         return super(BookingOccurrenceForm, self).clean()
