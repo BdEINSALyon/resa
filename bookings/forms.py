@@ -4,7 +4,7 @@ from bootstrap3_datetime.widgets import DateTimePicker
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from bookings.models import BookingOccurrence, Booking
+from bookings.models import BookingOccurrence, Booking, Resource
 
 log = logging.getLogger(__name__)
 
@@ -33,6 +33,7 @@ class BookingOccurrenceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.form_booking_id = kwargs.pop("booking_pk", None)
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
+        self.fields['resources'].queryset = Resource.objects.order_by('category', 'name')
 
     def clean_resources(self):
         resources = self.cleaned_data['resources']
