@@ -7,8 +7,10 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
@@ -243,3 +245,32 @@ class BookingUpdateView(UpdateView, BaseBookingView):
     @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         return super(BookingUpdateView, self).post(request, *args, **kwargs)
+
+
+class BookingOccurrenceDeleteView(DeleteView):
+    model = BookingOccurrence
+    decorators = [login_required, permission_required('bookings.delete_bookingoccurrence')]
+    booking = None
+    template_name = 'bookings/occurrence_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        return super(BookingOccurrenceDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingOccurrenceDeleteView, self).get_context_data(**kwargs)
+        context['booking'] = self.booking
+
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('bookings:booking-details', kwargs={'pk': str(self.booking.pk)})
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingOccurrenceDeleteView, self).get(request, *args, **kwargs)
+
+    @method_decorator(decorators)
+    def delete(self, request, *args, **kwargs):
+        log.error('LOL')
+        return super(BookingOccurrenceDeleteView, self).delete(request, *args, **kwargs)

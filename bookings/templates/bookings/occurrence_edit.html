@@ -30,9 +30,16 @@
             <form action="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=object.pk %}" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button type="submit" class="btn btn-success btn-block">
-                    <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
-                </button>
+                <div class="btn-group pull-right">
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
+                    </button>
+                    {% if perms.bookings.delete_bookingoccurrence %}
+                        <a href="{% url 'bookings:occurrence-delete' booking_pk=booking.pk pk=object.pk %}" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Supprimer
+                        </a>
+                    {% endif %}
+                </div>
             </form>
         </div>
     {% endblock %}

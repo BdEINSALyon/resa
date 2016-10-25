@@ -1,0 +1,18 @@
+{% extends 'bookings/occurrence_edit.html' %}
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+{% block title %}{% trans 'Supprimer une occurrence' %}{% endblock %}
+
+{% block occurrence_panel_body %}
+    <div class="panel-body">
+        <form action="{% url 'bookings:occurrence-delete' booking_pk=booking.pk pk=bookingoccurrence.pk %}" method="post">
+            {% csrf_token %}
+            <p>{% trans "Êtes-vous certain de vouloir supprimer l'occurrence suivante ?" %}</p>
+            <p>{{ bookingoccurrence }}</p>
+            <button type="submit" class="btn btn-danger btn-block">
+                <span class="glyphicon glyphicon-remove"></span> {% trans 'Supprimer' %}
+            </button>
+        </form>
+    </div>
+{% endblock %}
