@@ -28,6 +28,9 @@ class BookingOccurrenceForm(forms.ModelForm):
             'end': DateTimePicker(
                 options=picker_options
             ),
+            'resources': forms.SelectMultiple(
+                attrs={'size': 10}
+            ),
         }
 
     def __init__(self, *args, **kwargs):
