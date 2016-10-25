@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 15:59+0000\n"
+"POT-Creation-Date: 2016-10-25 16:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,6 +266,11 @@ msgstr "Sa"
 #: bookings/templates/bookings/resource_category_day.html:46
 msgid "Di"
 msgstr "Su"
+
+#: bookings/templates/bookings/resource_category_day.html:72
+#: bookings/templates/bookings/resource_category_day.html:90
+msgid "Heure"
+msgstr "Hour"
 
 #: bookings/templates/bookings/resource_category_day.html:111
 #, python-format
