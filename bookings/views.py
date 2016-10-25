@@ -273,3 +273,31 @@ class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):
     @method_decorator(decorators)
     def delete(self, request, *args, **kwargs):
         return super(BookingOccurrenceDeleteView, self).delete(request, *args, **kwargs)
+
+
+class BookingDeleteView(DeleteView, BaseBookingView):
+    model = Booking
+    decorators = [login_required, permission_required('bookings.delete_booking')]
+    booking = None
+    template_name = 'bookings/booking_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = self.get_object()
+        return super(BookingDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingDeleteView, self).get_context_data(**kwargs)
+        context['booking'] = self.booking
+
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('bookings:resource-category-day', kwargs={'id': str(self.booking.resources.first().category.pk)})
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingDeleteView, self).get(request, *args, **kwargs)
+
+    @method_decorator(decorators)
+    def delete(self, request, *args, **kwargs):
+        return super(BookingDeleteView, self).delete(request, *args, **kwargs)

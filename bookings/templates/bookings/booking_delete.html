@@ -3,7 +3,7 @@
 {% load crispy_forms_filters %}
 
 {% block title %}
-    {% trans 'modifier la réservation' as title %}
+    {% trans 'supprimer la réservation' as title %}
     {{ title|capfirst }}
 {% endblock title %}
 
@@ -18,19 +18,13 @@
         </h3>
     </div>
     <div class="panel-body">
-        <form action="{% url 'bookings:booking-update' pk=booking.pk %}" method="post">
+        <form action="{% url 'bookings:booking-delete' pk=booking.pk %}" method="post">
             {% csrf_token %}
-            {{ form|crispy }}
-        <div class="btn-group pull-right">
-            <button type="submit" class="btn btn-success">
-                <span class="glyphicon glyphicon-floppy-disk"></span> Enregistrer
+            <p>{% trans "Êtes-vous certain de vouloir supprimer la réservation suivante ? Toutes les occurrences liées seront supprimées." %}</p>
+            <p>{{ booking }}</p>
+            <button type="submit" class="btn btn-danger btn-block">
+                <span class="glyphicon glyphicon-remove"></span> Supprimer
             </button>
-            {% if perms.bookings.delete_bookingoccurrence %}
-                <a href="{% url 'bookings:booking-delete' pk=booking.pk %}" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-remove"></span> Supprimer
-                </a>
-            {% endif %}
-        </div>
         </form>
     </div>
 {% endblock information %}
