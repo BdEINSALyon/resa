@@ -226,6 +226,7 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     def get_context_data(self, **kwargs):
         context = super(BookingOccurrenceUpdateView, self).get_context_data(**kwargs)
         context['booking'] = self.booking
+        context['current_occurrence'] = self.get_object()
 
         return context
 

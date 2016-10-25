@@ -59,18 +59,17 @@
                     {% endblock occurrence_form %}
 
                     <div class="list-group">
-                        {% for occurrence in occurrences %}
+                        {% for occ in occurrences %}
                             {% if perms.bookings.change_bookingoccurrence %}
-                                <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occurrence.pk %}"
-                                   class="list-group-item">
+                                <a href="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=occ.pk %}"
+                                   class="list-group-item{% if occ == current_occurrence %} active{% endif %}">
                             {% else %}
                                 <div class="list-group-item">
                             {% endif %}
 
                             <span class="glyphicon glyphicon-time"></span>
 
-
-                            {{ occurrence.resources.all|join:', ' }} : {{ occurrence.str_dates|capfirst }}
+                            {{ occ.resources.all|join:', ' }} : {{ occ.str_dates|capfirst }}
 
                             {% if perms.bookings.change_bookingoccurrence %}
                                 </a>
