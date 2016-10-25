@@ -69,7 +69,7 @@
 
                             <span class="glyphicon glyphicon-time"></span>
 
-                            {{ occ.resources.all|join:', ' }} : {{ occ.str_dates|capfirst }}
+                            {{ occ.resources_names|join:', ' }} : {{ occ.str_dates|capfirst }}
 
                             {% if perms.bookings.change_bookingoccurrence %}
                                 </a>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 16:02+0000\n"
+"POT-Creation-Date: 2016-10-25 16:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,10 @@ msgstr ""
 
 #: bookings/apps.py:7
 msgid "Réservations"
+msgstr ""
+
+#: bookings/forms.py:43
+msgid "Toutes les ressources doivent être de la même catégorie"
 msgstr ""
 
 #: bookings/models.py:19
@@ -59,7 +63,7 @@ msgstr ""
 msgid "en minutes"
 msgstr ""
 
-#: bookings/models.py:96 bookings/models.py:252
+#: bookings/models.py:96 bookings/models.py:255
 msgid "ressource"
 msgstr ""
 
@@ -148,23 +152,23 @@ msgstr ""
 msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
-#: bookings/models.py:244
+#: bookings/models.py:247
 msgid "verrou de ressource"
 msgstr ""
 
-#: bookings/models.py:245
+#: bookings/models.py:248
 msgid "verrous de ressource"
 msgstr ""
 
-#: bookings/models.py:247
+#: bookings/models.py:250
 msgid "date de début"
 msgstr ""
 
-#: bookings/models.py:248
+#: bookings/models.py:251
 msgid "date de fin"
 msgstr ""
 
-#: bookings/models.py:258
+#: bookings/models.py:261
 #, python-format
 msgid "Verrou du %(start)s au %(end)s."
 msgstr ""

@@ -110,7 +110,7 @@ class Resource(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.name + ' (' + self.category.name + ')'
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
         occurrences = BookingOccurrence.objects \
@@ -237,6 +237,9 @@ class BookingOccurrence(models.Model):
 
     def __lt__(self, other):
         return self.start < other.start
+
+    def resources_names(self):
+        return [r.name for r in self.resources.all()]
 
 
 class ResourceLock(models.Model):
