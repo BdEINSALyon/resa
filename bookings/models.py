@@ -1,6 +1,7 @@
 import datetime as dt
 import logging
 
+from django.contrib.humanize.templatetags.humanize import naturalday
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -189,15 +190,17 @@ class BookingOccurrence(models.Model):
 
     def str_dates(self):
         if self.start.date() == self.end.date():
-            return _('le %(date)s de %(start)s à %(end)s') % {
-                'date': self.start.date().strftime('%d/%m/%Y'),
+            return _('%(date)s de %(start)s à %(end)s') % {
+                'date': naturalday(self.start.date(), 'd/m/Y'),
                 'start': self.start.time().strftime('%H:%M'),
                 'end': self.end.time().strftime('%H:%M')
             }
         else:
-            return _('du %(start)s au %(end)s') % {
-                'start': self.start.strftime('%d/%m/%Y (%H:%M)'),
-                'end': self.end.strftime('%d/%m/%Y (%H:%M)')
+            return _('%(start_date)s %(start_time)s - %(end_date)s %(end_time)s') % {
+                'start_date': naturalday(self.start, 'd/m/Y'),
+                'start_time': self.start.strftime('(%H:%M)'),
+                'end_date': naturalday(self.end, 'd/m/Y'),
+                'end_time': self.end.strftime('(%H:%M)'),
             }
 
     def contains_slot(self, slot):
