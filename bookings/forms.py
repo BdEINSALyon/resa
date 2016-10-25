@@ -50,16 +50,29 @@ class BookingOccurrenceForm(forms.ModelForm):
             booking = Booking.objects.get(pk=self.form_booking_id)
             self.cleaned_data['booking'] = booking
             self.instance.booking = booking
+
+        super(BookingOccurrenceForm, self).clean()
+
         if self.cleaned_data.get('resources'):
-            occurrences = []
-            for resource in self.cleaned_data['resources'].all():
-                for occurrence in resource.get_occurrences_period(self.cleaned_data['start'], self.cleaned_data['end']):
-                    if occurrence.id != self.instance.id and occurrence not in occurrences:
-                        occurrences.append(occurrence)
+            if self.cleaned_data.get('start'):
+                slot = self.cleaned_data.get('resources').first().category.get_slot(self.cleaned_data['start'])
+                self.cleaned_data['start'] = slot.start
 
-            occurrences.sort()
+            if self.cleaned_data.get('end'):
+                slot = self.cleaned_data.get('resources').first().category.get_slot(self.cleaned_data['end'])
+                if self.cleaned_data['end'] != slot.start:
+                    self.cleaned_data['end'] = slot.end
 
-            for occurrence in occurrences:
-                self.add_error(None, 'Conflit : ' + str(occurrence))
+            if self.cleaned_data.get('start') and self.cleaned_data.get('end'):
+                occurrences = []
+                for resource in self.cleaned_data['resources'].all():
+                    for occurrence in resource.get_occurrences_period(self.cleaned_data['start'], self.cleaned_data['end']):
+                        if occurrence.id != self.instance.id and occurrence not in occurrences:
+                            occurrences.append(occurrence)
 
-        return super(BookingOccurrenceForm, self).clean()
+                occurrences.sort()
+
+                for occurrence in occurrences:
+                    self.add_error(None, 'Conflit : ' + str(occurrence))
+
+        return self.cleaned_data
