@@ -28,6 +28,8 @@ debug_env = os.getenv('DEBUG', None)
 # Define production
 PROD = ENV in ['prod', 'production']
 
+HEROKU = ast.literal_eval(os.getenv('HEROKU', 'False'))
+
 # By default, if we're in prod, we don't want debug
 DEBUG = not PROD
 
@@ -43,7 +45,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = ssl_required
 SESSION_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_HTTPONLY = PROD
-USE_X_FORWARDED_HOST = PROD
+USE_X_FORWARDED_HOST = HEROKU
 SECURE_SSL_REDIRECT = ssl_required
 
 # Quick-start development settings - unsuitable for production
@@ -52,7 +54,7 @@ SECURE_SSL_REDIRECT = ssl_required
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'r6=0@#g#py60s2ujq=03^^w^8*mh_!a7wpou_fu7&&40p3r+(o'
 
-ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com', 'web']
 
 # Application definition
 
@@ -184,8 +186,6 @@ STATICFILES_DIRS = (
     # os.path.join(BASE_DIR, 'codes', 'static'),
     'static',
 )
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Media files (uploaded by users)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
