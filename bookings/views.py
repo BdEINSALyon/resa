@@ -247,7 +247,7 @@ class BookingUpdateView(UpdateView, BaseBookingView):
         return super(BookingUpdateView, self).post(request, *args, **kwargs)
 
 
-class BookingOccurrenceDeleteView(DeleteView):
+class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):
     model = BookingOccurrence
     decorators = [login_required, permission_required('bookings.delete_bookingoccurrence')]
     booking = None
