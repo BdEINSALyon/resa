@@ -131,6 +131,14 @@ class Resource(models.Model):
                     (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p)) |  # Commence pendant et finit après
                     (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
 
+    def get_locks_period(self, start_p, end_p):
+        return ResourceLock.objects\
+            .filter(resources__exact=self)\
+            .filter((Q(start__lte=start_p) & Q(end__gte=end_p)) |  # Commence avant et finit après la période
+                    (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p)) |  # Commence avant et finit pendant
+                    (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p)) |  # Commence pendant et finit après
+                    (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
+
     def get_occurrence(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day,
                        hour=dt.datetime.now().hour, minute=dt.datetime.now().minute):
         return self.get_occurrences(year=year, month=month, day=day) \
@@ -183,35 +191,14 @@ class Booking(models.Model):
         return self.bookingoccurrence_set.all().order_by('start')
 
 
-class BookingOccurrence(models.Model):
+class StartEndPeriod(models.Model):
     class Meta:
-        verbose_name = _('occurrence de réservation')
-        verbose_name_plural = _('occurrences de réservation')
+        abstract = True
 
     start = models.DateTimeField(verbose_name=_('date et heure de début'))
     end = models.DateTimeField(verbose_name=_('date et heure de fin'))
-    is_valid = models.BooleanField(default=True, verbose_name=_('valide'))
-    booking = models.ForeignKey(
-        Booking,
-        on_delete=models.CASCADE,
-        verbose_name=_('réservation'),
-        null=True
-    )
-    resources = models.ManyToManyField(
-        Resource,
-        verbose_name=_('ressources')
-    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        dates = self.str_dates()
-        resources = ', '.join([r.name for r in self.resources.all()])
-
-        return _('%(booking)s (%(resources)s) ' + dates) % {
-            'booking': self.booking,
-            'resources': resources
-        }
 
     def str_dates(self):
         if self.start.date() == self.end.date():
@@ -220,6 +207,7 @@ class BookingOccurrence(models.Model):
                 'start': self.start.time().strftime('%H:%M'),
                 'end': self.end.time().strftime('%H:%M')
             }
+
         else:
             return _('%(start_date)s %(start_time)s - %(end_date)s %(end_time)s') % {
                 'start_date': naturalday(self.start, 'd/m/Y'),
@@ -237,6 +225,16 @@ class BookingOccurrence(models.Model):
     def __lt__(self, other):
         return self.start < other.start
 
+
+class StartEndResources(StartEndPeriod):
+    class Meta:
+        abstract = True
+
+    resources = models.ManyToManyField(
+        Resource,
+        verbose_name=_('ressources')
+    )
+
     def resources_names(self):
         total_count = self.get_resources_count()
         count = 5
@@ -251,19 +249,38 @@ class BookingOccurrence(models.Model):
         return self.resources.count()
 
 
-class ResourceLock(models.Model):
+class BookingOccurrence(StartEndResources):
+    class Meta:
+        verbose_name = _('occurrence de réservation')
+        verbose_name_plural = _('occurrences de réservation')
+
+    is_valid = models.BooleanField(default=True, verbose_name=_('valide'))
+    booking = models.ForeignKey(
+        Booking,
+        on_delete=models.CASCADE,
+        verbose_name=_('réservation'),
+        null=True
+    )
+
+    def __str__(self):
+        dates = self.str_dates()
+        resources = ', '.join([r.name for r in self.resources.all()])
+
+        return _('%(booking)s (%(resources)s) ' + dates) % {
+            'booking': self.booking,
+            'resources': resources
+        }
+
+
+class ResourceLock(StartEndResources):
     class Meta:
         verbose_name = _('verrou de ressource')
         verbose_name_plural = _('verrous de ressource')
 
-    start = models.DateTimeField(verbose_name=_('date de début'))
-    end = models.DateTimeField(verbose_name=_('date de fin'))
-    resources = models.ManyToManyField(
-        Resource,
-        verbose_name=_('ressources')
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
-        return _('Verrou du %(start)s au %(end)s.') % {'start': self.start, 'end': self.end}
+        dates = self.str_dates()
+        resources = ', '.join([r.name for r in self.resources.all()])
+
+        return _('Verrou (%(resources)s) ' + dates) % {
+            'resources': resources
+        }

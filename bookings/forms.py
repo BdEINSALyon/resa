@@ -68,14 +68,23 @@ class BookingOccurrenceForm(forms.ModelForm):
 
             if self.cleaned_data.get('start') and self.cleaned_data.get('end'):
                 occurrences = []
+                locks = []
+
                 for resource in self.cleaned_data['resources'].all():
                     for occurrence in resource.get_occurrences_period(self.cleaned_data['start'], self.cleaned_data['end']):
                         if occurrence.id != self.instance.id and occurrence not in occurrences:
                             occurrences.append(occurrence)
+                    for lock in resource.get_locks_period(self.cleaned_data['start'], self.cleaned_data['end']):
+                        if lock not in locks:
+                            locks.append(lock)
 
                 occurrences.sort()
+                locks.sort()
 
                 for occurrence in occurrences:
                     self.add_error(None, 'Conflit : ' + str(occurrence))
+
+                for lock in locks:
+                    self.add_error(None, 'Conflit : ' + str(lock))
 
         return self.cleaned_data
