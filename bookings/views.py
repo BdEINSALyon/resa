@@ -2,6 +2,7 @@ import calendar
 import datetime as dt
 import logging
 import re
+from collections import defaultdict
 
 import dateutil.parser
 from django.contrib import messages
@@ -83,7 +84,7 @@ class ResourceCategoryDayView(ListView):
                 locks[resource.id].append(lock)
 
         lines = []
-        already_seen_occurrences = {}
+        already_seen = defaultdict(list)
         for slot in self.category.get_slots(date):
             line = {
                 'slot': slot
@@ -93,12 +94,9 @@ class ResourceCategoryDayView(ListView):
                 occurrence = slot.get_period(occurrences[resource.id])
                 lock = slot.get_period(locks[resource.id])
 
-                if already_seen_occurrences.get(resource.id) is None:
-                    already_seen_occurrences[resource.id] = []
-
                 if occurrence is not None:
-                    if occurrence not in already_seen_occurrences[resource.id]:
-                        already_seen_occurrences[resource.id].append(occurrence)
+                    if occurrence not in already_seen[resource.id]:
+                        already_seen[resource.id].append(occurrence)
 
                         cells.append({
                             'type': 'start',
@@ -111,8 +109,8 @@ class ResourceCategoryDayView(ListView):
                             'type': 'continue'
                         })
                 elif lock is not None:
-                    if lock not in already_seen_occurrences[resource.id]:
-                        already_seen_occurrences[resource.id].append(lock)
+                    if lock not in already_seen[resource.id]:
+                        already_seen[resource.id].append(lock)
 
                         cells.append({
                             'type': 'start',
