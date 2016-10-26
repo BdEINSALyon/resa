@@ -5,6 +5,7 @@ import logging
 import dateutil.parser
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -381,3 +382,17 @@ class BookingCreateView(CreateView):
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         return super(BookingCreateView, self).get(request, *args, **kwargs)
+
+
+class SearchResultsListView(ListView):
+    template_name = 'bookings/search.html'
+    model = Booking
+
+    def get_queryset(self):
+        if self.request.GET.get('query'):
+            return Booking.objects\
+                .annotate(search=SearchVector('reason', 'details', 'owner', config='french'))\
+                .filter(search=SearchQuery(self.request.GET['query'], config='french'))\
+                .order_by('created_at')
+        else:
+            return Booking.objects.all().order_by('created_at')

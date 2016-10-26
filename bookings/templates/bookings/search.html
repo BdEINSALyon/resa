@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block add-content %}
     <h2>
         {% block title %}
-            Accueil
+            {% trans 'Résultats de recherche' %}
         {% endblock title %}
     </h2>
-    <p>
-        Vous pouvez sélectionner une ressource dans la liste ci-dessus pour afficher ses disponibilités.
-    </p>
+    <ul>
+        {% for booking in booking_list %}
+            <li>{{ booking }}</li>
+        {% endfor %}
+    </ul>
 {% endblock add-content %}
