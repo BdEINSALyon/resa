@@ -258,10 +258,9 @@ class ResourceLock(models.Model):
 
     start = models.DateTimeField(verbose_name=_('date de début'))
     end = models.DateTimeField(verbose_name=_('date de fin'))
-    resource = models.ForeignKey(
+    resources = models.ManyToManyField(
         Resource,
-        on_delete=models.CASCADE,
-        verbose_name=_('ressource')
+        verbose_name=_('ressources')
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
