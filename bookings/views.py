@@ -389,6 +389,7 @@ class BookingCreateView(CreateView):
 class SearchResultsListView(ListView):
     template_name = 'bookings/search.html'
     model = Booking
+    query = None
 
     def normalize_query(self, query_string,
                         findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
@@ -423,10 +424,20 @@ class SearchResultsListView(ListView):
                 query = query & or_query
         return query
 
+    def dispatch(self, request, *args, **kwargs):
+        self.query = self.request.GET.get('query')
+        return super(SearchResultsListView, self).dispatch(request, *args, **kwargs)
+
     def get_queryset(self):
-        if self.request.GET.get('query'):
+        if self.query:
             return Booking.objects\
                 .filter(self.get_query(self.request.GET['query'], ['owner', 'reason', 'details']))\
                 .order_by('created_at')
         else:
             return Booking.objects.all().order_by('created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultsListView, self).get_context_data(**kwargs)
+        context['query'] = self.query
+
+        return context

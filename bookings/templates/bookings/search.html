@@ -4,12 +4,21 @@
 {% block add-content %}
     <h2>
         {% block title %}
-            {% trans 'Résultats de recherche' %}
+            {% trans 'Recherche' %}
         {% endblock title %}
     </h2>
-    <ul>
-        {% for booking in booking_list %}
-            <li>{{ booking }}</li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{% blocktrans %}Résultats pour {{ query }}{% endblocktrans %}</h3>
+            </div>
+                <div class="list-group">
+                    {% for booking in booking_list %}
+                        <a class="list-group-item" href="{% url 'bookings:booking-details' pk=booking.pk %}">{{ booking }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock add-content %}
