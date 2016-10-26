@@ -24,6 +24,34 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if category %}
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Date <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <form class="navbar-form navbar-left" action="" method="get">
+                                    <div class="form-group">
+                                        <input name="day" type="number" class="form-control dropdown-form"
+                                               placeholder="{% trans 'Jour' %}" size="4"
+                                               value="{{ date.day }}">
+                                        <input name="month" type="number" class="form-control dropdown-form"
+                                               placeholder="{% trans 'Mois' %}"
+                                               value="{{ date.month }}">
+                                        <input name="year" type="number" class="form-control dropdown-form"
+                                               placeholder="{% trans 'Année' %}"
+                                               value="{{ date.year }}">
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            {% trans 'Changer de date' %}
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            {% endif %}
             <ul class="nav navbar-nav navbar-right">
                 {% if not user.is_authenticated %}
                     <li><a href="{% url 'auth:login' %}?next={{ request.path }}">Login</a></li>
