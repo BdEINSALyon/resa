@@ -102,7 +102,6 @@ class Resource(models.Model):
         ResourceCategory,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True,
         verbose_name=_('catégorie')
     )
     available = models.BooleanField(verbose_name=_('disponible'), default=True)
