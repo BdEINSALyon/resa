@@ -119,8 +119,15 @@
                                                 </small>
                                             {% elif cell.lock %}
                                                 <strong>
-                                                    <span class="glyphicon glyphicon-lock"></span>
-                                                    {{ cell.lock.reason }}
+                                                    {% if user.is_staff and perms.bookings.change_resourcelock %}
+                                                        <a href="{% url 'admin:bookings_resourcelock_change' cell.lock.id %}">
+                                                            <span class="glyphicon glyphicon-lock"></span>
+                                                            {{ cell.lock.reason }}
+                                                        </a>
+                                                    {% else %}
+                                                        <span class="glyphicon glyphicon-lock"></span>
+                                                        {{ cell.lock.reason }}
+                                                    {% endif %}
                                                 </strong>
                                                 <br>
                                                 <small>
