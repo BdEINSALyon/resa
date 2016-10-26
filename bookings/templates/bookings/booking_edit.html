@@ -27,7 +27,7 @@
             </button>
             {% if perms.bookings.delete_bookingoccurrence %}
                 <a href="{% url 'bookings:booking-delete' pk=booking.pk %}" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-remove"></span> Supprimer
+                    <span class="glyphicon glyphicon-trash"></span> Supprimer
                 </a>
             {% endif %}
         </div>
