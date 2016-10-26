@@ -21,10 +21,10 @@ class Slot:
             'end': self.end
         }
 
-    def get_occurrence(self, occurrences):
-        for occurrence in occurrences:
-            if occurrence.contains_slot(self):
-                return occurrence
+    def get_period(self, periods):
+        for period in periods:
+            if period.contains_slot(self):
+                return period
 
         return None
 
@@ -112,7 +112,7 @@ class Resource(models.Model):
         return self.name + ' (' + self.category.name + ')'
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
-        occurrences = BookingOccurrence.objects \
+        return BookingOccurrence.objects \
             .filter(resources__exact=self) \
             .filter(start__year__lte=year) \
             .filter(end__year__gte=year) \
@@ -121,7 +121,15 @@ class Resource(models.Model):
             .filter(start__day__lte=day) \
             .filter(end__day__gte=day)
 
-        return occurrences
+    def get_locks(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
+        return ResourceLock.objects \
+            .filter(resources__exact=self) \
+            .filter(start__year__lte=year) \
+            .filter(end__year__gte=year) \
+            .filter(start__month__lte=month) \
+            .filter(end__month__gte=month) \
+            .filter(start__day__lte=day) \
+            .filter(end__day__gte=day)
 
     def get_occurrences_period(self, start_p, end_p):
         return BookingOccurrence.objects\

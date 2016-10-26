@@ -71,11 +71,16 @@ class ResourceCategoryDayView(ListView):
 
         # Booking occurrences
         occurrences = {}
+        locks = {}
         resources = self.get_queryset()
         for resource in resources:
             occurrences[resource.id] = []
+            locks[resource.id] = []
             for occurrence in resource.get_occurrences(year=year, month=month, day=day):
                 occurrences[resource.id].append(occurrence)
+
+            for lock in resource.get_locks(year, month, day):
+                locks[resource.id].append(lock)
 
         lines = []
         already_seen_occurrences = {}
@@ -85,18 +90,34 @@ class ResourceCategoryDayView(ListView):
             }
             cells = []
             for resource in resources:
-                occurrence = slot.get_occurrence(occurrences[resource.id])
-                if occurrence is not None:
-                    if already_seen_occurrences.get(resource.id) is None:
-                        already_seen_occurrences[resource.id] = []
+                occurrence = slot.get_period(occurrences[resource.id])
+                lock = slot.get_period(locks[resource.id])
 
+                if already_seen_occurrences.get(resource.id) is None:
+                    already_seen_occurrences[resource.id] = []
+
+                if occurrence is not None:
                     if occurrence not in already_seen_occurrences[resource.id]:
                         already_seen_occurrences[resource.id].append(occurrence)
 
                         cells.append({
                             'type': 'start',
-                            'rowspan': self.get_number_of_slots_for_occurrence(occurrence, date),
+                            'rowspan': self.get_number_of_slots_for_period(occurrence, date),
                             'occurrence': occurrence
+                        })
+
+                    else:
+                        cells.append({
+                            'type': 'continue'
+                        })
+                elif lock is not None:
+                    if lock not in already_seen_occurrences[resource.id]:
+                        already_seen_occurrences[resource.id].append(lock)
+
+                        cells.append({
+                            'type': 'start',
+                            'rowspan': self.get_number_of_slots_for_period(lock, date),
+                            'lock': lock
                         })
 
                     else:
@@ -115,10 +136,10 @@ class ResourceCategoryDayView(ListView):
 
         return context
 
-    def get_number_of_slots_for_occurrence(self, occurrence, date):
+    def get_number_of_slots_for_period(self, period, date):
         count = 0
         for slot in self.category.get_slots(date):
-            if occurrence.contains_slot(slot):
+            if period.contains_slot(slot):
                 count += 1
 
         return count

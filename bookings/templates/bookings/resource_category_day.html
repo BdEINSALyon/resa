@@ -98,25 +98,78 @@
 
                             {% for cell in line.cells %}
                                 {% if cell.type == 'start' %}
-                                    <td class="text-center info" rowspan="{{ cell.rowspan }}">
+                                    <td class="text-center {% if cell.occurrence %}info{% elif cell.lock %}danger{% endif %}"
+                                        rowspan="{{ cell.rowspan }}">
                                         {% if user.is_authenticated %}
-                                            <a href="{{ cell.occurrence.booking.get_absolute_url }}">
-                                                <strong>{{ cell.occurrence.booking.reason }}</strong>
-                                            </a>
-                                            <br>
-                                            <small>
-                                                {% with occurrence=cell.occurrence %}
-                                                    {% ifnotequal occurrence.start.date occurrence.end.date %}
-                                                        <span class="glyphicon glyphicon-time"></span>
-                                                        {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
-                                                            {{ start_d }} ({{ start_t }}) -
-                                                            {{ end_d }} ({{ end_t }})
-                                                        {% endblocktrans %}
-                                                    {% endifnotequal %}
-                                                {% endwith %}
-                                            </small>
+                                            {% if cell.occurrence %}
+                                                <a href="{{ cell.occurrence.booking.get_absolute_url }}">
+                                                    <strong>{{ cell.occurrence.booking.reason }}</strong>
+                                                </a>
+                                                <br>
+                                                <small>
+                                                    {% with occurrence=cell.occurrence %}
+                                                        {% ifnotequal occurrence.start.date occurrence.end.date %}
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                            {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
+                                                                {{ start_d }} ({{ start_t }}) -
+                                                                {{ end_d }} ({{ end_t }})
+                                                            {% endblocktrans %}
+                                                        {% endifnotequal %}
+                                                    {% endwith %}
+                                                </small>
+                                            {% elif cell.lock %}
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-lock"></span>
+                                                    {{ cell.lock.reason }}
+                                                </strong>
+                                                <br>
+                                                <small>
+                                                    {% with lock=cell.lock %}
+                                                        {% ifnotequal lock.start.date lock.end.date %}
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                            {% blocktrans with start_d=lock.start|date:'d/m/Y' start_t=lock.start|date:'H:i' end_d=lock.end|date:'d/m/Y' end_t=lock.end|date:'H:i' %}
+                                                                {{ start_d }} ({{ start_t }}) -
+                                                                {{ end_d }} ({{ end_t }})
+                                                            {% endblocktrans %}
+                                                        {% endifnotequal %}
+                                                    {% endwith %}
+                                                </small>
+                                            {% endif %}
                                         {% else %}
-                                            {% trans "Réservé" %}
+                                            {% if cell.occurrence %}
+                                                <strong>
+                                                    {% trans "Réservé" %}
+                                                </strong>
+                                                <br>
+                                                <small>
+                                                    {% with occurrence=cell.occurrence %}
+                                                        {% ifnotequal occurrence.start.date occurrence.end.date %}
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                            {% blocktrans with start_d=occurrence.start|date:'d/m/Y' start_t=occurrence.start|date:'H:i' end_d=occurrence.end|date:'d/m/Y' end_t=occurrence.end|date:'H:i' %}
+                                                                {{ start_d }} ({{ start_t }}) -
+                                                                {{ end_d }} ({{ end_t }})
+                                                            {% endblocktrans %}
+                                                        {% endifnotequal %}
+                                                    {% endwith %}
+                                                </small>
+                                            {% elif cell.lock %}
+                                                <strong>
+                                                    <span class="glyphicon glyphicon-lock"></span>
+                                                    {% trans "Verrouillé" %}
+                                                </strong>
+                                                <br>
+                                                <small>
+                                                    {% with lock=cell.lock %}
+                                                        {% ifnotequal lock.start.date lock.end.date %}
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                            {% blocktrans with start_d=lock.start|date:'d/m/Y' start_t=lock.start|date:'H:i' end_d=lock.end|date:'d/m/Y' end_t=lock.end|date:'H:i' %}
+                                                                {{ start_d }} ({{ start_t }}) -
+                                                                {{ end_d }} ({{ end_t }})
+                                                            {% endblocktrans %}
+                                                        {% endifnotequal %}
+                                                    {% endwith %}
+                                                </small>
+                                            {% endif %}
                                         {% endif %}
                                     </td>
                                 {% elif cell.type == 'free' %}
