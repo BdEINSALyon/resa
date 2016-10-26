@@ -34,7 +34,7 @@ class ResourceCategoryDayView(ListView):
         return super(ResourceCategoryDayView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Resource.objects.filter(category=self.category)
+        return Resource.objects.filter(category=self.category).order_by('name')
 
     def get_context_data(self, **kwargs):
         context = super(ResourceCategoryDayView, self).get_context_data(**kwargs)
