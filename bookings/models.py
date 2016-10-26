@@ -277,10 +277,13 @@ class ResourceLock(StartEndResources):
         verbose_name = _('verrou de ressource')
         verbose_name_plural = _('verrous de ressource')
 
+    reason = models.CharField(max_length=150)
+
     def __str__(self):
         dates = self.str_dates()
         resources = ', '.join([r.name for r in self.resources.all()])
 
-        return _('Verrou (%(resources)s) ' + dates) % {
-            'resources': resources
+        return _('[Verrou] %(reason)s (%(resources)s) ' + dates) % {
+            'resources': resources,
+            'reason': self.reason
         }
