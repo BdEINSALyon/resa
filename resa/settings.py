@@ -45,8 +45,8 @@ SECURE_CONTENT_TYPE_NOSNIFF = ssl_required
 SESSION_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_HTTPONLY = PROD
-USE_X_FORWARDED_HOST = ssl_required
-SECURE_SSL_REDIRECT = False
+USE_X_FORWARDED_HOST = HEROKU
+SECURE_SSL_REDIRECT = ssl_required
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
