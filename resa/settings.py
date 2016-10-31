@@ -53,7 +53,7 @@ SECURE_SSL_REDIRECT = ssl_redirect
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'r6=0@#g#py60s2ujq=03^^w^8*mh_!a7wpou_fu7&&40p3r+(o'
+SECRET_KEY = os.getenv('SECRET_KEY', 'r6=0@#g#py60s2ujq=03^^w^8*mh_!a7wpou_fu7&&40p3r+(o')
 
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com', 'web', '.bde-insa-lyon.fr']
 
