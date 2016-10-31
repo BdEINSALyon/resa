@@ -192,8 +192,8 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
-LOGIN_URL = 'auth:login'
-LOGOUT_URL = 'auth:logout'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'bookings:home'
 LOGOUT_REDIRECT_URL = 'bookings:home'
 

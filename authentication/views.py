@@ -4,4 +4,4 @@ from django.contrib import messages
 
 def password_change_done(request):
     messages.success(request, "Password changed successfully")
-    return render(request, 'hydrocodes/home.html')
+    return render(request, 'bookings/home.html')
