@@ -39,6 +39,7 @@ if debug_env is not None:
 
 # SSL will be required if in prod, unless the SSL is set to False.
 ssl_required = PROD and ast.literal_eval(os.getenv('SSL', 'True'))
+ssl_redirect = PROD and ast.literal_eval(os.getenv('SSL_REDIRECT', 'False'))
 
 SECURE_BROWSER_XSS_FILTER = ssl_required
 SECURE_CONTENT_TYPE_NOSNIFF = ssl_required
@@ -46,7 +47,7 @@ SESSION_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_HTTPONLY = PROD
 USE_X_FORWARDED_HOST = HEROKU
-SECURE_SSL_REDIRECT = ssl_required
+SECURE_SSL_REDIRECT = ssl_redirect
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
