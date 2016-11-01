@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 11:59+0100\n"
+"POT-Creation-Date: 2016-11-01 12:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,11 @@ msgstr ""
 msgid "%(res)s n'est pas disponible"
 msgstr ""
 
-#: bookings/forms.py:109
+#: bookings/forms.py:96
+msgid "Le début doit être avant la fin !"
+msgstr ""
+
+#: bookings/forms.py:119
 #, python-format
 msgid "Conflit : %(conflict)s"
 msgstr ""
