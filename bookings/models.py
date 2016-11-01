@@ -21,6 +21,9 @@ class Slot:
             'end': self.end
         }
 
+    def __eq__(self, other):
+        return self.start == other.start and self.end == other.end
+
     def get_period(self, periods):
         for period in periods:
             if period.contains_slot(self):
