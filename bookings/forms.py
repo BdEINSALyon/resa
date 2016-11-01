@@ -44,7 +44,7 @@ class BookingOccurrenceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.form_booking_id = kwargs.pop("booking_pk", None)
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
-        self.fields['resources'].queryset = Resource.objects.order_by('category', 'name')
+        self.fields['resources'].queryset = Resource.objects.all()
 
     def clean_resources(self):
         resources = self.cleaned_data['resources']

@@ -38,7 +38,7 @@ class ResourceCategoryDayView(ListView):
         return super(ResourceCategoryDayView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Resource.objects.filter(category=self.category, available=True).order_by('name')
+        return Resource.objects.filter(category=self.category, available=True)
 
     def get_context_data(self, **kwargs):
         context = super(ResourceCategoryDayView, self).get_context_data(**kwargs)
@@ -450,10 +450,9 @@ class SearchResultsListView(ListView):
     def get_queryset(self):
         if self.query:
             return Booking.objects\
-                .filter(self.get_query(self.request.GET['query'], ['owner', 'reason', 'details']))\
-                .order_by('created_at')
+                .filter(self.get_query(self.request.GET['query'], ['owner', 'reason', 'details']))
         else:
-            return Booking.objects.all().order_by('created_at')
+            return Booking.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultsListView, self).get_context_data(**kwargs)

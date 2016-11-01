@@ -36,6 +36,7 @@ class ResourceCategory(models.Model):
     class Meta:
         verbose_name = _('catégorie de ressource')
         verbose_name_plural = _('catégories de ressource')
+        ordering = ['name']
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
     parent = models.ForeignKey(
@@ -98,6 +99,7 @@ class Resource(models.Model):
     class Meta:
         verbose_name = _('ressource')
         verbose_name_plural = _('ressources')
+        ordering = ['category', 'name']
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
     description = models.CharField(max_length=500, blank=True, verbose_name=_('description'))
@@ -177,6 +179,7 @@ class Booking(models.Model):
     class Meta:
         verbose_name = _('réservation')
         verbose_name_plural = _('réservations')
+        ordering = ['created_at']
 
     reason = models.CharField(max_length=150, verbose_name=_('raison'))
     details = models.TextField(verbose_name=_('détails'), blank=True)
@@ -199,12 +202,13 @@ class Booking(models.Model):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.id)})
 
     def get_occurrences(self):
-        return self.bookingoccurrence_set.all().order_by('start')
+        return self.bookingoccurrence_set.all()
 
 
 class StartEndPeriod(models.Model):
     class Meta:
         abstract = True
+        ordering = ['start', 'end']
 
     start = models.DateTimeField(verbose_name=_('date et heure de début'))
     end = models.DateTimeField(verbose_name=_('date et heure de fin'))
