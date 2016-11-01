@@ -4,10 +4,12 @@ from .models import Resource, ResourceCategory, BookingCategory, Booking, Bookin
 
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = 'name',
+    list_display = 'name', 'category', 'available'
+    list_editable = 'available',
     list_display_links = 'name',
     search_fields = 'name',
-    list_filter = ['category', 'available']
+    list_filter = 'category', 'available'
+    ordering = 'category', 'name'
 
 admin.site.register(ResourceCategory)
 admin.site.register(BookingCategory)
