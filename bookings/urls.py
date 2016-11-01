@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^search$',
         SearchResultsListView.as_view(),
         name='search'),
+    url(r'^help$', TemplateView.as_view(template_name='bookings/help.html'), name='help')
 ]
