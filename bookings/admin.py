@@ -11,8 +11,17 @@ class ResourceAdmin(admin.ModelAdmin):
     list_filter = 'category', 'available'
     ordering = 'category', 'name'
 
+
+@admin.register(ResourceLock)
+class ResourceLockAdmin(admin.ModelAdmin):
+    list_display = 'reason', 'start', 'end'
+    list_display_links = 'reason',
+    search_fields = 'reason',
+    date_hierarchy = 'start'
+    list_filter = 'resources',
+    filter_horizontal = 'resources',
+
 admin.site.register(ResourceCategory)
 admin.site.register(BookingCategory)
 admin.site.register(BookingOccurrence)
 admin.site.register(Booking)
-admin.site.register(ResourceLock)
