@@ -88,14 +88,24 @@ class BookingOccurrenceForm(forms.ModelForm):
                     self.cleaned_data['end'] = slot.end
 
             if self.cleaned_data.get('start') and self.cleaned_data.get('end'):
+                start = self.cleaned_data.get('start')
+                end = self.cleaned_data.get('end')
+
+                if end < start:
+                    raise forms.ValidationError(
+                        _("Le début doit être avant la fin !"),
+                        code='start-end-order'
+                    )
+
                 occurrences = []
                 locks = []
 
                 for resource in self.cleaned_data['resources'].all():
-                    for occurrence in resource.get_occurrences_period(self.cleaned_data['start'], self.cleaned_data['end']):
+                    for occurrence in resource.get_occurrences_period(start, end):
                         if occurrence.id != self.instance.id and occurrence not in occurrences:
                             occurrences.append(occurrence)
-                    for lock in resource.get_locks_period(self.cleaned_data['start'], self.cleaned_data['end']):
+
+                    for lock in resource.get_locks_period(start, end):
                         if lock not in locks:
                             locks.append(lock)
 
