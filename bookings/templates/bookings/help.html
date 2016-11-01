@@ -2,5 +2,47 @@
 {% load i18n %}
 
 {% block add-content %}
-    <h1>{% block title %}{% trans 'Aide' %}{% endblock %}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{% block title %}{% trans 'Aide' %}{% endblock %}</h1>
+            <h2>{% trans 'Principe général' %}</h2>
+            <h3>{% trans 'Réservation' %}</h3>
+            <p>
+                {% blocktrans %}
+                    Une réservation correspond par exemple à un évènement organisé par une asso. <br>
+                    On doit indiquer un motif, et on peut stocker des détails supplémentaires comme des
+                    informations de contact par exemple. On peut également saisir une catégorie pour la réservation
+                    ainsi qu'un "propriétaire".
+                {% endblocktrans %}
+            </p>
+            <h3>{% trans 'Propriétaire' %}</h3>
+            <p>
+                {% blocktrans %}
+                    Un propriétaire peut être une personne (matérialisée par son numéro de carte VA), une équipe, ou
+                    une asso (matérialisées par leur nom). Ainsi, on peut chercher facilement les réservations
+                    effectuées par une personne en cherchant son numéro de carte VA.
+                {% endblocktrans %}
+            </p>
+            <h3>{% trans 'Occurrences' %}</h3>
+            <p>
+                {% blocktrans %}
+                    Les occurrences d'une réservation contiennent la date et l'heure de début et de fin de l'occurrence,
+                    ainsi que les ressources concernées.<br>
+                    Cette séparation permet de réserver plusieurs ressources à des instants différents pour le même
+                    motif.
+                {% endblocktrans %}
+            </p>
+            <h4>{% trans 'Exemple' %}</h4>
+            <p>
+                {% blocktrans %}
+                    Les 24 souhaitent faire leur AG de recrutement durant laquelle ils distribuent des crêpes. <br>
+                    Pour cela, on crée une réservation avec le motif "AG de recrutement", on met "24 heures" en tant que
+                    propriétaire et on ajoute le numéro de téléphone de contact dans les détails. <br>
+                    Ensuite, on ajoute une occurrence avec une date de début et de fin (par exemple le 2/11/2016
+                    de 19h à 22h) pour l'amphi qu'ils souhaitent, puis on ajoute une autre occurrence pour une crêpière
+                    (par exemple du 2/11/2016 à 12h au 3/11/2016 à 12h).
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
 {% endblock add-content %}
