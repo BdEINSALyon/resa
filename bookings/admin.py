@@ -21,7 +21,28 @@ class ResourceLockAdmin(admin.ModelAdmin):
     list_filter = 'resources',
     filter_horizontal = 'resources',
 
-admin.site.register(ResourceCategory)
-admin.site.register(BookingCategory)
-admin.site.register(BookingOccurrence)
-admin.site.register(Booking)
+
+@admin.register(ResourceCategory)
+class ResourceCategoryAdmin(admin.ModelAdmin):
+    list_display = 'name', 'parent', 'day_start', 'day_end', 'granularity'
+    list_editable = 'parent', 'day_start', 'day_end', 'granularity'
+    list_display_links = 'name',
+    search_fields = 'name',
+
+
+@admin.register(BookingCategory)
+class BookingCategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(BookingOccurrence)
+class BookingOccurrenceAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = 'reason', 'category', 'owner'
+    search_fields = 'reason', 'details', 'owner'
+    list_filter = 'category',
+    list_editable = 'category', 'owner'

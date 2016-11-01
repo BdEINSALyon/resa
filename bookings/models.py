@@ -166,6 +166,7 @@ class BookingCategory(models.Model):
     class Meta:
         verbose_name = _('catégorie de réservation')
         verbose_name_plural = _('catégories de réservation')
+        ordering = ['name']
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
     created_at = models.DateTimeField(auto_now_add=True)
