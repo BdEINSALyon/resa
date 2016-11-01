@@ -49,10 +49,23 @@ class BookingOccurrenceForm(forms.ModelForm):
     def clean_resources(self):
         resources = self.cleaned_data['resources']
         first_cat = resources.first().category
+        errors = []
 
         for resource in resources.all():
             if resource.category != first_cat:
-                raise forms.ValidationError(_('Toutes les ressources doivent être de la même catégorie'))
+                errors.append(forms.ValidationError(
+                    _('Toutes les ressources doivent être de la même catégorie'),
+                    code='not-same-category'
+                ))
+            if not resource.available:
+                errors.append(forms.ValidationError(
+                    _("%(res)s n'est pas disponible"),
+                    code='not-available',
+                    params={'res': str(resource)}
+                ))
+
+        if len(errors) > 0:
+            raise forms.ValidationError(errors)
 
         return resources
 
@@ -89,10 +102,16 @@ class BookingOccurrenceForm(forms.ModelForm):
                 occurrences.sort()
                 locks.sort()
 
-                for occurrence in occurrences:
-                    self.add_error(None, 'Conflit : ' + str(occurrence))
+                errors = []
 
-                for lock in locks:
-                    self.add_error(None, 'Conflit : ' + str(lock))
+                for conflict in occurrences + locks:
+                    errors.append(forms.ValidationError(
+                        _('Conflit : %(conflict)s'),
+                        code='conflict',
+                        params={'conflict': conflict}
+                    ))
+
+                if len(errors) > 0:
+                    raise forms.ValidationError(errors)
 
         return self.cleaned_data

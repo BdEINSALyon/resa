@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 09:25+0100\n"
+"POT-Creation-Date: 2016-11-01 11:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,9 +21,19 @@ msgstr ""
 msgid "Réservations"
 msgstr "Bookings"
 
-#: bookings/forms.py:47
+#: bookings/forms.py:57
 msgid "Toutes les ressources doivent être de la même catégorie"
 msgstr "All resources must come from the same category"
+
+#: bookings/forms.py:62
+#, python-format
+msgid "%(res)s n'est pas disponible"
+msgstr "%(res)s is not available"
+
+#: bookings/forms.py:109
+#, python-format
+msgid "Conflit : %(conflict)s"
+msgstr "Conflict : %(conflict)s"
 
 #: bookings/models.py:19
 #, python-format
