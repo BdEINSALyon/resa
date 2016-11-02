@@ -162,7 +162,8 @@ class BookingOccurrenceForm(forms.ModelForm):
             self.add_error(
                 'recurrence_end',
                 forms.ValidationError(
-                    _('Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence.')
+                    _('Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence.'),
+                    code='need-recurrence_end'
                 )
             )
 
