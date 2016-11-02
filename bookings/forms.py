@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 class BookingOccurrenceForm(forms.ModelForm):
     class Meta:
         model = BookingOccurrence
-        fields = ['start', 'end', 'resources']
+        fields = ['start', 'end', 'resources', 'recursion_type']
         widgets = {
             'resources': forms.SelectMultiple(
                 attrs={'size': 10}
@@ -28,6 +28,30 @@ class BookingOccurrenceForm(forms.ModelForm):
             "vertical": "top"
         },
     }
+
+    picker_date_options = picker_options.copy()
+    picker_date_options['format'] = 'DD/MM/YYYY'
+
+    RECURSION_CHOICES = (
+        ('N', _('Aucun')),
+        ('D', _('Quotidien')),
+        ('W', _('Hebdomadaire')),
+        ('M', _('Mensuel')),
+        ('Y', _('Annuel'))
+    )
+
+    recursion_type = forms.ChoiceField(
+        choices=RECURSION_CHOICES,
+        label=_('Type de récurrence')
+    )
+
+    recursion_end = forms.DateField(
+        input_formats=['%d/%m/%Y'],
+        widget=DateTimePicker(options=picker_date_options),
+        label=_('Date de fin de récurrence'),
+        help_text=_('Pris en compte seulement si le type de récurrence est différent de "Aucun"'),
+        required=False
+    )
 
     start = DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
@@ -123,5 +147,13 @@ class BookingOccurrenceForm(forms.ModelForm):
 
                 if len(errors) > 0:
                     raise forms.ValidationError(errors)
+
+        if self.cleaned_data.get('recursion_type') != 'N' and not self.cleaned_data.get('recursion_end'):
+            self.add_error(
+                'recursion_end',
+                forms.ValidationError(
+                    _('Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence.')
+                )
+            )
 
         return self.cleaned_data
