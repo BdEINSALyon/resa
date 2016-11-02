@@ -265,7 +265,7 @@ class StartEndResources(StartEndPeriod):
         return self.resources.count()
 
 
-class Recursion(models.Model):
+class Recurrence(models.Model):
     class Meta:
         verbose_name = _('récursion')
         verbose_name_plural = _('récursions')
@@ -286,8 +286,8 @@ class BookingOccurrence(StartEndResources):
         verbose_name=_('réservation'),
         null=True
     )
-    recursion = models.ForeignKey(
-        Recursion,
+    recurrence = models.ForeignKey(
+        Recurrence,
         on_delete=models.CASCADE,
         verbose_name=_('récursion'),
         null=True,

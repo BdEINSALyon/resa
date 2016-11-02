@@ -335,15 +335,15 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         form = self.get_form(request.POST)
 
         if form.is_valid():
-            recursion_type = form.cleaned_data.get('recursion_type')
+            recurrence_type = form.cleaned_data.get('recurrence_type')
 
-            if recursion_type == 'D':
+            if recurrence_type == 'D':
                 pass
-            elif recursion_type == 'W':
+            elif recurrence_type == 'W':
                 pass
-            elif recursion_type == 'M':
+            elif recurrence_type == 'M':
                 pass
-            elif recursion_type == 'Y':
+            elif recurrence_type == 'Y':
                 pass
             else:
                 messages.success(request, _('Occurrence créée avec succès'))

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recursion
+from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recurrence
 
 
 @admin.register(Resource)
@@ -40,8 +40,8 @@ class BookingOccurrenceAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Recursion)
-class RecursionAdmin(admin.ModelAdmin):
+@admin.register(Recurrence)
+class Recurrence(admin.ModelAdmin):
     pass
 
 
