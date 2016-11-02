@@ -162,6 +162,65 @@ class BaseBookingView(ContextMixin):
         return context
 
 
+class BookingCreateView(CreateView):
+    model = Booking
+    fields = ['reason', 'details', 'category', 'owner']
+    template_name = 'bookings/booking_new.html'
+    decorators = [login_required, permission_required('bookings.add_booking')]
+    start = None
+    end = None
+    booking = None
+    resource_id = None
+
+    def get_success_url(self):
+        return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk}) \
+               + '?start=' + str(self.start.isoformat()) \
+               + '&end=' + str(self.end.isoformat())\
+               + '&resource=' + str(self.resource_id)
+
+    def dispatch(self, request, *args, **kwargs):
+        self.resource_id = str(self.request.GET.get('resource'))
+
+        start = self.request.GET.get('start')
+        end = self.request.GET.get('end')
+
+        if start is not None:
+            self.start = dateutil.parser.parse(start)
+        else:
+            self.start = dt.datetime.now()
+
+        if end is not None:
+            self.end = dateutil.parser.parse(end)
+        else:
+            self.end = self.start
+
+        return super(BookingCreateView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingCreateView, self).get_context_data(**kwargs)
+        context['start'] = self.start
+        context['end'] = self.end
+        context['resource_id'] = self.resource_id
+
+        return context
+
+    @method_decorator(decorators)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+
+        if form.is_valid():
+            self.booking = form.save()
+
+            messages.success(request, _('Réservation créée avec succès'))
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingCreateView, self).get(request, *args, **kwargs)
+
+
 class BookingDetailView(DetailView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_detail.html'
@@ -174,6 +233,54 @@ class BookingDetailView(DetailView, BaseBookingView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return super(BookingDetailView, self).get(request, *args, **kwargs)
+
+
+class BookingUpdateView(UpdateView, BaseBookingView):
+    model = Booking
+    template_name = 'bookings/booking_edit.html'
+    fields = ['reason', 'details', 'category', 'owner']
+    decorators = [login_required, permission_required('bookings.change_booking')]
+    booking = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = get_object_or_404(Booking, pk=self.kwargs['pk'])
+        return super(BookingUpdateView, self).dispatch(request, *args, **kwargs)
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingUpdateView, self).get(request, *args, **kwargs)
+
+    @method_decorator(decorators)
+    def post(self, request, *args, **kwargs):
+        return super(BookingUpdateView, self).post(request, *args, **kwargs)
+
+
+class BookingDeleteView(DeleteView, BaseBookingView):
+    model = Booking
+    decorators = [login_required, permission_required('bookings.delete_booking')]
+    booking = None
+    template_name = 'bookings/booking_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.booking = self.get_object()
+        return super(BookingDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingDeleteView, self).get_context_data(**kwargs)
+        context['booking'] = self.booking
+
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('bookings:home')
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(BookingDeleteView, self).get(request, *args, **kwargs)
+
+    @method_decorator(decorators)
+    def delete(self, request, *args, **kwargs):
+        return super(BookingDeleteView, self).delete(request, *args, **kwargs)
 
 
 class BookingOccurrenceCreateView(CreateView, BaseBookingView):
@@ -270,26 +377,6 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
         return super(BookingOccurrenceUpdateView, self).post(request, *args, **kwargs)
 
 
-class BookingUpdateView(UpdateView, BaseBookingView):
-    model = Booking
-    template_name = 'bookings/booking_edit.html'
-    fields = ['reason', 'details', 'category', 'owner']
-    decorators = [login_required, permission_required('bookings.change_booking')]
-    booking = None
-
-    def dispatch(self, request, *args, **kwargs):
-        self.booking = get_object_or_404(Booking, pk=self.kwargs['pk'])
-        return super(BookingUpdateView, self).dispatch(request, *args, **kwargs)
-
-    @method_decorator(decorators)
-    def get(self, request, *args, **kwargs):
-        return super(BookingUpdateView, self).get(request, *args, **kwargs)
-
-    @method_decorator(decorators)
-    def post(self, request, *args, **kwargs):
-        return super(BookingUpdateView, self).post(request, *args, **kwargs)
-
-
 class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):
     model = BookingOccurrence
     decorators = [login_required, permission_required('bookings.delete_bookingoccurrence')]
@@ -316,93 +403,6 @@ class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):
     @method_decorator(decorators)
     def delete(self, request, *args, **kwargs):
         return super(BookingOccurrenceDeleteView, self).delete(request, *args, **kwargs)
-
-
-class BookingDeleteView(DeleteView, BaseBookingView):
-    model = Booking
-    decorators = [login_required, permission_required('bookings.delete_booking')]
-    booking = None
-    template_name = 'bookings/booking_delete.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        self.booking = self.get_object()
-        return super(BookingDeleteView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(BookingDeleteView, self).get_context_data(**kwargs)
-        context['booking'] = self.booking
-
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy('bookings:home')
-
-    @method_decorator(decorators)
-    def get(self, request, *args, **kwargs):
-        return super(BookingDeleteView, self).get(request, *args, **kwargs)
-
-    @method_decorator(decorators)
-    def delete(self, request, *args, **kwargs):
-        return super(BookingDeleteView, self).delete(request, *args, **kwargs)
-
-
-class BookingCreateView(CreateView):
-    model = Booking
-    fields = ['reason', 'details', 'category', 'owner']
-    template_name = 'bookings/booking_new.html'
-    decorators = [login_required, permission_required('bookings.add_booking')]
-    start = None
-    end = None
-    booking = None
-    resource_id = None
-
-    def get_success_url(self):
-        return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk}) \
-               + '?start=' + str(self.start.isoformat()) \
-               + '&end=' + str(self.end.isoformat())\
-               + '&resource=' + str(self.resource_id)
-
-    def dispatch(self, request, *args, **kwargs):
-        self.resource_id = str(self.request.GET.get('resource'))
-
-        start = self.request.GET.get('start')
-        end = self.request.GET.get('end')
-
-        if start is not None:
-            self.start = dateutil.parser.parse(start)
-        else:
-            self.start = dt.datetime.now()
-
-        if end is not None:
-            self.end = dateutil.parser.parse(end)
-        else:
-            self.end = self.start
-
-        return super(BookingCreateView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(BookingCreateView, self).get_context_data(**kwargs)
-        context['start'] = self.start
-        context['end'] = self.end
-        context['resource_id'] = self.resource_id
-
-        return context
-
-    @method_decorator(decorators)
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-
-        if form.is_valid():
-            self.booking = form.save()
-
-            messages.success(request, _('Réservation créée avec succès'))
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    @method_decorator(decorators)
-    def get(self, request, *args, **kwargs):
-        return super(BookingCreateView, self).get(request, *args, **kwargs)
 
 
 class SearchResultsListView(ListView):
