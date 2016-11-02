@@ -111,6 +111,16 @@ class BookingOccurrenceForm(forms.ModelForm):
                 if self.cleaned_data['end'] != slot.start:
                     self.cleaned_data['end'] = slot.end
 
+            if self.cleaned_data.get('end') and self.cleaned_data.get('recurrence_end'):
+                end = self.cleaned_data.get('end')
+                recurrence_end = self.cleaned_data.get('recurrence_end')
+
+                if recurrence_end < end:
+                    raise forms.ValidationError(
+                        _("La date de fin de récurrence doit se situer après la date de fin !"),
+                        code='start-recurrence_end-order'
+                    )
+
             if self.cleaned_data.get('start') and self.cleaned_data.get('end'):
                 start = self.cleaned_data.get('start')
                 end = self.cleaned_data.get('end')
