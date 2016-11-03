@@ -294,6 +294,12 @@ class BookingOccurrence(StartEndResources):
         default=None
     )
 
+    resources = models.ManyToManyField(
+        Resource,
+        verbose_name=_('ressources'),
+        through='OccurrenceResourceCount'
+    )
+
     def __str__(self):
         dates = self.str_dates()
         resources = ', '.join([r.name for r in self.resources.all()])
@@ -302,6 +308,21 @@ class BookingOccurrence(StartEndResources):
             'booking': self.booking,
             'resources': resources
         }
+
+
+class OccurrenceResourceCount(models.Model):
+    bookingoccurrence = models.ForeignKey(
+        to=BookingOccurrence,
+        on_delete=models.CASCADE
+    )
+    resource = models.ForeignKey(
+        to=Resource,
+        on_delete=models.CASCADE
+    )
+    count = models.IntegerField(
+        default=1,
+        blank=True
+    )
 
 
 class ResourceLock(StartEndResources):
