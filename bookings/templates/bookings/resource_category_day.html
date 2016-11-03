@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'bookings/base.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -35,7 +35,7 @@
                     <a href="{{ category.get_absolute_url }}?year={{ date.year }}&month={{ date.month|add:'1' }}&day={{ 1 }}"
                        class="btn btn-default btn-sm pull-right"><span class="">&raquo;</span></a>
                 </div>
-                <table class="table table-bordered table-condensed table-striped">
+                <table class="table table-bordered table-condensed table-striped flexed-table">
                     <tr>
                         <th class="text-center">{% trans 'Lu' %}</th>
                         <th class="text-center">{% trans 'Ma' %}</th>

@@ -1,0 +1,18 @@
+.flexed-table tr {
+    display: flex;
+}
+
+.flexed-table td, .flexed-table th {
+    display: flex;
+    flex: 1;
+    padding: 0 !important;
+    border-left-width: 0 !important;
+    border-bottom-width: 0 !important;
+}
+
+.flexed-table th, .flexed-table td a {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 5px !important;
+}
