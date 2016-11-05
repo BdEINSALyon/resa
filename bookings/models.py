@@ -117,49 +117,49 @@ class Resource(models.Model):
         return self.name + ' (' + self.category.name + ')'
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
-        return BookingOccurrence.objects \
-            .filter(resources__exact=self) \
-            .filter(start__year__lte=year) \
-            .filter(end__year__gte=year) \
-            .filter(start__month__lte=month) \
-            .filter(end__month__gte=month) \
-            .filter(start__day__lte=day) \
-            .filter(end__day__gte=day)
+        return (BookingOccurrence.objects
+                .filter(resources__exact=self)
+                .filter(start__year__lte=year)
+                .filter(end__year__gte=year)
+                .filter(start__month__lte=month)
+                .filter(end__month__gte=month)
+                .filter(start__day__lte=day)
+                .filter(end__day__gte=day))
 
     def get_locks(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
-        return ResourceLock.objects \
-            .filter(resources__exact=self) \
-            .filter(start__year__lte=year) \
-            .filter(end__year__gte=year) \
-            .filter(start__month__lte=month) \
-            .filter(end__month__gte=month) \
-            .filter(start__day__lte=day) \
-            .filter(end__day__gte=day)
+        return (ResourceLock.objects
+                .filter(resources__exact=self)
+                .filter(start__year__lte=year)
+                .filter(end__year__gte=year)
+                .filter(start__month__lte=month)
+                .filter(end__month__gte=month)
+                .filter(start__day__lte=day)
+                .filter(end__day__gte=day))
 
     def get_occurrences_period(self, start_p, end_p):
         return BookingOccurrence.objects\
             .filter(resources__exact=self)\
-            .filter((Q(start__lte=start_p) & Q(end__gte=end_p)) |  # Commence avant et finit après la période
-                    (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p)) |  # Commence avant et finit pendant
-                    (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p)) |  # Commence pendant et finit après
-                    (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
+            .filter((Q(start__lte=start_p) & Q(end__gte=end_p))  # Commence avant et finit après la période
+                    | (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p))  # Commence avant et finit pendant
+                    | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p))  # Commence pendant et finit après
+                    | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
 
     def get_locks_period(self, start_p, end_p):
         return ResourceLock.objects\
             .filter(resources__exact=self)\
-            .filter((Q(start__lte=start_p) & Q(end__gte=end_p)) |  # Commence avant et finit après la période
-                    (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p)) |  # Commence avant et finit pendant
-                    (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p)) |  # Commence pendant et finit après
-                    (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
+            .filter((Q(start__lte=start_p) & Q(end__gte=end_p))  # Commence avant et finit après la période
+                    | (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p))  # Commence avant et finit pendant
+                    | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p))  # Commence pendant et finit après
+                    | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
 
     def get_occurrence(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day,
                        hour=dt.datetime.now().hour, minute=dt.datetime.now().minute):
-        return self.get_occurrences(year=year, month=month, day=day) \
-            .filter(start__hour__lte=hour)\
-            .filter(end__hour__gte=hour)\
-            .filter(start__minute__lte=minute)\
-            .filter(end__minute__gte=minute)\
-            .first()
+        return (self.get_occurrences(year=year, month=month, day=day)
+                .filter(start__hour__lte=hour)
+                .filter(end__hour__gte=hour)
+                .filter(start__minute__lte=minute)
+                .filter(end__minute__gte=minute)
+                .first())
 
 
 class BookingCategory(models.Model):
