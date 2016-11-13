@@ -20,7 +20,11 @@ class Migration(migrations.Migration):
                 ('count', models.IntegerField(blank=True, default=1)),
             ],
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='bookingoccurrence',
+            name='resources',
+        ),
+        migrations.AddField(
             model_name='bookingoccurrence',
             name='resources',
             field=models.ManyToManyField(through='bookings.OccurrenceResourceCount', to='bookings.Resource', verbose_name='ressources'),
