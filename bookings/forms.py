@@ -5,6 +5,7 @@ from django import forms
 from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
 
+from bookings.fields import ResourcesField
 from bookings.models import BookingOccurrence, Booking, Resource
 
 log = logging.getLogger(__name__)
@@ -13,12 +14,7 @@ log = logging.getLogger(__name__)
 class BookingOccurrenceForm(forms.ModelForm):
     class Meta:
         model = BookingOccurrence
-        fields = ['start', 'end', 'resources', "recurrence_type"]
-        widgets = {
-            'resources': forms.SelectMultiple(
-                attrs={'size': 10}
-            ),
-        }
+        fields = ['start', 'end', 'recurrence_type']
 
     picker_options = {
         "format": "DD/MM/YYYY HH:mm",
@@ -65,10 +61,14 @@ class BookingOccurrenceForm(forms.ModelForm):
         label=BookingOccurrence._meta.get_field('end').verbose_name.capitalize()
     )
 
+    resources = ResourcesField(
+        label=BookingOccurrence._meta.get_field('resources').verbose_name.capitalize(),
+        choices=Resource.objects.all()
+    )
+
     def __init__(self, *args, **kwargs):
         self.form_booking_id = kwargs.pop("booking_pk", None)
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
-        self.fields['resources'].queryset = Resource.objects.all()
 
     def clean_resources(self):
         resources = self.cleaned_data['resources']

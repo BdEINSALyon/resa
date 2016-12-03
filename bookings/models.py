@@ -113,8 +113,13 @@ class Resource(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    number = models.PositiveIntegerField()
+
+    def is_countable(self):
+        return self.number > 1
+
     def __str__(self):
-        return self.name + ' (' + self.category.name + ')'
+        return self.name + ' - ' + self.category.name
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
         return (BookingOccurrence.objects
