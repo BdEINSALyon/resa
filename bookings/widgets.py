@@ -4,12 +4,25 @@ from django.utils.safestring import mark_safe
 
 
 class ResourcesWidget(forms.widgets.Widget):
+    def value_from_datadict(self, data, files, name):
+        counts = {}
+        for key, value in data.items():
+            if key.startswith(name):
+                if value == 'on':
+                    value = 1
+                elif value == '' or int(value) == 0:
+                    continue
+                counts[key.split('_')[1]] = int(value)
+
+        return counts
+
     def render(self, name, value, attrs=None):
-        print(value)
+        print('ResourcesWidget render', value)
         if value is None:
             value = {}
-        if isinstance(value, list):
-            value = {resource: 1 if resource.is_countable() else True for resource in value if resource is not None}
+        if isinstance(value, list) and len(value) > 0:
+            if not isinstance(value[0], dict):
+                value = {resource: 1 if resource.is_countable() else True for resource in value if resource is not None}
 
         output = [format_html('<table class="table table-hover">'),
                   format_html('<tr><th>Ressource</th><th>Catégorie</th><th>Sélectionné</th></tr>')]
@@ -44,13 +57,20 @@ class ResourcesWidget(forms.widgets.Widget):
 
         values = {0: False, 1: True}
 
-        if resource in selected_choices:
-            value = selected_choices.get(resource)
+        res_id = str(pk)
+        if res_id in selected_choices:
+            value = selected_choices.get(res_id)
             if not resource.is_countable():
                 value = values.get(value)
 
-        return format_html('<tr>'
-                           '<td>{name}</td>'
-                           '<td>{category}</td>'
-                           '<td>{field}</td>'
-                           '</tr>', name=name, category=category, field=field.render(pk, value))
+        res_id = 'resources_' + res_id
+
+        return format_html(
+            '<tr>'
+            '<td><label for="{id}">{name}</label></td>'
+            '<td>{category}</td>'
+            '<td>{field}</td>'
+            '</tr>',
+            name=name, id=res_id, category=category,
+            field=field.render('resources_' + str(pk), value)
+        )

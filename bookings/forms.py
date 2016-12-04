@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 class BookingOccurrenceForm(forms.ModelForm):
     class Meta:
         model = BookingOccurrence
-        fields = ['start', 'end', 'recurrence_type']
+        fields = ['start', 'end', 'recurrence_type', 'recurrence_end', 'resources']
 
     picker_options = {
         "format": "DD/MM/YYYY HH:mm",
@@ -72,10 +72,10 @@ class BookingOccurrenceForm(forms.ModelForm):
 
     def clean_resources(self):
         resources = self.cleaned_data['resources']
-        first_cat = resources.first().category
+        first_cat = next(iter(resources.keys())).category
         errors = []
 
-        for resource in resources.all():
+        for resource in resources.keys():
             if resource.category != first_cat:
                 errors.append(forms.ValidationError(
                     _('Toutes les ressources doivent être de la même catégorie'),
@@ -101,13 +101,15 @@ class BookingOccurrenceForm(forms.ModelForm):
 
         super(BookingOccurrenceForm, self).clean()
 
-        if self.cleaned_data.get('resources'):
+        resources = self.cleaned_data.get('resources')
+
+        if resources:
             if self.cleaned_data.get('start'):
-                slot = self.cleaned_data.get('resources').first().category.get_slot(self.cleaned_data['start'])
+                slot = next(iter(resources.keys())).category.get_slot(self.cleaned_data['start'])
                 self.cleaned_data['start'] = slot.start
 
             if self.cleaned_data.get('end'):
-                slot = self.cleaned_data.get('resources').first().category.get_slot(self.cleaned_data['end'])
+                slot = next(iter(resources.keys())).category.get_slot(self.cleaned_data['end'])
                 if self.cleaned_data['end'] != slot.start:
                     self.cleaned_data['end'] = slot.end
 
@@ -134,7 +136,9 @@ class BookingOccurrenceForm(forms.ModelForm):
                 occurrences = []
                 locks = []
 
-                for resource in self.cleaned_data['resources'].all():
+                errors = []
+
+                for resource, requested in resources.items():
                     for occurrence in resource.get_occurrences_period(start, end):
                         if occurrence.id != self.instance.id and occurrence not in occurrences:
                             occurrences.append(occurrence)
@@ -143,10 +147,22 @@ class BookingOccurrenceForm(forms.ModelForm):
                         if lock not in locks:
                             locks.append(lock)
 
+                    number_available = resource.count_available(start, end)
+                    if number_available < requested:
+                        self.add_error(
+                            'resources',
+                            forms.ValidationError(
+                                _('Seulement %(number)d %(name)s disponible !'),
+                                code='not-enough',
+                                params={
+                                    'number': number_available,
+                                    'name': resource.name
+                                }
+                            )
+                        )
+
                 occurrences.sort()
                 locks.sort()
-
-                errors = []
 
                 for conflict in occurrences + locks:
                     errors.append(forms.ValidationError(

@@ -7,23 +7,18 @@ from collections import defaultdict
 import dateutil.parser
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import CreateView
-from django.views.generic import DeleteView
-from django.views.generic import DetailView
-from django.views.generic import ListView
-from django.views.generic import UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.base import ContextMixin
 
 from bookings.forms import BookingOccurrenceForm
-from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence
+from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount
 
 log = logging.getLogger(__name__)
 
@@ -387,6 +382,14 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
         return super(BookingOccurrenceUpdateView, self).post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        self.object = occurrence = form.save(commit=False)
+        for resource, count in form.cleaned_data.get('resources').items():
+            occurrence_count = OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+            occurrence_count.save()
+
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):

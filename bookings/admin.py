@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recurrence
+from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recurrence, \
+    OccurrenceResourceCount
 
 
 @admin.register(Resource)
@@ -41,8 +42,13 @@ class BookingOccurrenceAdmin(admin.ModelAdmin):
 
 
 @admin.register(Recurrence)
-class Recurrence(admin.ModelAdmin):
+class RecurrenceAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(OccurrenceResourceCount)
+class OccurrenceResourceCountAdmin(admin.ModelAdmin):
+    list_display = 'occurrence', 'resource', 'count'
 
 
 @admin.register(Booking)

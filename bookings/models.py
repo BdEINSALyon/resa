@@ -118,6 +118,17 @@ class Resource(models.Model):
     def is_countable(self):
         return self.number > 1
 
+    def count_available(self, start_p, end_p):
+        occurrences = self.get_occurrences_period(start_p, end_p)
+        booked_count = 0
+
+        for occurrence in occurrences:
+            for booking in occurrence.bookings.filter(resource__exact=self):
+                print(booking)
+                booked_count += booking.count
+
+        return self.number - booked_count
+
     def __str__(self):
         return self.name + ' - ' + self.category.name
 
@@ -316,13 +327,15 @@ class BookingOccurrence(StartEndResources):
 
 
 class OccurrenceResourceCount(models.Model):
-    bookingoccurrence = models.ForeignKey(
+    occurrence = models.ForeignKey(
         to=BookingOccurrence,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='bookings'
     )
     resource = models.ForeignKey(
         to=Resource,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='bookings'
     )
     count = models.IntegerField(
         default=1,
