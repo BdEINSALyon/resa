@@ -86,41 +86,83 @@ class ResourceCategoryDayView(ListView):
             }
             cells = []
             for resource in resources:
-                occurrence = slot.get_period(occurrences[resource.id])
+                if not resource.is_countable():
+                    occurrence = slot.get_period(occurrences[resource.id])
+                else:
+                    occurrence = slot.get_periods(occurrences[resource.id])
                 lock = slot.get_period(locks[resource.id])
 
-                if occurrence is not None:
-                    if occurrence not in already_seen[resource.id]:
-                        already_seen[resource.id].append(occurrence)
+                if occurrence is not None:  # We found an occurrence to display
+                    if isinstance(occurrence, list):  # It's a countable resource
+                        continuous = {slot}
+                        found_occurrences = set()
+                        continuous_slots(occurrence, continuous, occurrences[resource.id], found_occurrences)
 
-                        cells.append({
-                            'type': 'start',
-                            'rowspan': self.get_number_of_slots_for_period(occurrence, date),
-                            'occurrence': occurrence
-                        })
+                        if found_occurrences not in already_seen[resource.id]:
+                            already_seen[resource.id].append(found_occurrences)
 
-                    else:
-                        cells.append({
-                            'type': 'continue'
-                        })
-                elif lock is not None:
+                            cells.append({
+                                'type': 'start',
+                                'rowspan': len(continuous),
+                                'occurrence': found_occurrences,
+                                'colspan': 1
+                            })
+                            cells.append({
+                                'type': 'free',
+                                'resource': resource,
+                                'count': resource.count_available(slot.start, slot.end),
+                                'colspan': 1
+                            })
+                        else:
+                            cells.append({
+                                'type': 'continue'
+                            })
+                            cells.append({
+                                'type': 'free',
+                                'resource': resource,
+                                'count': resource.count_available(slot.start, slot.end),
+                                'colspan': 1
+                            })
+
+                    else:  # It's a normal resource
+                        if occurrence not in already_seen[resource.id]:
+                            already_seen[resource.id].append(occurrence)
+
+                            cell = {
+                                'type': 'start',
+                                'rowspan': self.get_number_of_slots_for_period(occurrence, date),
+                                'occurrence': occurrence,
+                                'colspan': 1
+                            }
+
+                            cells.append(cell)
+                        else:
+                            cells.append({
+                                'type': 'continue'
+                            })
+
+
+                elif lock is not None:  # No occurrence, maybe a lock ?
                     if lock not in already_seen[resource.id]:
                         already_seen[resource.id].append(lock)
 
                         cells.append({
                             'type': 'start',
                             'rowspan': self.get_number_of_slots_for_period(lock, date),
-                            'lock': lock
+                            'lock': lock,
+                            'colspan': 2 if resource.is_countable() else 1
                         })
 
                     else:
                         cells.append({
-                            'type': 'continue'
+                            'type': 'continue',
+                            'colspan': 2 if resource.is_countable() else 1
                         })
-                else:
+                else:  # There is nothing to display
                     cells.append({
                         'type': 'free',
-                        'resource': resource
+                        'resource': resource,
+                        'colspan': 2 if resource.is_countable() else 1
                     })
             line['cells'] = cells
             lines.append(line)
@@ -170,7 +212,7 @@ class BookingCreateView(CreateView):
     def get_success_url(self):
         return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk}) \
                + '?start=' + str(self.start.isoformat()) \
-               + '&end=' + str(self.end.isoformat())\
+               + '&end=' + str(self.end.isoformat()) \
                + '&resource=' + str(self.resource_id)
 
     def dispatch(self, request, *args, **kwargs):
@@ -475,7 +517,7 @@ class SearchResultsListView(ListView):
 
     def get_queryset(self):
         if self.query:
-            return Booking.objects\
+            return Booking.objects \
                 .filter(self.get_query(self.request.GET['query'], ['owner', 'reason', 'details']))
         else:
             return Booking.objects.all()
@@ -485,3 +527,21 @@ class SearchResultsListView(ListView):
         context['query'] = self.query
 
         return context
+
+
+def continuous_slots(occurrences, slots, resource_occurrences, found_occurrences):
+    found = set()
+    for occ in occurrences:
+        found_occurrences.add(occ)
+        for s in occ.get_slots():
+            found.add(s)
+
+    if len(found) > 0 and not found <= slots:
+        diff = found - slots
+        occs = []
+        for s in diff:
+            occs += s.get_periods(resource_occurrences)
+            slots.add(s)
+            slots.update(continuous_slots(occs, slots, resource_occurrences, found_occurrences))
+
+    return slots

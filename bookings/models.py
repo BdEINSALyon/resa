@@ -24,12 +24,23 @@ class Slot:
     def __eq__(self, other):
         return self.start == other.start and self.end == other.end
 
+    def __hash__(self, *args, **kwargs):
+        return hash((self.start, self.end))
+
     def get_period(self, periods):
         for period in periods:
             if period.contains_slot(self):
                 return period
 
         return None
+
+    def get_periods(self, periods):
+        found_periods = []
+        for period in periods:
+            if period.contains_slot(self) and period not in found_periods:
+                found_periods.append(period)
+
+        return found_periods if len(found_periods) > 0 else None
 
 
 class ResourceCategory(models.Model):
@@ -118,7 +129,7 @@ class Resource(models.Model):
     def is_countable(self):
         return self.number > 1
 
-    def count_available(self, start_p, end_p, occurrence):
+    def count_available(self, start_p, end_p, occurrence=None):
         occurrences = self.get_occurrences_period(start_p, end_p)
         booked_count = 0
 
@@ -329,6 +340,21 @@ class BookingOccurrence(StartEndResources):
 
     def get_resources_count(self):
         return sum(map(lambda x: x.count, self.bookings.all()))
+
+    def get_slots(self):
+        time = self.start
+        end = self.end
+
+        delta = dt.timedelta(minutes=self.resources.first().category.granularity)
+
+        slots = []
+
+        # Allow 23:59:59 for end of day
+        while time + delta <= end + dt.timedelta(seconds=1):
+            slots.append(Slot(time, time + delta))
+            time += delta
+
+        return slots
 
 
 class OccurrenceResourceCount(models.Model):
