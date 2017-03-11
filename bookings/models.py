@@ -124,7 +124,7 @@ class Resource(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    number = models.PositiveIntegerField()
+    number = models.PositiveIntegerField(verbose_name=_('quantité'))
 
     def is_countable(self):
         return self.number > 1
