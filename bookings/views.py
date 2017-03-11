@@ -141,7 +141,6 @@ class ResourceCategoryDayView(ListView):
                                 'type': 'continue'
                             })
 
-
                 elif lock is not None:  # No occurrence, maybe a lock ?
                     if lock not in already_seen[resource.id]:
                         already_seen[resource.id].append(lock)
@@ -159,11 +158,16 @@ class ResourceCategoryDayView(ListView):
                             'colspan': 2 if resource.is_countable() else 1
                         })
                 else:  # There is nothing to display
-                    cells.append({
+                    cell = {
                         'type': 'free',
                         'resource': resource,
                         'colspan': 2 if resource.is_countable() else 1
-                    })
+                    }
+                    if resource.is_countable():
+                        cell['count'] = resource.count_available(slot.start, slot.end)
+
+                    cells.append(cell)
+
             line['cells'] = cells
             lines.append(line)
 

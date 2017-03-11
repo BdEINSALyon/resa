@@ -183,13 +183,13 @@
                                 {% elif cell.type == 'free' %}
                                     {% if user.is_authenticated %}
                                         <td class="text-center" colspan="{{ cell.colspan }}">
-                                        {% ifequal cell.count 0 %}
-                                            ({{ cell.count }})
-                                        {% else %}
-                                            <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}&resource={{ cell.resource.pk }}">
-                                                <span class="glyphicon glyphicon-plus-sign"></span>{% if cell.count %} ({{ cell.count }}){% endif %}
-                                            </a>
-                                        {% endifequal %}
+                                            {% ifequal cell.count 0 %}
+                                                ({{ cell.count }})
+                                            {% else %}
+                                                <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}&resource={{ cell.resource.pk }}">
+                                                    <span class="glyphicon glyphicon-plus-sign"></span></a>
+                                                {% if cell.count %}<br>({{ cell.count }}){% endif %}
+                                            {% endifequal %}
                                         </td>
                                     {% else %}
                                         <td></td>
@@ -207,7 +207,7 @@
                         <th class="text-center active">Heure</th>
 
                         {% for resource in resource_list %}
-                            <th class="text-center active">
+                            <th class="text-center active" {% if resource.is_countable %}colspan="2"{% endif %}>
                                 {{ resource.name }}
                             </th>
                         {% endfor %}
