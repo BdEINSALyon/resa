@@ -1,5 +1,4 @@
 import logging
-from enum import Enum
 
 from bootstrap3_datetime.widgets import DateTimePicker
 from django import forms
@@ -10,14 +9,6 @@ from bookings.fields import ResourcesField
 from bookings.models import BookingOccurrence, Booking, Resource
 
 log = logging.getLogger(__name__)
-
-
-class Recurrence(Enum):
-    NONE = 'N'
-    DAILY = 'D'
-    WEEKLY = 'W'
-    MONTHLY = 'M'
-    YEARLY = 'Y'
 
 
 class BookingOccurrenceForm(forms.ModelForm):
@@ -37,12 +28,18 @@ class BookingOccurrenceForm(forms.ModelForm):
     picker_date_options = picker_options.copy()
     picker_date_options['format'] = 'DD/MM/YYYY'
 
+    NONE = 'N'
+    DAILY = 'D'
+    WEEKLY = 'W'
+    MONTHLY = 'M'
+    YEARLY = 'Y'
+
     RECURRENCE_CHOICES = (
-        (Recurrence.NONE, _('Aucun')),
-        (Recurrence.DAILY, _('Quotidien')),
-        (Recurrence.WEEKLY, _('Hebdomadaire')),
-        (Recurrence.MONTHLY, _('Mensuel')),
-        (Recurrence.YEARLY, _('Annuel'))
+        (NONE, _('Aucun')),
+        (DAILY, _('Quotidien')),
+        (WEEKLY, _('Hebdomadaire')),
+        (MONTHLY, _('Mensuel')),
+        (YEARLY, _('Annuel'))
     )
 
     recurrence_type = forms.ChoiceField(
@@ -183,7 +180,9 @@ class BookingOccurrenceForm(forms.ModelForm):
                 if len(errors) > 0:
                     raise forms.ValidationError(errors)
 
-        if self.cleaned_data.get('recurrence_type') != Recurrence.NONE and not self.cleaned_data.get('recurrence_end'):
+        print(self.cleaned_data)
+        if self.cleaned_data.get('recurrence_type') != BookingOccurrenceForm.NONE \
+                and not self.cleaned_data.get('recurrence_end'):
             self.add_error(
                 'recurrence_end',
                 forms.ValidationError(
