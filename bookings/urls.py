@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 from bookings.views import ResourceCategoryDayView, BookingDetailView, BookingOccurrenceCreateView, BookingUpdateView, \
     BookingOccurrenceUpdateView, BookingOccurrenceDeleteView, BookingDeleteView, BookingCreateView,\
-    SearchResultsListView
+    SearchResultsListView, CountableOccurrencesList
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='bookings/home.html'), name='home'),
@@ -23,5 +23,8 @@ urlpatterns = [
     url(r'^search$',
         SearchResultsListView.as_view(),
         name='search'),
+    url(r'^occurrences$',
+        CountableOccurrencesList.as_view(),
+        name='occurrences_filter'),
     url(r'^help$', TemplateView.as_view(template_name='bookings/help.html'), name='help')
 ]

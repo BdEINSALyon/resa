@@ -119,7 +119,7 @@
                                                     {% endifnotequal %}
                                                 {% endwith %}
                                             {% elif cell.occurrences %}
-                                                <a href="#">
+                                                <a href="{% url 'bookings:occurrences_filter' %}?filter={{ cell.occurrences|join:',' }}">
                                                     <strong>Réservé</strong>
                                                 </a>
                                             {% elif cell.lock %}

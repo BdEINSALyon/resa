@@ -104,7 +104,7 @@ class ResourceCategoryDayView(ListView):
                             cells.append({
                                 'type': 'start',
                                 'rowspan': len(continuous),
-                                'occurrence': found_occurrences,
+                                'occurrences': map(lambda x: x.pk, found_occurrences),
                                 'colspan': 1
                             })
                             cells.append({
@@ -531,6 +531,23 @@ class SearchResultsListView(ListView):
         context['query'] = self.query
 
         return context
+
+
+class CountableOccurrencesList(ListView):
+    template_name = 'bookings/occurrences_filter_list.html'
+    model = BookingOccurrence
+    filter = None
+    context_object_name = 'occurrences_list'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.filter = map(int, self.request.GET.get('filter').split(','))
+        return super(CountableOccurrencesList, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        if self.filter:
+            return BookingOccurrence.objects.filter(pk__in=self.filter)
+        else:
+            return BookingOccurrence.objects.all()
 
 
 def continuous_slots(occurrences, slots, resource_occurrences, found_occurrences):

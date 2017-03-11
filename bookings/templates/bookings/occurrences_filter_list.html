@@ -1,0 +1,31 @@
+{% extends 'bookings/base.html' %}
+{% load i18n %}
+
+{% block add-content %}
+    <h2>
+        {% block title %}
+            {% trans 'Résultats' %}
+        {% endblock title %}
+    </h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {% blocktrans count counter=occurrences_list|length %}
+                            {{ counter }} ressource réservée
+                        {% plural %}
+                            {{ counter }} ressource(s) réservée(s)
+                        {% endblocktrans %}
+                    </h3>
+                </div>
+                <div class="list-group">
+                    {% for occurrence in occurrences_list %}
+                        <a class="list-group-item"
+                           href="{% url 'bookings:booking-details' pk=occurrence.pk %}">{{ occurrence }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock add-content %}
