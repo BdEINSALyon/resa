@@ -99,7 +99,7 @@
 
                             {% for cell in line.cells %}
                                 {% if cell.type == 'start' %}
-                                    <td class="text-center {% if cell.occurrence %}info{% elif cell.lock %}danger{% endif %}"
+                                    <td class="text-center {% if cell.occurrence or cell.occurrences %}info{% elif cell.lock %}danger{% endif %}"
                                         rowspan="{{ cell.rowspan }}" colspan="{{ cell.colspan }}">
                                         {% if user.is_authenticated %}
                                             {% if cell.occurrence %}
@@ -118,6 +118,10 @@
                                                         </small>
                                                     {% endifnotequal %}
                                                 {% endwith %}
+                                            {% elif cell.occurrences %}
+                                                <a href="#">
+                                                    <strong>Réservé</strong>
+                                                </a>
                                             {% elif cell.lock %}
                                                 <strong>
                                                     {% if user.is_staff and perms.bookings.change_resourcelock %}
@@ -160,6 +164,10 @@
                                                         {% endifnotequal %}
                                                     {% endwith %}
                                                 </small>
+                                            {% elif cell.occurrences %}
+                                                <strong>
+                                                    {% trans "Réservé" %}
+                                                </strong>
                                             {% elif cell.lock %}
                                                 <strong>
                                                     <span class="glyphicon glyphicon-lock"></span>
@@ -181,19 +189,19 @@
                                         {% endif %}
                                     </td>
                                 {% elif cell.type == 'free' %}
-                                    {% if user.is_authenticated %}
-                                        <td class="text-center" colspan="{{ cell.colspan }}">
-                                            {% if cell.count <= 0 %}
-                                                ({{ cell.count }})
-                                            {% else %}
-                                                <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}&resource={{ cell.resource.pk }}">
-                                                    <span class="glyphicon glyphicon-plus-sign"></span>{% if cell.count %} ({{ cell.count }}){% endif %}
-                                                </a>
-                                            {% endif %}
-                                        </td>
-                                    {% else %}
-                                        <td></td>
-                                    {% endif %}
+                                    <td class="text-center" colspan="{{ cell.colspan }}">
+                                        {% if user.is_authenticated %}
+                                                {% if cell.count <= 0 %}
+                                                    ({{ cell.count }})
+                                                {% else %}
+                                                    <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}&resource={{ cell.resource.pk }}">
+                                                        <span class="glyphicon glyphicon-plus-sign"></span>{% if cell.count %} ({{ cell.count }}){% endif %}
+                                                    </a>
+                                                {% endif %}
+                                        {% else %}
+                                            {% if cell.count %}({{ cell.count }}){% endif %}
+                                        {% endif %}
+                                    </td>
                                 {% endif %}
                             {% endfor %}
 
