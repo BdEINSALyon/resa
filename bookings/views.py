@@ -7,7 +7,6 @@ from collections import defaultdict
 import dateutil.parser
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
