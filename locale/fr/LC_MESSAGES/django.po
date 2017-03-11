@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 12:24+0100\n"
+"POT-Creation-Date: 2017-03-11 15:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,22 +22,73 @@ msgstr ""
 msgid "Réservations"
 msgstr ""
 
-#: bookings/forms.py:57
+#: bookings/fields.py:18
+msgid "Vous devez sélectionner au moins une ressource."
+msgstr ""
+
+#: bookings/forms.py:38
+msgid "Aucun"
+msgstr ""
+
+#: bookings/forms.py:39
+msgid "Quotidien"
+msgstr ""
+
+#: bookings/forms.py:40
+msgid "Hebdomadaire"
+msgstr ""
+
+#: bookings/forms.py:41
+msgid "Mensuel"
+msgstr ""
+
+#: bookings/forms.py:42
+msgid "Annuel"
+msgstr ""
+
+#: bookings/forms.py:47
+msgid "Type de récurrence"
+msgstr ""
+
+#: bookings/forms.py:53
+msgid "Date de fin de récurrence"
+msgstr ""
+
+#: bookings/forms.py:54
+msgid ""
+"Pris en compte seulement si le type de récurrence est différent de \"Aucun\""
+msgstr ""
+
+#: bookings/forms.py:88
 msgid "Toutes les ressources doivent être de la même catégorie"
 msgstr ""
 
-#: bookings/forms.py:62
+#: bookings/forms.py:93
 #, python-format
 msgid "%(res)s n'est pas disponible"
 msgstr ""
 
-#: bookings/forms.py:96
+#: bookings/forms.py:129
+msgid "La date de fin de récurrence doit se situer après la date de fin !"
+msgstr ""
+
+#: bookings/forms.py:139
 msgid "Le début doit être avant la fin !"
 msgstr ""
 
-#: bookings/forms.py:119
+#: bookings/forms.py:163
+#, python-format
+msgid "Seulement %(number)d %(name)s disponible !"
+msgstr ""
+
+#: bookings/forms.py:177
 #, python-format
 msgid "Conflit : %(conflict)s"
+msgstr ""
+
+#: bookings/forms.py:190
+msgid ""
+"Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence."
 msgstr ""
 
 #: bookings/models.py:19
@@ -45,136 +96,144 @@ msgstr ""
 msgid "de %(start)s à %(end)s"
 msgstr ""
 
-#: bookings/models.py:37
+#: bookings/models.py:45
 msgid "catégorie de ressource"
 msgstr ""
 
-#: bookings/models.py:38
+#: bookings/models.py:46
 msgid "catégories de ressource"
 msgstr ""
 
-#: bookings/models.py:40 bookings/models.py:102 bookings/models.py:168
+#: bookings/models.py:49 bookings/models.py:112 bookings/models.py:197
 msgid "nom"
 msgstr ""
 
-#: bookings/models.py:46
+#: bookings/models.py:55
 msgid "catégorie parente"
 msgstr ""
 
-#: bookings/models.py:48
+#: bookings/models.py:57
 msgid "début de journée"
 msgstr ""
 
-#: bookings/models.py:49
+#: bookings/models.py:58
 msgid "fin de journée"
 msgstr ""
 
-#: bookings/models.py:50
+#: bookings/models.py:59
 msgid "granularité"
 msgstr ""
 
-#: bookings/models.py:50
+#: bookings/models.py:59
 msgid "en minutes"
 msgstr ""
 
-#: bookings/models.py:99
+#: bookings/models.py:108
 msgid "ressource"
 msgstr ""
 
-#: bookings/models.py:100 bookings/models.py:246
+#: bookings/models.py:109 bookings/models.py:277 bookings/models.py:325
 msgid "ressources"
 msgstr ""
 
-#: bookings/models.py:103
+#: bookings/models.py:113
 msgid "description"
 msgstr ""
 
-#: bookings/models.py:108
+#: bookings/models.py:118
 msgid "catégorie"
 msgstr ""
 
-#: bookings/models.py:110
+#: bookings/models.py:120
 msgid "disponible"
 msgstr ""
 
-#: bookings/models.py:165 bookings/models.py:187
+#: bookings/models.py:193 bookings/models.py:217
 msgid "catégorie de réservation"
 msgstr ""
 
-#: bookings/models.py:166
+#: bookings/models.py:194
 msgid "catégories de réservation"
 msgstr ""
 
-#: bookings/models.py:178 bookings/models.py:272
+#: bookings/models.py:207 bookings/models.py:312
 #: bookings/templates/bookings/booking_detail.html:8
 msgid "réservation"
 msgstr ""
 
-#: bookings/models.py:179
+#: bookings/models.py:208
 msgid "réservations"
 msgstr ""
 
-#: bookings/models.py:181
+#: bookings/models.py:211
 msgid "raison"
 msgstr "motif"
 
-#: bookings/models.py:182
+#: bookings/models.py:212
 msgid "détails"
 msgstr ""
 
-#: bookings/models.py:189
+#: bookings/models.py:219
 msgid "propriétaire"
 msgstr ""
 
-#: bookings/models.py:194
+#: bookings/models.py:224
 #, python-format
 msgid "%(reason)s"
 msgstr ""
 
-#: bookings/models.py:209
+#: bookings/models.py:240
 msgid "date et heure de début"
 msgstr ""
 
-#: bookings/models.py:210
+#: bookings/models.py:241
 msgid "date et heure de fin"
 msgstr ""
 
-#: bookings/models.py:216
+#: bookings/models.py:247
 #, python-format
 msgid "%(date)s de %(start)s à %(end)s"
 msgstr ""
 
-#: bookings/models.py:223
+#: bookings/models.py:254
 #, python-format
 msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
-#: bookings/models.py:265
+#: bookings/models.py:296 bookings/models.py:318
+msgid "récurrence"
+msgstr ""
+
+#: bookings/models.py:297
+msgid "récurrences"
+msgstr ""
+
+#: bookings/models.py:305
 msgid "occurrence de réservation"
 msgstr ""
 
-#: bookings/models.py:266
+#: bookings/models.py:306
 msgid "occurrences de réservation"
 msgstr ""
 
-#: bookings/models.py:268
+#: bookings/models.py:308
 msgid "valide"
 msgstr ""
 
-#: bookings/models.py:280
+#: bookings/models.py:333
 #, python-format
 msgid "%(booking)s (%(resources)s) "
 msgstr ""
 
-#: bookings/models.py:288
+#: bookings/models.py:376
 msgid "verrou de ressource"
 msgstr ""
 
-#: bookings/models.py:289
+#: bookings/models.py:377
 msgid "verrous de ressource"
 msgstr ""
 
-#: bookings/models.py:297
+#: bookings/models.py:385
 #, python-format
 msgid "[Verrou] %(reason)s (%(resources)s) "
 msgstr ""
@@ -186,7 +245,7 @@ msgstr ""
 #: bookings/templates/bookings/booking_delete.html:14
 #: bookings/templates/bookings/booking_edit.html:14
 #: bookings/templates/bookings/booking_new.html:14
-#: bookings/templates/bookings/occurrence_edit.html:23
+#: bookings/templates/bookings/occurrence_edit.html:24
 msgid "Annuler"
 msgstr ""
 
@@ -204,7 +263,8 @@ msgid ""
 msgstr ""
 
 #: bookings/templates/bookings/booking_detail.html:56
-#: bookings/templates/bookings/occurrence_edit.html:25
+#: bookings/templates/bookings/help.html:25
+#: bookings/templates/bookings/occurrence_edit.html:26
 msgid "Occurrences"
 msgstr ""
 
@@ -214,6 +274,76 @@ msgstr ""
 
 #: bookings/templates/bookings/booking_new.html:6
 msgid "Créer une réservation"
+msgstr ""
+
+#: bookings/templates/bookings/help.html:7 templates/navbar.html:25
+msgid "Aide"
+msgstr ""
+
+#: bookings/templates/bookings/help.html:8
+msgid "Réservation"
+msgstr ""
+
+#: bookings/templates/bookings/help.html:10
+msgid ""
+"\n"
+"                    Une réservation correspond par exemple à un évènement "
+"organisé par une asso. <br>\n"
+"                    On doit indiquer un motif, et on peut stocker des "
+"détails supplémentaires comme des\n"
+"                    informations de contact par exemple. On peut également "
+"saisir une catégorie pour la réservation\n"
+"                    ainsi qu'un \"propriétaire\".\n"
+"                "
+msgstr ""
+
+#: bookings/templates/bookings/help.html:17
+msgid "Propriétaire"
+msgstr ""
+
+#: bookings/templates/bookings/help.html:19
+msgid ""
+"\n"
+"                    Un propriétaire peut être une personne (matérialisée par "
+"son numéro de carte VA), une équipe, ou\n"
+"                    une asso (matérialisées par leur nom). Ainsi, on peut "
+"chercher facilement les réservations\n"
+"                    effectuées par une personne en cherchant son numéro de "
+"carte VA.\n"
+"                "
+msgstr ""
+
+#: bookings/templates/bookings/help.html:27
+msgid ""
+"\n"
+"                    Les occurrences d'une réservation contiennent la date et "
+"l'heure de début et de fin de l'occurrence,\n"
+"                    ainsi que les ressources concernées.<br>\n"
+"                    Cette séparation permet de réserver plusieurs ressources "
+"à des instants différents pour le même\n"
+"                    motif.\n"
+"                "
+msgstr ""
+
+#: bookings/templates/bookings/help.html:34
+msgid "Exemple"
+msgstr ""
+
+#: bookings/templates/bookings/help.html:36
+msgid ""
+"\n"
+"                    Les 24 souhaitent faire leur AG de recrutement durant "
+"laquelle ils distribuent des crêpes. <br>\n"
+"                    Pour cela, on crée une réservation avec le motif \"AG de "
+"recrutement\", on met \"24 heures\" en tant que\n"
+"                    propriétaire et on ajoute le numéro de téléphone de "
+"contact dans les détails. <br>\n"
+"                    Ensuite, on ajoute une occurrence avec une date de début "
+"et de fin (par exemple le 2/11/2016\n"
+"                    de 19h à 22h) pour l'amphi qu'ils souhaitent, puis on "
+"ajoute une autre occurrence pour une crêpière\n"
+"                    (par exemple du 2/11/2016 à 12h au 3/11/2016 à 12h).\n"
+"                "
 msgstr ""
 
 #: bookings/templates/bookings/occurrence_delete.html:5
@@ -228,11 +358,11 @@ msgstr ""
 msgid "Supprimer"
 msgstr ""
 
-#: bookings/templates/bookings/occurrence_edit.html:17
+#: bookings/templates/bookings/occurrence_edit.html:18
 msgid "Édition de l'occurrence"
 msgstr ""
 
-#: bookings/templates/bookings/occurrence_edit.html:35
+#: bookings/templates/bookings/occurrence_edit.html:36
 msgid "Enregistrer"
 msgstr ""
 
@@ -277,14 +407,14 @@ msgid "Di"
 msgstr ""
 
 #: bookings/templates/bookings/resource_category_day.html:72
-#: bookings/templates/bookings/resource_category_day.html:90
+#: bookings/templates/bookings/resource_category_day.html:91
 msgid "Heure"
 msgstr ""
 
-#: bookings/templates/bookings/resource_category_day.html:113
-#: bookings/templates/bookings/resource_category_day.html:137
-#: bookings/templates/bookings/resource_category_day.html:155
-#: bookings/templates/bookings/resource_category_day.html:172
+#: bookings/templates/bookings/resource_category_day.html:114
+#: bookings/templates/bookings/resource_category_day.html:138
+#: bookings/templates/bookings/resource_category_day.html:156
+#: bookings/templates/bookings/resource_category_day.html:173
 #, python-format
 msgid ""
 "\n"
@@ -295,15 +425,15 @@ msgid ""
 "                                                            "
 msgstr ""
 
-#: bookings/templates/bookings/resource_category_day.html:148
+#: bookings/templates/bookings/resource_category_day.html:149
 msgid "Réservé"
 msgstr ""
 
-#: bookings/templates/bookings/resource_category_day.html:165
+#: bookings/templates/bookings/resource_category_day.html:166
 msgid "Verrouillé"
 msgstr ""
 
-#: bookings/templates/bookings/search.html:7 templates/navbar.html:23
+#: bookings/templates/bookings/search.html:7 templates/navbar.html:29
 msgid "Recherche"
 msgstr ""
 
@@ -312,12 +442,12 @@ msgstr ""
 msgid "Résultats pour %(query)s"
 msgstr ""
 
-#: bookings/views.py:233
-msgid "Occurrence créée avec succès"
+#: bookings/views.py:223
+msgid "Réservation créée avec succès"
 msgstr ""
 
-#: bookings/views.py:398
-msgid "Réservation créée avec succès"
+#: bookings/views.py:358
+msgid "Occurrence créée avec succès"
 msgstr ""
 
 #: resa/settings.py:177
@@ -328,18 +458,18 @@ msgstr "Français"
 msgid "English"
 msgstr "Anglais"
 
-#: templates/navbar.html:42
+#: templates/navbar.html:47
 msgid "Jour"
 msgstr ""
 
-#: templates/navbar.html:45
+#: templates/navbar.html:50
 msgid "Mois"
 msgstr ""
 
-#: templates/navbar.html:48
+#: templates/navbar.html:53
 msgid "Année"
 msgstr ""
 
-#: templates/navbar.html:51
+#: templates/navbar.html:56
 msgid "Changer de date"
 msgstr ""
