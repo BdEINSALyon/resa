@@ -41,7 +41,7 @@ class BookingOccurrenceAdmin(admin.ModelAdmin):
 
 
 @admin.register(Recurrence)
-class Recurrence(admin.ModelAdmin):
+class RecurrenceAdmin(admin.ModelAdmin):
     pass
 
 
