@@ -5,8 +5,8 @@ from .models import Resource, ResourceCategory, BookingCategory, Booking, Bookin
 
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = 'name', 'category', 'available'
-    list_editable = 'available',
+    list_display = 'name', 'category', 'available', 'number'
+    list_editable = 'available', 'number'
     list_display_links = 'name',
     search_fields = 'name',
     list_filter = 'category', 'available'
