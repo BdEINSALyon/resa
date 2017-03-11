@@ -205,7 +205,7 @@ class BaseBookingView(ContextMixin):
 
 class BookingCreateView(CreateView):
     model = Booking
-    fields = ['reason', 'details', 'category', 'owner']
+    fields = ['owner', 'reason', 'details', 'category']
     template_name = 'bookings/booking_new.html'
     decorators = [login_required, permission_required('bookings.add_booking')]
     start = None
@@ -279,7 +279,7 @@ class BookingDetailView(DetailView, BaseBookingView):
 class BookingUpdateView(UpdateView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_edit.html'
-    fields = ['reason', 'details', 'category', 'owner']
+    fields = ['owner', 'reason', 'details', 'category']
     decorators = [login_required, permission_required('bookings.change_booking')]
     booking = None
 

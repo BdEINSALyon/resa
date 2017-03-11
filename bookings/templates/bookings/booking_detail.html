@@ -23,6 +23,11 @@
                         </h3>
                     </div>
                     <div class="list-group">
+                        {% if booking.owner %}
+                            <div class="list-group-item">
+                                <span class="glyphicon glyphicon-user"></span> {{ booking.owner }}
+                            </div>
+                        {% endif %}
                         <div class="list-group-item">
                             <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
                         </div>
@@ -33,9 +38,6 @@
                         {% endif %}
                         <div class="list-group-item">
                             <span class="glyphicon glyphicon-tag"></span> {{ booking.category }}
-                        </div>
-                        <div class="list-group-item">
-                            <span class="glyphicon glyphicon-user"></span> {{ booking.owner }}
                         </div>
                     </div>
                 {% endblock information %}
