@@ -187,8 +187,8 @@
                                                 ({{ cell.count }})
                                             {% else %}
                                                 <a href="{% url 'bookings:booking-new' %}?start={{ line.slot.start.isoformat }}&end={{ line.slot.end.isoformat }}&resource={{ cell.resource.pk }}">
-                                                    <span class="glyphicon glyphicon-plus-sign"></span></a>
-                                                {% if cell.count %}<br>({{ cell.count }}){% endif %}
+                                                    <span class="glyphicon glyphicon-plus-sign"></span>{% if cell.count %} ({{ cell.count }}){% endif %}
+                                                </a>
                                             {% endifequal %}
                                         </td>
                                     {% else %}
