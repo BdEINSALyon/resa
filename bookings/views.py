@@ -347,6 +347,15 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         else:
             return self.form_invalid(form)
 
+    def form_valid(self, form):
+        occurrence = form.save(commit=False)
+        occurrence.save()
+
+        for resource, count in form.cleaned_data.get('resources').items():
+            OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+
+        return HttpResponseRedirect(self.get_success_url())
+
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
         messages.warning(request, "La récurrence ne fonctionne pas pour le moment.")
@@ -385,9 +394,11 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 
     def form_valid(self, form):
         self.object = occurrence = form.save(commit=False)
+        occurrence.save()
+        OccurrenceResourceCount.objects.filter(occurrence=occurrence).delete()
+
         for resource, count in form.cleaned_data.get('resources').items():
-            occurrence_count = OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
-            occurrence_count.save()
+            OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
 
         return HttpResponseRedirect(self.get_success_url())
 

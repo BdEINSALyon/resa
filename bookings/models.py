@@ -118,12 +118,14 @@ class Resource(models.Model):
     def is_countable(self):
         return self.number > 1
 
-    def count_available(self, start_p, end_p):
+    def count_available(self, start_p, end_p, occurrence):
         occurrences = self.get_occurrences_period(start_p, end_p)
         booked_count = 0
 
-        for occurrence in occurrences:
-            for booking in occurrence.bookings.filter(resource__exact=self):
+        for occ in occurrences:
+            if occ == occurrence:
+                continue
+            for booking in occ.bookings.filter(resource__exact=self):
                 print(booking)
                 booked_count += booking.count
 
@@ -324,6 +326,9 @@ class BookingOccurrence(StartEndResources):
             'booking': self.booking,
             'resources': resources
         }
+
+    def get_resources_count(self):
+        return sum(map(lambda x: x.count, self.bookings.all()))
 
 
 class OccurrenceResourceCount(models.Model):

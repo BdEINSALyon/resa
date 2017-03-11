@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import QuerySet
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
@@ -17,12 +18,16 @@ class ResourcesWidget(forms.widgets.Widget):
         return counts
 
     def render(self, name, value, attrs=None):
-        print('ResourcesWidget render', value)
         if value is None:
             value = {}
-        if isinstance(value, list) and len(value) > 0:
+        elif isinstance(value, list) and len(value) > 0:
+            # We're creating a new booking
             if not isinstance(value[0], dict):
                 value = {resource: 1 if resource.is_countable() else True for resource in value if resource is not None}
+
+        elif isinstance(value, QuerySet) and len(value) > 0:
+            if not isinstance(value[0], dict):
+                value = {resource: resource.bookings.get(occurrence=self.occurrence).count if resource.is_countable() else True for resource in value if resource is not None}
 
         output = [format_html('<table class="table table-hover">'),
                   format_html('<tr><th>Ressource</th><th>Catégorie</th><th>Sélectionné</th></tr>')]
@@ -47,10 +52,16 @@ class ResourcesWidget(forms.widgets.Widget):
 
         choices = {}
 
-        for k, v in selected_choices.items():
-            if not isinstance(k, str):
-                k = str(k.pk)
-            choices[k] = v
+        if isinstance(selected_choices, dict):
+            for k, v in selected_choices.items():
+                if not isinstance(k, str):
+                    k = str(k.pk)
+                choices[k] = v
+
+        elif isinstance(selected_choices, QuerySet):
+            for choice in selected_choices:
+                print("render_choice", choice)
+                choices[str(choice.pk)] = 1
 
         name = resource.name
         category = resource.category.name
@@ -65,8 +76,8 @@ class ResourcesWidget(forms.widgets.Widget):
         values = {0: False, 1: True}
 
         res_id = str(pk)
-        if res_id in selected_choices:
-            value = selected_choices.get(res_id)
+        if res_id in choices:
+            value = choices.get(res_id)
             if not resource.is_countable():
                 value = values.get(value)
 

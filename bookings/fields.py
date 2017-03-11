@@ -8,9 +8,10 @@ from bookings.widgets import ResourcesWidget
 class ResourcesField(forms.Field):
     widget = ResourcesWidget
 
-    def __init__(self, choices, *args, **kwargs):
+    def __init__(self, choices, occurrence, *args, **kwargs):
         super(ResourcesField, self).__init__(*args, **kwargs)
         self.widget.choices = self.choices = choices
+        self.widget.occurrence = self.occurrence = occurrence
 
     def clean(self, value):
         if len(value) == 0:

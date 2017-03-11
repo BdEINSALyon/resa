@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 class BookingOccurrenceForm(forms.ModelForm):
     class Meta:
         model = BookingOccurrence
-        fields = ['start', 'end', 'recurrence_type', 'recurrence_end', 'resources']
+        fields = ['start', 'end', 'recurrence_type', 'recurrence_end']
 
     picker_options = {
         "format": "DD/MM/YYYY HH:mm",
@@ -67,14 +67,15 @@ class BookingOccurrenceForm(forms.ModelForm):
         label=BookingOccurrence._meta.get_field('end').verbose_name.capitalize()
     )
 
-    resources = ResourcesField(
-        label=BookingOccurrence._meta.get_field('resources').verbose_name.capitalize(),
-        choices=Resource.objects.all()
-    )
-
     def __init__(self, *args, **kwargs):
         self.form_booking_id = kwargs.pop("booking_pk", None)
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
+        self.fields['resources'] = ResourcesField(
+            label=BookingOccurrence._meta.get_field('resources').verbose_name.capitalize(),
+            choices=Resource.objects.all(),
+            occurrence=self.instance
+        )
+        self.Meta.fields.append('resources')
 
     def clean_resources(self):
         resources = self.cleaned_data['resources']
@@ -145,15 +146,16 @@ class BookingOccurrenceForm(forms.ModelForm):
                 errors = []
 
                 for resource, requested in resources.items():
-                    for occurrence in resource.get_occurrences_period(start, end):
-                        if occurrence.id != self.instance.id and occurrence not in occurrences:
-                            occurrences.append(occurrence)
+                    if not resource.is_countable():
+                        for occurrence in resource.get_occurrences_period(start, end):
+                            if occurrence.id != self.instance.id and occurrence not in occurrences:
+                                occurrences.append(occurrence)
 
                     for lock in resource.get_locks_period(start, end):
                         if lock not in locks:
                             locks.append(lock)
 
-                    number_available = resource.count_available(start, end)
+                    number_available = resource.count_available(start, end, self.instance)
                     if number_available < requested:
                         self.add_error(
                             'resources',
@@ -180,7 +182,6 @@ class BookingOccurrenceForm(forms.ModelForm):
                 if len(errors) > 0:
                     raise forms.ValidationError(errors)
 
-        print(self.cleaned_data)
         if self.cleaned_data.get('recurrence_type') != BookingOccurrenceForm.NONE \
                 and not self.cleaned_data.get('recurrence_end'):
             self.add_error(
@@ -191,4 +192,5 @@ class BookingOccurrenceForm(forms.ModelForm):
                 )
             )
 
+        print("Cleaned data", self.cleaned_data)
         return self.cleaned_data
