@@ -1,4 +1,4 @@
-from bookings.models import ResourceCategory, Resource
+from bookings.models import ResourceCategory
 
 
 def resource_and_category_list(request):
