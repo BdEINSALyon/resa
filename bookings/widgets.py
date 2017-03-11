@@ -45,6 +45,8 @@ class ResourcesWidget(forms.widgets.Widget):
         if resource is None:
             return ''
 
+        selected_choices = {str(k.pk): v for k, v in selected_choices.items()}
+
         name = resource.name
         category = resource.category.name
         pk = resource.pk
