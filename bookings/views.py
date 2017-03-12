@@ -5,6 +5,7 @@ import re
 from collections import defaultdict
 
 import dateutil.parser
+from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage
@@ -17,8 +18,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.base import ContextMixin
 
-from bookings.forms import BookingOccurrenceForm
-from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount
+from bookings.forms import BookingOccurrenceForm, BookingOccurrenceUpdateForm
+from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount, Recurrence
 
 log = logging.getLogger(__name__)
 
@@ -376,41 +377,80 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         form = self.get_form(request.POST)
 
         if form.is_valid():
-            recurrence_type = form.cleaned_data.get('recurrence_type')
-
-            if recurrence_type == 'D':
-                pass
-            elif recurrence_type == 'W':
-                pass
-            elif recurrence_type == 'M':
-                pass
-            elif recurrence_type == 'Y':
-                pass
-            else:
-                messages.success(request, _('Occurrence créée avec succès'))
-                return self.form_valid(form)
+            messages.success(request, _('Occurrence créée avec succès'))
+            return self.form_valid(form)
 
         else:
             return self.form_invalid(form)
 
     def form_valid(self, form):
         occurrence = form.save(commit=False)
-        occurrence.save()
 
-        for resource, count in form.cleaned_data.get('resources').items():
-            OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+        recurrence_type = form.cleaned_data.get('recurrence_type')
+
+        delta = None
+        if recurrence_type == BookingOccurrenceForm.DAILY:
+            delta = relativedelta(days=1)
+        elif recurrence_type == BookingOccurrenceForm.WEEKLY:
+            delta = relativedelta(weeks=1)
+        elif recurrence_type == BookingOccurrenceForm.BI_WEEKLY:
+            delta = relativedelta(weeks=2)
+        elif recurrence_type == BookingOccurrenceForm.TRI_WEEKLY:
+            delta = relativedelta(weeks=3)
+        elif recurrence_type == BookingOccurrenceForm.QUAD_WEEKLY:
+            delta = relativedelta(weeks=4)
+        elif recurrence_type == BookingOccurrenceForm.MONTHLY:
+            delta = relativedelta(months=1)
+        elif recurrence_type == BookingOccurrenceForm.YEARLY:
+            delta = relativedelta(years=1)
+
+        if not delta:
+            for resource, count in form.cleaned_data.get('resources').items():
+                occurrence.save()
+                OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+        else:
+            recurrence = Recurrence.objects.create()
+            occurrence.recurrence = recurrence
+            start_time = occurrence.start
+            end_time = occurrence.end
+
+            for resource, count in form.cleaned_data.get('resources').items():
+                if resource.count_available(start_time, end_time) >= count:
+                    if not occurrence.pk:
+                        occurrence.save()
+                    OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+
+            booking = occurrence.booking
+            start_time += delta
+            end_time += delta
+            recurr_end = form.cleaned_data.get('recurrence_end')
+
+            while start_time.date() <= end_time.date() <= recurr_end:
+                occurrence = BookingOccurrence(
+                    start=start_time, end=end_time,
+                    booking=booking,
+                    recurrence=recurrence
+                )
+
+                for resource, count in form.cleaned_data.get('resources').items():
+                    if resource.count_available(start_time, end_time) >= count:
+                        if not occurrence.pk:
+                            occurrence.save()
+                        OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+
+                start_time += delta
+                end_time += delta
 
         return HttpResponseRedirect(self.get_success_url())
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        messages.warning(request, "La périodicité ne fonctionne pas pour le moment.")
         return super(BookingOccurrenceCreateView, self).get(request, *args, **kwargs)
 
 
 class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     model = BookingOccurrence
-    form_class = BookingOccurrenceForm
+    form_class = BookingOccurrenceUpdateForm
     template_name = 'bookings/occurrence_edit.html'
     decorators = [login_required, permission_required('bookings.change_bookingoccurrence')]
     booking = None
@@ -431,7 +471,6 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        messages.warning(request, "La périodicité ne fonctionne pas pour le moment.")
         return super(BookingOccurrenceUpdateView, self).get(request, *args, **kwargs)
 
     @method_decorator(decorators)

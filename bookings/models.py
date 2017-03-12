@@ -116,15 +116,14 @@ class Resource(models.Model):
     description = models.CharField(max_length=500, blank=True, verbose_name=_('description'))
     category = models.ForeignKey(
         ResourceCategory,
-        on_delete=models.SET_NULL,
-        null=True,
+        on_delete=models.CASCADE,
         verbose_name=_('catégorie')
     )
     available = models.BooleanField(verbose_name=_('disponible'), default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    number = models.PositiveIntegerField(verbose_name=_('quantité'))
+    number = models.PositiveIntegerField(verbose_name=_('quantité'), default=1)
 
     def is_countable(self):
         return self.number > 1
