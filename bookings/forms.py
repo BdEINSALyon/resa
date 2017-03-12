@@ -72,7 +72,7 @@ class BookingOccurrenceForm(forms.ModelForm):
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
         self.fields['resources'] = ResourcesField(
             label=BookingOccurrence._meta.get_field('resources').verbose_name.capitalize(),
-            choices=Resource.objects.all(),
+            choices=Resource.objects.filter(available=True),
             occurrence=self.instance
         )
         self.Meta.fields.append('resources')
