@@ -404,7 +404,7 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        messages.warning(request, "La récurrence ne fonctionne pas pour le moment.")
+        messages.warning(request, "La périodicité ne fonctionne pas pour le moment.")
         return super(BookingOccurrenceCreateView, self).get(request, *args, **kwargs)
 
 
@@ -431,7 +431,7 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 
     @method_decorator(decorators)
     def get(self, request, *args, **kwargs):
-        messages.warning(request, "La récurrence ne fonctionne pas pour le moment.")
+        messages.warning(request, "La périodicité ne fonctionne pas pour le moment.")
         return super(BookingOccurrenceUpdateView, self).get(request, *args, **kwargs)
 
     @method_decorator(decorators)

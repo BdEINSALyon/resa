@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-11 18:01+0100\n"
+"POT-Creation-Date: 2017-03-12 14:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,16 +47,16 @@ msgid "Annuel"
 msgstr ""
 
 #: bookings/forms.py:47
-msgid "Type de récurrence"
+msgid "Type de périodicité"
 msgstr ""
 
 #: bookings/forms.py:53
-msgid "Date de fin de récurrence"
+msgid "Date de fin de périodicité"
 msgstr ""
 
 #: bookings/forms.py:54
 msgid ""
-"Pris en compte seulement si le type de récurrence est différent de \"Aucun\""
+"Pris en compte seulement si le type de périodicité est différent de \"Aucun\""
 msgstr ""
 
 #: bookings/forms.py:88
@@ -69,7 +69,7 @@ msgid "%(res)s n'est pas disponible"
 msgstr ""
 
 #: bookings/forms.py:129
-msgid "La date de fin de récurrence doit se situer après la date de fin !"
+msgid "La date de fin de périodicité doit se situer après la date de fin !"
 msgstr ""
 
 #: bookings/forms.py:139
@@ -88,7 +88,7 @@ msgstr ""
 
 #: bookings/forms.py:190
 msgid ""
-"Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence."
+"Vous devez saisir une date de fin si vous souhaitez ajouter une périodicité."
 msgstr ""
 
 #: bookings/models.py:19
@@ -205,11 +205,11 @@ msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
 #: bookings/models.py:299 bookings/models.py:321
-msgid "récurrence"
+msgid "périodicité"
 msgstr ""
 
 #: bookings/models.py:300
-msgid "récurrences"
+msgid "périodicités"
 msgstr ""
 
 #: bookings/models.py:308

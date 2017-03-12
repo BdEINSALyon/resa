@@ -44,14 +44,14 @@ class BookingOccurrenceForm(forms.ModelForm):
 
     recurrence_type = forms.ChoiceField(
         choices=RECURRENCE_CHOICES,
-        label=_('Type de récurrence')
+        label=_('Type de périodicité')
     )
 
     recurrence_end = forms.DateField(
         input_formats=['%d/%m/%Y'],
         widget=DateTimePicker(options=picker_date_options),
-        label=_('Date de fin de récurrence'),
-        help_text=_('Pris en compte seulement si le type de récurrence est différent de "Aucun"'),
+        label=_('Date de fin de périodicité'),
+        help_text=_('Pris en compte seulement si le type de périodicité est différent de "Aucun"'),
         required=False
     )
 
@@ -126,7 +126,7 @@ class BookingOccurrenceForm(forms.ModelForm):
 
                 if recurrence_end < end:
                     raise forms.ValidationError(
-                        _("La date de fin de récurrence doit se situer après la date de fin !"),
+                        _("La date de fin de périodicité doit se situer après la date de fin !"),
                         code='start-recurrence_end-order'
                     )
 
@@ -187,7 +187,7 @@ class BookingOccurrenceForm(forms.ModelForm):
             self.add_error(
                 'recurrence_end',
                 forms.ValidationError(
-                    _('Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence.'),
+                    _('Vous devez saisir une date de fin si vous souhaitez ajouter une périodicité.'),
                     code='need-recurrence_end'
                 )
             )

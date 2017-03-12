@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-11 18:01+0100\n"
+"POT-Creation-Date: 2017-03-12 14:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,18 +46,18 @@ msgid "Annuel"
 msgstr "Yearly"
 
 #: bookings/forms.py:47
-msgid "Type de récurrence"
-msgstr "Recurrence type"
+msgid "Type de périodicité"
+msgstr "Periodicity type"
 
 #: bookings/forms.py:53
-msgid "Date de fin de récurrence"
-msgstr "Recurrence end date"
+msgid "Date de fin de périodicité"
+msgstr "Periodicity end date"
 
 #: bookings/forms.py:54
 msgid ""
-"Pris en compte seulement si le type de récurrence est différent de \"Aucun\""
+"Pris en compte seulement si le type de périodicité est différent de \"Aucun\""
 msgstr ""
-"Only taken into account if the recurrence type is different than \"None\""
+"Only taken into account if the periodicity type is different than \"None\""
 
 #: bookings/forms.py:88
 msgid "Toutes les ressources doivent être de la même catégorie"
@@ -69,8 +69,8 @@ msgid "%(res)s n'est pas disponible"
 msgstr "%(res)s is not available"
 
 #: bookings/forms.py:129
-msgid "La date de fin de récurrence doit se situer après la date de fin !"
-msgstr ""
+msgid "La date de fin de périodicité doit se situer après la date de fin !"
+msgstr "The periodicity end date must be after the end date"
 
 #: bookings/forms.py:139
 msgid "Le début doit être avant la fin !"
@@ -88,8 +88,8 @@ msgstr "Conflict : %(conflict)s"
 
 #: bookings/forms.py:190
 msgid ""
-"Vous devez saisir une date de fin si vous souhaitez ajouter une récurrence."
-msgstr "You must pick an end date if you want to add a recurrence"
+"Vous devez saisir une date de fin si vous souhaitez ajouter une périodicité."
+msgstr "You must pick an end date if you want to add a periodicity"
 
 #: bookings/models.py:19
 #, python-format
@@ -205,12 +205,12 @@ msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
 #: bookings/models.py:299 bookings/models.py:321
-msgid "récurrence"
-msgstr "recurrence"
+msgid "périodicité"
+msgstr "periodicity"
 
 #: bookings/models.py:300
-msgid "récurrences"
-msgstr "recurrences"
+msgid "périodicités"
+msgstr "periodicities"
 
 #: bookings/models.py:308
 msgid "occurrence de réservation"
@@ -497,6 +497,12 @@ msgstr "Year"
 #: templates/navbar.html:56
 msgid "Changer de date"
 msgstr "Change date"
+
+#~ msgid "récurrence"
+#~ msgstr "recurrence"
+
+#~ msgid "récurrences"
+#~ msgstr "recurrences"
 
 #~ msgid "date de début"
 #~ msgstr "start date"
