@@ -1,3 +1,4 @@
+appdirs==1.4.3
 dj-database-url==0.4.1
 Django==1.10.2
 django-autofixture==0.12.1
@@ -7,7 +8,10 @@ django-dotenv==1.4.1
 gunicorn==19.6.0
 Jinja2==2.8
 MarkupSafe==0.23
+packaging==16.8
 psycopg2==2.6.2
+pyparsing==2.2.0
 python-dateutil==2.5.3
+requests==2.13.0
 six==1.10.0
 whitenoise==3.2.2

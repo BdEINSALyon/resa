@@ -60,7 +60,8 @@ ALLOWED_HOSTS = ['localhost', '.herokuapp.com', 'web', '.bde-insa-lyon.fr']
 # Application definition
 
 INSTALLED_APPS = [
-    'authentication',
+    'account',
+    'permissions',
     'crispy_forms',
     'autofixture',
     'bookings',
@@ -193,10 +194,10 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'bookings:home'
-LOGOUT_REDIRECT_URL = 'bookings:home'
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 

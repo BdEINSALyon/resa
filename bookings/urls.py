@@ -5,7 +5,7 @@ from bookings.views import ResourceCategoryDayView, BookingDetailView, BookingOc
     SearchResultsListView, CountableOccurrencesList
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='bookings/home.html'), name='home'),
+    url(r'^home$', TemplateView.as_view(template_name='bookings/home.html'), name='home'),
     url(r'^resource-category/(?P<id>[0-9]+)$', ResourceCategoryDayView.as_view(), name='resource-category-day'),
     url(r'^booking/(?P<pk>[0-9]+)$', BookingDetailView.as_view(), name='booking-details'),
     url(r'^booking/(?P<pk>[0-9]+)/edit$', BookingUpdateView.as_view(), name='booking-update'),
