@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block add_style %}
+
+{% block style %}
+    {{ block.super }}
     <link rel="stylesheet" href="{% static 'bookings/style.css' %}">
-{% endblock %}
+{% endblock style %}
