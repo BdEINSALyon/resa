@@ -29,14 +29,20 @@ class ResourcesWidget(forms.widgets.Widget):
             if not isinstance(value[0], dict):
                 value = {resource: resource.bookings.get(occurrence=self.occurrence).count if resource.is_countable() else True for resource in value if resource is not None}
 
-        output = [format_html('<table class="table table-hover">'),
-                  format_html('<tr><th>Ressource</th><th>Catégorie</th><th>Sélectionné</th></tr>')]
+        output = [
+            format_html('<div id="resources">'),
+            format_html("""
+              <input id="search" class="search form-control" placeholder="Rechercher" />
+            """),
+            format_html('<table class="table table-hover">'),
+            format_html('<tbody class="list">'),
+        ]
 
         choices = self.render_choices(value)
         if choices:
             output.append(choices)
 
-        output.append('</table>')
+        output.append(format_html('</tbody></table></div>'))
 
         return mark_safe('\n'.join(output))
 
@@ -85,8 +91,8 @@ class ResourcesWidget(forms.widgets.Widget):
 
         return format_html(
             '<tr>'
-            '<td><label for="{id}">{name}</label></td>'
-            '<td>{category}</td>'
+            '<td class="name"><label for="{id}">{name}</label></td>'
+            '<td class="category">{category}</td>'
             '<td>{field}</td>'
             '</tr>',
             name=name, id=res_id, category=category,

@@ -1,6 +1,7 @@
 {% extends 'bookings/booking_detail.html' %}
 {% load crispy_forms_filters %}
 {% load i18n %}
+{% load static %}
 
 {% block javascript %}
     {{ block.super }}
@@ -8,6 +9,8 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
             crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script src="{% static 'bookings/occurrence_edit.js' %}"></script>
 {% endblock javascript %}
 
 {% block style %}
