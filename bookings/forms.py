@@ -142,6 +142,7 @@ class BookingOccurrenceForm(forms.ModelForm):
 
                 occurrences = []
                 locks = []
+                resources_errors = []
 
                 errors = []
 
@@ -150,29 +151,31 @@ class BookingOccurrenceForm(forms.ModelForm):
                         for occurrence in resource.get_occurrences_period(start, end):
                             if occurrence.id != self.instance.id and occurrence not in occurrences:
                                 occurrences.append(occurrence)
+                    else:
+                        number_available = resource.count_available(start, end, self.instance)
+                        resources_errors.append(resource)
+                        if number_available < requested:
+                            self.add_error(
+                                'resources',
+                                forms.ValidationError(
+                                    _('Seulement %(number)d %(name)s disponible !'),
+                                    code='not-enough',
+                                    params={
+                                        'number': number_available,
+                                        'name': resource.name
+                                    }
+                                )
+                            )
 
                     for lock in resource.get_locks_period(start, end):
                         if lock not in locks:
                             locks.append(lock)
 
-                    number_available = resource.count_available(start, end, self.instance)
-                    if number_available < requested:
-                        self.add_error(
-                            'resources',
-                            forms.ValidationError(
-                                _('Seulement %(number)d %(name)s disponible !'),
-                                code='not-enough',
-                                params={
-                                    'number': number_available,
-                                    'name': resource.name
-                                }
-                            )
-                        )
-
                 occurrences.sort()
                 locks.sort()
+                resources_errors.sort()
 
-                for conflict in occurrences + locks:
+                for conflict in occurrences + locks + resources_errors:
                     errors.append(forms.ValidationError(
                         _('Conflit : %(conflict)s'),
                         code='conflict',
