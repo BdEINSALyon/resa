@@ -34,6 +34,6 @@ EXPOSE 8000
 
 RUN chmod +x bash/run-prod.sh
 
-RUN python manage.py compilemessages -l en -l fr
+RUN python3 manage.py compilemessages -l en -l fr
 
 CMD /app/bash/run-prod.sh
