@@ -203,7 +203,8 @@ class BookingOccurrenceForm(forms.ModelForm):
                     if len(errors) > 0:
                         raise forms.ValidationError(errors)
 
-        if self.cleaned_data.get('recurrence_type') != BookingOccurrenceForm.NONE \
+        if self.cleaned_data.get('recurrence_type') \
+                and self.cleaned_data.get('recurrence_type') != BookingOccurrenceForm.NONE \
                 and not self.cleaned_data.get('recurrence_end'):
             self.add_error(
                 'recurrence_end',
@@ -262,3 +263,12 @@ class BookingOccurrenceForm(forms.ModelForm):
 
         print("Cleaned data", self.cleaned_data)
         return self.cleaned_data
+
+
+class BookingOccurrenceUpdateForm(BookingOccurrenceForm):
+    class Meta(BookingOccurrenceForm.Meta):
+        fields = ['start', 'end']
+
+    ignore_impossible = None
+    recurrence_end = None
+    recurrence_type = None

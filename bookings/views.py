@@ -18,7 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.base import ContextMixin
 
-from bookings.forms import BookingOccurrenceForm
+from bookings.forms import BookingOccurrenceForm, BookingOccurrenceUpdateForm
 from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount, Recurrence
 
 log = logging.getLogger(__name__)
@@ -450,7 +450,7 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
 
 class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     model = BookingOccurrence
-    form_class = BookingOccurrenceForm
+    form_class = BookingOccurrenceUpdateForm
     template_name = 'bookings/occurrence_edit.html'
     decorators = [login_required, permission_required('bookings.change_bookingoccurrence')]
     booking = None
