@@ -2,18 +2,19 @@
 {% load crispy_forms_filters %}
 {% load i18n %}
 
-{% block add_javascript %}
+{% block javascript %}
+    {{ block.super }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment-with-locales.min.js"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"
             crossorigin="anonymous"></script>
-{% endblock add_javascript %}
+{% endblock javascript %}
 
-{% block add_style %}
+{% block style %}
     {{ block.super }}
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
-{% endblock add_style %}
+{% endblock style %}
 
 {% block title %}{% trans "Édition de l'occurrence" %}{% endblock %}
 
