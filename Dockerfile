@@ -28,7 +28,7 @@ COPY . /app
 
 VOLUME /app/staticfiles
 
-ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/dashboard
+ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/resa
 
 EXPOSE 8000
 
