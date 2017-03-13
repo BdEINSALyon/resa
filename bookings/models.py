@@ -320,7 +320,7 @@ class StartEndResources(StartEndPeriod):
     )
 
     def resources_names(self):
-        total_count = self.get_resources_count()
+        total_count = self.resources.count()
         count = 5
         queryset = self.resources.all()[:count]
         resources = [r.name for r in queryset]
