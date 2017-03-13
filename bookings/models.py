@@ -113,6 +113,9 @@ class Place(models.Model):
 
     name = models.CharField(max_length=150, verbose_name=_('nom'))
 
+    def __str__(self):
+        return self.name
+
 
 class Resource(models.Model):
     class Meta:
