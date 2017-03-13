@@ -62,6 +62,10 @@ class ResourceCategory(models.Model):
     granularity = models.PositiveIntegerField(verbose_name=_('granularité'), help_text=_('en minutes'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    booking_form = models.BooleanField(
+        verbose_name=_('fiche de location'),
+        default=False
+    )
 
     def get_absolute_url(self):
         return reverse('bookings:resource-category-day', kwargs={'id': str(self.id)})
@@ -153,6 +157,10 @@ class Resource(models.Model):
         verbose_name=_('caution'),
         default=0,
         help_text=_('en centimes')
+    )
+    id_card_guarantee = models.BooleanField(
+        verbose_name=_("carte d'étudiant ou carte d'identité"),
+        default=False
     )
 
     def is_countable(self):
