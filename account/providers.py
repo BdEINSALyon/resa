@@ -101,12 +101,13 @@ class MicrosoftOAuthProvider(OAuthProvider):
         try:
             user = User.objects.get(email=graph_user['mail'])
         except User.DoesNotExist:
-            user = User(email=graph_user['mail'],
-                        username=graph_user['mail'],
-                        first_name=graph_user['givenName'],
-                        last_name=graph_user['surname'],
-                        password="".join(random.choice(string.printable) for _ in range(10))
-                        )
+            user = User(
+                email=graph_user['mail'],
+                username=graph_user['mail'],
+                first_name=graph_user.get('givenName', None) or '',
+                last_name=graph_user.get('surname', None) or '',
+                password="".join(random.choice(string.printable) for _ in range(10))
+            )
             user.save()
         token.user = user
         token.save()
