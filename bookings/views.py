@@ -95,9 +95,22 @@ class ResourceCategoryDayView(ListView):
 
                 if occurrence is not None:  # We found an occurrence to display
                     if isinstance(occurrence, list):  # It's a countable resource
-                        continuous = {slot}
+                        all_continuous = {slot}
                         found_occurrences = set()
-                        continuous_slots(occurrence, continuous, occurrences[resource.id], found_occurrences)
+                        continuous_slots(occurrence, all_continuous, occurrences[resource.id], found_occurrences)
+
+                        # Remove the slots after day end and before the current slot since we want to display
+                        # a cell from the current slot to some rows after.
+                        continuous = set()
+                        for s in all_continuous:
+                            end = dt.datetime.combine(date, resource.category.day_end)
+                            if resource.category.day_end == dt.time(0, 0):
+                                # Since 13/03/2017 00:00 is considered in the beginning of the day
+                                # and we allowed 00:00 for end of day, if we look at an end of day
+                                # at 00:00, we should consider 00:00 the next day.
+                                end += dt.timedelta(days=1)
+                            if s.start >= slot.start and s.end <= end:
+                                continuous.add(s)
 
                         if found_occurrences not in already_seen[resource.id]:
                             already_seen[resource.id].append(found_occurrences)

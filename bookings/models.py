@@ -223,8 +223,9 @@ class Booking(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return _('%(reason)s') % {
-            'reason': self.reason
+        return _('%(owner)s - %(reason)s') % {
+            'reason': self.reason,
+            'owner': self.owner
         }
 
     def get_absolute_url(self):
