@@ -17,6 +17,10 @@ class AzureGroupForm(forms.ModelForm):
             headers={
                 'Authorization': 'Bearer {}'.format(service.provider.retrieve_app_token()['access_token'])
             }).json()
+
+        if data.get('error'):
+            return ('', 'Error while fetching groups : {}'.format(data.get('error').get('message'))),
+
         groups = data.get('value', [])
         form_data = []
         for group in groups:
