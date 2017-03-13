@@ -140,8 +140,16 @@ class Resource(models.Model):
         default=None
     )
 
-    booking_fee = models.PositiveIntegerField(verbose_name=_('frais de location'), default=0)
-    guarantee = models.PositiveIntegerField(verbose_name=_('caution'), default=0)
+    booking_fee = models.PositiveIntegerField(
+        verbose_name=_('frais de location'),
+        default=0,
+        help_text=_('en centimes')
+    )
+    guarantee = models.PositiveIntegerField(
+        verbose_name=_('caution'),
+        default=0,
+        help_text=_('en centimes')
+    )
 
     def is_countable(self):
         return self.number > 1
