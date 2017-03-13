@@ -108,6 +108,14 @@ class ResourceCategory(models.Model):
         return Slot(time, time + delta)
 
 
+class Place(models.Model):
+    class Meta:
+        verbose_name = _('lieu')
+        verbose_name_plural = _('lieux')
+
+    name = models.CharField(max_length=150, verbose_name=_('nom'))
+
+
 class Resource(models.Model):
     class Meta:
         verbose_name = _('ressource')
@@ -126,6 +134,16 @@ class Resource(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     number = models.PositiveIntegerField(verbose_name=_('quantité'), default=1)
+
+    place = models.ForeignKey(
+        to=Place,
+        on_delete=models.SET_NULL,
+        null=True,
+        default=None
+    )
+
+    booking_fee = models.PositiveIntegerField(verbose_name=_('frais de location'), default=0)
+    guarantee = models.PositiveIntegerField(verbose_name=_('caution'), default=0)
 
     def is_countable(self):
         return self.number > 1
