@@ -35,8 +35,8 @@
             <td>{{ booking.resource.name }}</td>
             <td>{{ booking.count }}</td>
             <td></td>
-            <td>{{ booking.resource.booking_fee }} €</td>
-            <td>{% widthratio booking.resource.guarantee 100 1 %} €</td>
+            <td>{% widthratio booking.fee 100 1 %} €</td>
+            <td>{% widthratio booking.guarantee 100 1 %} €</td>
             <td>{% if booking.resource.id_card_guarantee %}{% trans 'Oui' %}{% else %}{% trans 'Non' %}{% endif %}</td>
         </tr>
     {% endfor %}
