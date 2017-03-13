@@ -33,8 +33,8 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(ResourceCategory)
 class ResourceCategoryAdmin(admin.ModelAdmin):
-    list_display = 'name', 'parent', 'day_start', 'day_end', 'granularity'
-    list_editable = 'parent', 'day_start', 'day_end', 'granularity'
+    list_display = 'name', 'parent', 'day_start', 'day_end', 'granularity', 'booking_form'
+    list_editable = 'parent', 'day_start', 'day_end', 'granularity', 'booking_form'
     list_display_links = 'name',
     search_fields = 'name',
 
