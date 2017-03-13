@@ -196,8 +196,8 @@ MEDIA_URL = '/uploads/'
 
 # LOGIN_URL = 'login'
 # LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'bookings:home'
+LOGOUT_REDIRECT_URL = 'bookings:home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
