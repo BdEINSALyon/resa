@@ -271,7 +271,7 @@ class Booking(models.Model):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.id)})
 
     def get_occurrences(self):
-        return self.bookingoccurrence_set.all()
+        return self.occurrences.all()
 
 
 class StartEndPeriod(models.Model):
@@ -352,14 +352,16 @@ class BookingOccurrence(StartEndResources):
         Booking,
         on_delete=models.CASCADE,
         verbose_name=_('réservation'),
-        null=True
+        null=True,
+        related_name='occurrences'
     )
     recurrence = models.ForeignKey(
         Recurrence,
         on_delete=models.CASCADE,
         verbose_name=_('périodicité'),
         null=True,
-        default=None
+        default=None,
+        related_name='occurrences'
     )
 
     resources = models.ManyToManyField(
