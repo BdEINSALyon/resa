@@ -2,11 +2,12 @@ from django.conf.urls import url
 from django.views.generic import TemplateView
 from bookings.views import ResourceCategoryDayView, BookingDetailView, BookingOccurrenceCreateView, BookingUpdateView, \
     BookingOccurrenceUpdateView, BookingOccurrenceDeleteView, BookingDeleteView, BookingCreateView,\
-    SearchResultsListView, CountableOccurrencesList
+    SearchResultsListView, CountableOccurrencesList, BookingFormView
 
 urlpatterns = [
     url(r'^home$', TemplateView.as_view(template_name='bookings/home.html'), name='home'),
     url(r'^resource-category/(?P<id>[0-9]+)$', ResourceCategoryDayView.as_view(), name='resource-category-day'),
+    url(r'^form/(?P<pk>[0-9]+)$', BookingFormView.as_view(), name='booking-form'),
     url(r'^booking/(?P<pk>[0-9]+)$', BookingDetailView.as_view(), name='booking-details'),
     url(r'^booking/(?P<pk>[0-9]+)/edit$', BookingUpdateView.as_view(), name='booking-update'),
     url(r'^booking/(?P<pk>[0-9]+)/delete$', BookingDeleteView.as_view(), name='booking-delete'),

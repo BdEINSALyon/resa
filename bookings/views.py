@@ -11,14 +11,15 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from django.views.generic.base import ContextMixin
+from django.views.generic import FormView
+from django.views.generic.base import ContextMixin, TemplateView
 
-from bookings.forms import BookingOccurrenceForm, BookingOccurrenceUpdateForm
+from bookings.forms import BookingOccurrenceForm, BookingOccurrenceUpdateForm, BookingFormForm
 from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount, Recurrence
 
 log = logging.getLogger(__name__)
@@ -285,9 +286,18 @@ class BookingDetailView(DetailView, BaseBookingView):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['pk'])
         return super(BookingDetailView, self).dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(BookingDetailView, self).get_context_data(**kwargs)
+        context['booking_form'] = BookingFormForm(booking=self.booking)
+        return context
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return super(BookingDetailView, self).get(request, *args, **kwargs)
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        return redirect(to='bookings:booking-form', occurrence_pk=request.POST.get('occurrence'))
 
 
 class BookingUpdateView(UpdateView, BaseBookingView):
@@ -605,6 +615,26 @@ class CountableOccurrencesList(ListView):
             return BookingOccurrence.objects.filter(pk__in=self.filter)
         else:
             return BookingOccurrence.objects.all()
+
+
+class BookingFormView(DetailView):
+    model = BookingOccurrence
+    template_name = 'bookings/booking_form.html'
+    occurrence = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.occurrence = get_object_or_404(BookingOccurrence, pk=self.kwargs['pk'])
+        return super(BookingFormView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BookingFormView, self).get_context_data(**kwargs)
+        context['occurrence'] = self.occurrence
+        context['category'] = self.occurrence.resources.first().category
+        return context
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return super(BookingFormView, self).get(request, *args, **kwargs)
 
 
 def continuous_slots(occurrences, slots, resource_occurrences, found_occurrences):
