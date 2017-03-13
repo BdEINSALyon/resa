@@ -297,7 +297,7 @@ class BookingDetailView(DetailView, BaseBookingView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        return redirect(to='bookings:booking-form', occurrence_pk=request.POST.get('occurrence'))
+        return redirect(to='bookings:booking-form', pk=request.POST.get('occurrence'))
 
 
 class BookingUpdateView(UpdateView, BaseBookingView):

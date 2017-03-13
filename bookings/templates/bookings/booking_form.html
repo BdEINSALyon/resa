@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Resa &bull; </title>
+    <title>Resa &bull; {% trans 'Fiche de location' %}</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -16,7 +16,31 @@
     {% endblock style %}
 </head>
 <body>
-    <h1>Fiche de location</h1>
-    <h2>{{ category }}</h2>
+<h1>{% trans 'Fiche de location' %}</h1>
+<h2>{{ category }}</h2>
+<h3>{% trans 'Ressources empruntées' %}</h3>
+<table class="table table-striped table-bordered">
+    <tbody>
+    <tr>
+        <th>{% trans 'Matériel' %}</th>
+        <th>{% trans 'Quantité départ' %}</th>
+        <th>{% trans 'Quantité retour' %}</th>
+        <th>{% trans 'Frais de location' %}</th>
+        <th>{% trans 'Caution' %}</th>
+        <th>{% trans "Carte d'étudiant" %}</th>
+    </tr>
+
+    {% for booking in occurrence.bookings.all %}
+        <tr>
+            <td>{{ booking.resource.name }}</td>
+            <td>{{ booking.count }}</td>
+            <td></td>
+            <td>{{ booking.resource.booking_fee }} €</td>
+            <td>{% widthratio booking.resource.guarantee 100 1 %} €</td>
+            <td>{% if booking.resource.id_card_guarantee %}{% trans 'Oui' %}{% else %}{% trans 'Non' %}{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 </body>
 </html>
