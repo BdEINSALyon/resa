@@ -7,7 +7,7 @@ from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
 
 from bookings.fields import ResourcesField
-from bookings.models import BookingOccurrence, Booking, Resource, Slot
+from bookings.models import BookingOccurrence, Booking, Resource, Slot, ResourceCategory
 
 log = logging.getLogger(__name__)
 
@@ -271,3 +271,19 @@ class BookingOccurrenceUpdateForm(BookingOccurrenceForm):
     ignore_impossible = None
     recurrence_end = None
     recurrence_type = None
+
+
+class BookingFormForm(forms.Form):
+    class Meta:
+        fields = []
+
+    def __init__(self, booking, *args, **kwargs):
+        self.booking = booking
+        super(BookingFormForm, self).__init__(*args, **kwargs)
+        resource_requires_form = Resource.objects.filter(category__booking_form=True)
+        self.fields['occurrence'] = forms.ModelChoiceField(
+            queryset=BookingOccurrence.objects.filter(booking=booking).filter(resources__in=resource_requires_form),
+            required=True,
+            label=_('Occurrence')
+        )
+        self.Meta.fields.append('occurrence')

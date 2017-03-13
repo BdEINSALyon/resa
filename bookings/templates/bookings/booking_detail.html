@@ -1,6 +1,7 @@
 {% extends 'bookings/base.html' %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 
 {% block add-content %}
     <h2>
@@ -42,6 +43,16 @@
                     </div>
                 {% endblock information %}
             </div>
+            {% if booking.occurrences.count > 0 %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ booking_form|crispy }}
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {% trans 'Éditer la fiche de location' %}
+                    </button>
+                </form>
+
+            {% endif %}
         </div>
         {% block occurrences %}
             <div class="col-md-6">
@@ -69,42 +80,42 @@
                                 <div class="list-group-item">
                             {% endif %}
 
-                            <span class="glyphicon glyphicon-time"></span>
+                        <span class="glyphicon glyphicon-time"></span>
 
-                            {{ occ.resources_names|join:', ' }} : {{ occ.str_dates|capfirst }}
+                        {{ occ.resources_names|join:', ' }} : {{ occ.str_dates|capfirst }}
 
-                            <span class="badge">{{ occ.get_resources_count }}</span>
+                        <span class="badge">{{ occ.get_resources_count }}</span>
 
-                            {% if perms.bookings.change_bookingoccurrence %}
-                                </a>
-                            {% else %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                        {% if occurrences.has_other_pages %}
-                                <div class="list-group-item">
-
-                                    <nav>
-                                        <ul class="pagination">
-                                            <li class="{% if occurrences.has_previous == False %}disabled{% endif %}">
-                                                <a href="?occ_page={{ occurrences.number|add:'-1' }}">&laquo;</a>
-                                            </li>
-
-                                            {% for page in occurrences.paginator.page_range %}
-                                                <li class="{% if page == occurrences.number %}active{% endif %}">
-                                                    <a href="?occ_page={{ page }}">{{ page }}</a>
-                                                </li>
-                                            {% endfor %}
-
-                                            <li class="{% if occurrences.has_next == False %}disabled{% endif %}">
-                                                <a href="?occ_page={{ occurrences.number|add:'1' }}">&raquo;</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                        {% if perms.bookings.change_bookingoccurrence %}
+                            </a>
+                        {% else %}
+                            </div>
                         {% endif %}
-                    </div>
+                        {% endfor %}
+                    {% if occurrences.has_other_pages %}
+                        <div class="list-group-item">
+
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="{% if occurrences.has_previous == False %}disabled{% endif %}">
+                                        <a href="?occ_page={{ occurrences.number|add:'-1' }}">&laquo;</a>
+                                    </li>
+
+                                    {% for page in occurrences.paginator.page_range %}
+                                        <li class="{% if page == occurrences.number %}active{% endif %}">
+                                            <a href="?occ_page={{ page }}">{{ page }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                    <li class="{% if occurrences.has_next == False %}disabled{% endif %}">
+                                        <a href="?occ_page={{ occurrences.number|add:'1' }}">&raquo;</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    {% endif %}
                 </div>
+            </div>
             </div>
         {% endblock occurrences %}
     </div>

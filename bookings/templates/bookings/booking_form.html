@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Resa &bull; </title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    {% block style %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'default_style.css' %}">
+    {% endblock style %}
+</head>
+<body>
+    <h1>Fiche de location</h1>
+    <h2>{{ category }}</h2>
+</body>
+</html>
