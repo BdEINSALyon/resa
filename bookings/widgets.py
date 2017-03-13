@@ -66,7 +66,6 @@ class ResourcesWidget(forms.widgets.Widget):
 
         elif isinstance(selected_choices, QuerySet):
             for choice in selected_choices:
-                print("render_choice", choice)
                 choices[str(choice.pk)] = 1
 
         name = resource.name

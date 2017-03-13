@@ -20,7 +20,6 @@ class ResourcesField(forms.Field):
         return super(ResourcesField, self).clean(value)
 
     def to_python(self, counts):
-        print('ResourcesField to_python', counts)
         resource_counts = {}
         for pk, count in counts.items():
             resource = Resource.objects.get(pk=pk)
