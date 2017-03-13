@@ -520,6 +520,7 @@ class SearchResultsListView(ListView):
     template_name = 'bookings/search.html'
     model = Booking
     query = None
+    decorators = [login_required]
 
     def normalize_query(self, query_string,
                         findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
@@ -570,6 +571,10 @@ class SearchResultsListView(ListView):
         context['query'] = self.query
 
         return context
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super(SearchResultsListView, self).get(request, *args, **kwargs)
 
 
 class CountableOccurrencesList(ListView):

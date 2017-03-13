@@ -15,6 +15,7 @@ import os
 
 import dj_database_url
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -194,8 +195,8 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
 
-# LOGIN_URL = 'login'
-# LOGOUT_URL = 'logout'
+LOGIN_URL = reverse_lazy('oauth_login', kwargs={'provider': 'microsoft'})
+LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'bookings:home'
 LOGOUT_REDIRECT_URL = 'bookings:home'
 
