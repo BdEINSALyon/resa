@@ -171,8 +171,8 @@ class BookingOccurrenceForm(forms.ModelForm):
                                     occurrences.append(occurrence)
                         else:
                             number_available = resource.count_available(start, end, self.instance)
-                            resources_errors.append(resource)
                             if number_available < requested:
+                                resources_errors.append(resource)
                                 self.add_error(
                                     'resources',
                                     forms.ValidationError(
