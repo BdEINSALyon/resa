@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recurrence, \
-    OccurrenceResourceCount
+    OccurrenceResourceCount, Place
 
 
 @admin.register(Resource)
@@ -21,6 +21,14 @@ class ResourceLockAdmin(admin.ModelAdmin):
     date_hierarchy = 'start'
     list_filter = 'resources',
     filter_horizontal = 'resources',
+
+
+@admin.register(Place)
+class PlaceAdmin(admin.ModelAdmin):
+    list_display = 'name',
+    list_display_links = 'name',
+    ordering = 'name',
+    search_fields = 'name',
 
 
 @admin.register(ResourceCategory)
