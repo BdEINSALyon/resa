@@ -176,7 +176,6 @@ class Resource(models.Model):
             if occ == occurrence:
                 continue
             for booking in occ.bookings.filter(resource__exact=self):
-                print(booking)
                 booked_count += booking.count
 
         return self.number - booked_count

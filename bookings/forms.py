@@ -292,7 +292,6 @@ class BookingOccurrenceForm(forms.ModelForm):
             if len(errors) > 0:
                 raise forms.ValidationError(errors)
 
-        print("Cleaned data", self.cleaned_data)
         return self.cleaned_data
 
 
