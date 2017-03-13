@@ -412,6 +412,14 @@ class OccurrenceResourceCount(models.Model):
         blank=True
     )
 
+    @property
+    def fee(self):
+        return self.count * self.resource.booking_fee
+
+    @property
+    def guarantee(self):
+        return self.count * self.resource.guarantee
+
 
 class ResourceLock(StartEndResources):
     class Meta:
