@@ -105,6 +105,8 @@ class ResourceCategory(models.Model):
                 return slot
             time += delta
 
+        return Slot(time, time + delta)
+
 
 class Resource(models.Model):
     class Meta:
