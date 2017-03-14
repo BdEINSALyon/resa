@@ -22,6 +22,7 @@
 <table class="table table-striped table-bordered">
     <tbody>
     <tr>
+        <th>{% trans 'Lieu' %}</th>
         <th>{% trans 'Matériel' %}</th>
         <th>{% trans 'Quantité départ' %}</th>
         <th>{% trans 'Quantité retour' %}</th>
@@ -32,6 +33,7 @@
 
     {% for booking in occurrence.bookings.all %}
         <tr>
+            <td>{{ booking.resource.place }}</td>
             <td>{{ booking.resource.name }}</td>
             <td>{{ booking.count }}</td>
             <td></td>
