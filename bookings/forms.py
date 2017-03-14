@@ -280,9 +280,17 @@ class BookingFormForm(forms.Form):
     def __init__(self, booking, *args, **kwargs):
         self.booking = booking
         super(BookingFormForm, self).__init__(*args, **kwargs)
+
         resource_requires_form = Resource.objects.filter(category__booking_form=True)
+
+        queryset = BookingOccurrence\
+            .objects\
+            .filter(booking=booking)\
+            .filter(resources__in=resource_requires_form)\
+            .distinct()
+
         self.fields['occurrence'] = forms.ModelChoiceField(
-            queryset=BookingOccurrence.objects.filter(booking=booking).filter(resources__in=resource_requires_form),
+            queryset=queryset,
             required=True,
             label=_('Occurrence')
         )
