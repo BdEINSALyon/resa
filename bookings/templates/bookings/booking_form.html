@@ -42,6 +42,15 @@
             <td>{% if booking.resource.id_card_guarantee %}{% trans 'Oui' %}{% else %}{% trans 'Non' %}{% endif %}</td>
         </tr>
     {% endfor %}
+    <tr>
+        <td><strong>{% trans 'Total' %}</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{% widthratio total.fee 100 1 %} €</td>
+        <td>{% widthratio total.guarantee 100 1 %} €</td>
+        <td></td>
+    </tr>
     </tbody>
 </table>
 </body>
