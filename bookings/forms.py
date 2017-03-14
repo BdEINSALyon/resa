@@ -1,3 +1,4 @@
+import datetime as dt
 import logging
 
 from bootstrap3_datetime.widgets import DateTimePicker
@@ -128,12 +129,42 @@ class BookingOccurrenceForm(forms.ModelForm):
         resources = self.cleaned_data.get('resources')
 
         if resources:
+            first_resource = next(iter(resources.keys()))
+
             if self.cleaned_data.get('start'):
-                slot = next(iter(resources.keys())).category.get_slot(self.cleaned_data['start'])
+                if self.cleaned_data.get('start').time() < first_resource.category.day_start:
+                    self.add_error('start', forms.ValidationError(
+                        _('La réservation ne peut pas commencer avant %(time)s pour la catégorie %(cat)s'),
+                        code='too_early',
+                        params={
+                            'time': first_resource.category.day_start,
+                            'cat': first_resource.category
+                        }
+                    ))
+            if self.cleaned_data.get('start'):
+                slot = first_resource.category.get_slot(self.cleaned_data['start'])
                 self.cleaned_data['start'] = slot.start
 
             if self.cleaned_data.get('end'):
-                slot = next(iter(resources.keys())).category.get_slot(self.cleaned_data['end'])
+                end = first_resource.category.day_end
+                if end == dt.time(0, 0):
+                    end = dt.time(23, 59, 59)
+
+                form_end = self.cleaned_data.get('end').time()
+                if form_end == dt.time(0, 0):
+                    form_end = dt.time(23, 59, 59)
+
+                if form_end > end:
+                    self.add_error('end', forms.ValidationError(
+                        _('La réservation ne peut pas se terminer après %(time)s pour la catégorie %(cat)s'),
+                        code='too_late',
+                        params={
+                            'time': first_resource.category.day_end,
+                            'cat': first_resource.category
+                        }
+                    ))
+            if self.cleaned_data.get('end'):
+                slot = first_resource.category.get_slot(self.cleaned_data['end'])
                 if self.cleaned_data['end'] != slot.start:
                     self.cleaned_data['end'] = slot.end
 
