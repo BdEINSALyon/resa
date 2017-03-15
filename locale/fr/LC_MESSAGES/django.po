@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-15 23:57+0100\n"
+"POT-Creation-Date: 2017-03-16 00:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -440,55 +440,63 @@ msgstr ""
 msgid "Fiche de location"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:27
+#: bookings/templates/bookings/booking_form.html:28
 msgid "Contact"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:63
+#: bookings/templates/bookings/booking_form.html:64
 msgid "Dates"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:87
+#: bookings/templates/bookings/booking_form.html:91
+msgid "État des lieux"
+msgstr ""
+
+#: bookings/templates/bookings/booking_form.html:105
+msgid "Après état des lieux"
+msgstr ""
+
+#: bookings/templates/bookings/booking_form.html:130
 msgid "Ressources empruntées"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:91
+#: bookings/templates/bookings/booking_form.html:134
 msgid "Lieu"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:92
+#: bookings/templates/bookings/booking_form.html:135
 msgid "Matériel"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:93
+#: bookings/templates/bookings/booking_form.html:136
 msgid "Quantité départ"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:94
+#: bookings/templates/bookings/booking_form.html:137
 msgid "Quantité retour"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:95
+#: bookings/templates/bookings/booking_form.html:138
 msgid "Frais de location"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:96
+#: bookings/templates/bookings/booking_form.html:139
 msgid "Caution"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:97
-msgid "Carte d'étudiant"
+#: bookings/templates/bookings/booking_form.html:140
+msgid "Carte d'étudiant/d'identité"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:108
+#: bookings/templates/bookings/booking_form.html:151
 msgid "Oui"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:108
+#: bookings/templates/bookings/booking_form.html:151
 msgid "Non"
 msgstr ""
 
-#: bookings/templates/bookings/booking_form.html:112
+#: bookings/templates/bookings/booking_form.html:155
 msgid "Total"
 msgstr ""
 
