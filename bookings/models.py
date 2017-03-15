@@ -438,3 +438,21 @@ class ResourceLock(StartEndResources):
             'resources': resources,
             'reason': self.reason
         }
+
+
+class Paragraph(models.Model):
+    class Meta:
+        verbose_name = _('paragraphe')
+        verbose_name_plural = _('paragraphes')
+
+    title = models.CharField(max_length=500, verbose_name=_('titre'))
+    content = models.TextField(verbose_name=_('contenu'))
+    order = models.IntegerField(verbose_name=_('ordre'), default=0)
+    categories = models.ManyToManyField(
+        to=ResourceCategory,
+        verbose_name=_('catégories'),
+        related_name='paragraphs'
+    )
+
+    def __str__(self):
+        return self.title
