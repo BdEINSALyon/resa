@@ -9,3 +9,19 @@ input.dropdown-form {
 #logo {
     padding: 1ex 1em;
 }
+
+.inventory {
+    padding-bottom: 15rem;
+}
+
+.pagebreak {
+    page-break-before: always;
+}
+
+.signatures {
+    padding-bottom: 12rem;
+}
+
+.signatures-bde {
+    padding-bottom: 8rem;
+}
