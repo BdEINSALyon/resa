@@ -631,13 +631,19 @@ class BookingFormView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(BookingFormView, self).get_context_data(**kwargs)
+
         context['occurrence'] = self.occurrence
         context['booking'] = self.occurrence.booking
-        context['category'] = self.occurrence.resources.first().category
+
+        category = self.occurrence.resources.first().category
+        context['category'] = category
+        context['paragraphs'] = category.paragraphs.order_by('order')
+
         context['total'] = {
             'fee': sum(map(lambda x: x.fee, self.occurrence.bookings.all())),
             'guarantee': sum(map(lambda x: x.guarantee, self.occurrence.bookings.all()))
         }
+
         return context
 
     @method_decorator(login_required)

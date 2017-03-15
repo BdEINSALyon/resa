@@ -78,7 +78,7 @@
     </div>
 </div>
 
-{% for paragraph in category.paragraphs.all %}
+{% for paragraph in paragraphs %}
     <h3>{{ paragraph.order }}. {{ paragraph.title }}</h3>
     <p>
         {{ paragraph.content }}
