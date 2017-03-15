@@ -18,6 +18,12 @@
 <body>
 <h1>{% trans 'Fiche de location' %}</h1>
 <h2>{{ category }}</h2>
+{% for paragraph in category.paragraphs.all %}
+    <h3>{{ paragraph.order }}. {{ paragraph.title }}</h3>
+    <p>
+        {{ paragraph.content }}
+    </p>
+{% endfor %}
 <h3>{% trans 'Ressources empruntées' %}</h3>
 <table class="table table-striped table-bordered">
     <tbody>
