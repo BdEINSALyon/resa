@@ -474,19 +474,3 @@ class Paragraph(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class RequiredInfo(models.Model):
-    class Meta:
-        verbose_name = _('information requise')
-        verbose_name_plural = _('informations requises')
-
-    name = models.CharField(max_length=100, verbose_name=_('nom'))
-    categories = models.ManyToManyField(
-        to=ResourceCategory,
-        verbose_name=_('catégories'),
-        related_name='required_infos'
-    )
-
-    def __str__(self):
-        return self.name

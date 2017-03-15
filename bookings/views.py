@@ -632,6 +632,7 @@ class BookingFormView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(BookingFormView, self).get_context_data(**kwargs)
         context['occurrence'] = self.occurrence
+        context['booking'] = self.occurrence.booking
         context['category'] = self.occurrence.resources.first().category
         context['total'] = {
             'fee': sum(map(lambda x: x.fee, self.occurrence.bookings.all())),
