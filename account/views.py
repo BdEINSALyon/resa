@@ -53,10 +53,7 @@ class HomeLoginView(TemplateView):
     template_name = 'account/login.html'
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return shortcuts.redirect(settings.LOGIN_REDIRECT_URL or 'logged_home')
-        else:
-            return super(HomeLoginView, self).get(request, args, kwargs)
+        return shortcuts.redirect(settings.LOGIN_REDIRECT_URL)
 
 
 class LoggedHomeView(LoginRequiredMixin, TemplateView):
