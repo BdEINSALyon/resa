@@ -586,7 +586,9 @@ class SearchResultsListView(ListView):
     def get_queryset(self):
         if self.query:
             return Booking.objects \
-                .filter(self.get_query(self.request.GET['query'], ['owner', 'reason', 'details']))
+                .filter(self.get_query(self.request.GET['query'], ['contact_first_name', 'contact_last_name',
+                                                                   'contact_email', 'contact_phone', 'contact_asso',
+                                                                   'reason', 'details']))
         else:
             return Booking.objects.all()
 
