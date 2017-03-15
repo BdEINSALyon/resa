@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-12 14:10+0100\n"
+"POT-Creation-Date: 2017-03-15 23:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,79 +17,171 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: account/models.py:13
+msgid "Jeton OAuth"
+msgstr "OAuth token"
+
+#: account/models.py:15
+msgid "utilisateur"
+msgstr "user"
+
+#: account/models.py:16
+msgid "service"
+msgstr ""
+
+#: account/models.py:27
+msgid "Service OAuth"
+msgstr "OAuth Service"
+
+#: account/models.py:33
+msgid "Microsoft"
+msgstr ""
+
+#: account/models.py:36 bookings/models.py:52 bookings/models.py:120
+#: bookings/models.py:132 bookings/models.py:238
+msgid "nom"
+msgstr "name"
+
+#: account/models.py:37
+msgid "identifiant"
+msgstr "identifier"
+
+#: account/models.py:39
+msgid "application id"
+msgstr ""
+
+#: account/models.py:40
+msgid "application secret"
+msgstr ""
+
+#: account/models.py:41
+msgid "actif"
+msgstr "active"
+
 #: bookings/apps.py:7
 msgid "Réservations"
 msgstr "Bookings"
 
-#: bookings/fields.py:18
+#: bookings/fields.py:19
 msgid "Vous devez sélectionner au moins une ressource."
 msgstr "You must select at least one resource"
 
-#: bookings/forms.py:38
+#: bookings/forms.py:43
 msgid "Aucun"
 msgstr "None"
 
-#: bookings/forms.py:39
-msgid "Quotidien"
-msgstr "Daily"
+#: bookings/forms.py:44
+msgid "Tous les jours"
+msgstr "Every day"
 
-#: bookings/forms.py:40
-msgid "Hebdomadaire"
-msgstr "Weekly"
+#: bookings/forms.py:45
+msgid "Toutes les semaines (même jour de la semaine)"
+msgstr "Every week (same day of week)"
 
-#: bookings/forms.py:41
-msgid "Mensuel"
-msgstr "Monthly"
-
-#: bookings/forms.py:42
-msgid "Annuel"
-msgstr "Yearly"
+#: bookings/forms.py:46
+msgid "Toutes les deux semaines (même jour de la semaine)"
+msgstr "Every two weeks (same day of week)"
 
 #: bookings/forms.py:47
+msgid "Toutes les trois semaines (même jour de la semaine)"
+msgstr "Every three weeks (same day of week)"
+
+#: bookings/forms.py:48
+msgid "Toutes les quatre semaines (même jour de la semaine)"
+msgstr "Every four weeks (same day of week)"
+
+#: bookings/forms.py:49
+msgid "Tous les mois à la même date"
+msgstr "Every month (same date)"
+
+#: bookings/forms.py:50
+msgid "Tous les ans à la même date"
+msgstr "Every year (same date)"
+
+#: bookings/forms.py:55
 msgid "Type de périodicité"
 msgstr "Periodicity type"
 
-#: bookings/forms.py:53
+#: bookings/forms.py:61
 msgid "Date de fin de périodicité"
 msgstr "Periodicity end date"
 
-#: bookings/forms.py:54
+#: bookings/forms.py:62
 msgid ""
-"Pris en compte seulement si le type de périodicité est différent de \"Aucun\""
+"Pris en compte seulement si le type de périodicité est différent de \"Aucun"
+"\"."
 msgstr ""
-"Only taken into account if the periodicity type is different than \"None\""
+"Only taken into account if the periodicity type is different than \"None\"."
 
-#: bookings/forms.py:88
+#: bookings/forms.py:67
+msgid "Ignorer les dates impossibles"
+msgstr "Ignore impossible dates"
+
+#: bookings/forms.py:69
+msgid ""
+"Lorsque cette option est sélectionnée, les demandes impossibles à satisfaire "
+"ne génèrent pas d'erreur. Pris en compte seulement si le type de périodicité "
+"est différent de \"Aucun\"."
+msgstr ""
+"When this option is selected, all bookings that are impossible to create "
+"won't generate any error. Only taken into account if the periodicity type "
+"is different than \"None\"."
+
+#: bookings/forms.py:106
 msgid "Toutes les ressources doivent être de la même catégorie"
 msgstr "All resources must come from the same category"
 
-#: bookings/forms.py:93
+#: bookings/forms.py:111
 #, python-format
 msgid "%(res)s n'est pas disponible"
 msgstr "%(res)s is not available"
 
-#: bookings/forms.py:129
+#: bookings/forms.py:137
+#, python-format
+msgid ""
+"La réservation ne peut pas commencer avant %(time)s pour la catégorie %(cat)s"
+msgstr ""
+"Booking can't start before %(time)s for the following category : %(cat)s"
+
+#: bookings/forms.py:159
+#, python-format
+msgid ""
+"La réservation ne peut pas se terminer après %(time)s pour la catégorie "
+"%(cat)s"
+msgstr "Booking can't end after %(time)s for the following category : %(cat)s"
+
+#: bookings/forms.py:177
 msgid "La date de fin de périodicité doit se situer après la date de fin !"
 msgstr "The periodicity end date must be after the end date"
 
-#: bookings/forms.py:139
+#: bookings/forms.py:187
 msgid "Le début doit être avant la fin !"
 msgstr "Beginning must be before end !"
 
-#: bookings/forms.py:163
+#: bookings/forms.py:210
 #, python-format
 msgid "Seulement %(number)d %(name)s disponible !"
 msgstr "Only %(number)d %(name)s available !"
 
-#: bookings/forms.py:177
+#: bookings/forms.py:229
 #, python-format
 msgid "Conflit : %(conflict)s"
 msgstr "Conflict : %(conflict)s"
 
-#: bookings/forms.py:190
+#: bookings/forms.py:243
 msgid ""
 "Vous devez saisir une date de fin si vous souhaitez ajouter une périodicité."
 msgstr "You must pick an end date if you want to add a periodicity"
+
+#: bookings/forms.py:281
+#, python-format
+msgid "%(res)s indisponible %(slot)s"
+msgstr "%(res)s not available %(slot)s"
+
+#: bookings/forms.py:326
+#, fuzzy
+msgid "Occurrence"
+msgstr "Occurrence"
 
 #: bookings/models.py:19
 #, python-format
@@ -103,10 +195,6 @@ msgstr "resource category"
 #: bookings/models.py:49
 msgid "catégories de ressource"
 msgstr "resource categories"
-
-#: bookings/models.py:52 bookings/models.py:115 bookings/models.py:200
-msgid "nom"
-msgstr "name"
 
 #: bookings/models.py:58
 msgid "catégorie parente"
@@ -128,119 +216,191 @@ msgstr "granularity"
 msgid "en minutes"
 msgstr "in minutes"
 
-#: bookings/models.py:111
+#: bookings/models.py:66
+msgid "fiche de location"
+msgstr "booking form"
+
+#: bookings/models.py:117
+msgid "lieu"
+msgstr "place"
+
+#: bookings/models.py:118
+msgid "lieux"
+msgstr "places"
+
+#: bookings/models.py:128
 msgid "ressource"
 msgstr "resource"
 
-#: bookings/models.py:112 bookings/models.py:280 bookings/models.py:328
+#: bookings/models.py:129 bookings/models.py:334 bookings/models.py:384
 msgid "ressources"
 msgstr "resources"
 
-#: bookings/models.py:116
+#: bookings/models.py:133
 msgid "description"
 msgstr ""
 
-#: bookings/models.py:121
+#: bookings/models.py:137 bookings/models.py:470
 msgid "catégorie"
 msgstr "category"
 
-#: bookings/models.py:123
+#: bookings/models.py:139
 msgid "disponible"
 msgstr "available"
 
-#: bookings/models.py:127
+#: bookings/models.py:143
 msgid "quantité"
 msgstr "quantity"
 
-#: bookings/models.py:196 bookings/models.py:220
+#: bookings/models.py:154
+msgid "frais de location"
+msgstr "booking fee"
+
+#: bookings/models.py:156 bookings/models.py:161
+msgid "en centimes"
+msgstr "in cents"
+
+#: bookings/models.py:159
+msgid "caution"
+msgstr "guarantee"
+
+#: bookings/models.py:164
+msgid "carte d'étudiant ou carte d'identité"
+msgstr "student card or id card"
+
+#: bookings/models.py:234 bookings/models.py:258
 msgid "catégorie de réservation"
 msgstr "booking category"
 
-#: bookings/models.py:197
+#: bookings/models.py:235
 msgid "catégories de réservation"
 msgstr "booking categories"
 
-#: bookings/models.py:210 bookings/models.py:315
-#: bookings/templates/bookings/booking_detail.html:8
+#: bookings/models.py:248 bookings/models.py:369
+#: bookings/templates/bookings/booking_detail.html:9
 msgid "réservation"
 msgstr "booking"
 
-#: bookings/models.py:211
+#: bookings/models.py:249
 msgid "réservations"
 msgstr "bookings"
 
-#: bookings/models.py:214
+#: bookings/models.py:252
 msgid "raison"
 msgstr "reason"
 
-#: bookings/models.py:215
+#: bookings/models.py:253
 msgid "détails"
 msgstr "details"
 
-#: bookings/models.py:222
-msgid "propriétaire"
-msgstr "owner"
+#: bookings/models.py:263
+msgid "numéro de carte VA"
+msgstr "member card number"
 
-#: bookings/models.py:227
-#, python-format
-msgid "%(reason)s"
+#: bookings/models.py:264
+msgid "prénom"
+msgstr "first name"
+
+#: bookings/models.py:265
+msgid "nom de famille"
+msgstr "last name"
+
+#: bookings/models.py:266
+msgid "adresse mail"
+msgstr "email address"
+
+#: bookings/models.py:267
+msgid "numéro de téléphone"
+msgstr "phone number"
+
+#: bookings/models.py:268
+msgid "association"
 msgstr ""
 
-#: bookings/models.py:243
+#: bookings/models.py:269
+msgid "Uniquement si la réservation est faite au nom d'une association"
+msgstr "Only if the booking is made in the name of an association"
+
+#: bookings/models.py:280
+#, python-format
+msgid "%(owner)s - %(reason)s"
+msgstr "%(owner)s for %(reason)s"
+
+#: bookings/models.py:297
 msgid "date et heure de début"
 msgstr "start date and time"
 
-#: bookings/models.py:244
+#: bookings/models.py:298
 msgid "date et heure de fin"
 msgstr "end date and time"
 
-#: bookings/models.py:250
+#: bookings/models.py:304
 #, python-format
 msgid "%(date)s de %(start)s à %(end)s"
 msgstr "%(date)s from %(start)s to %(end)s"
 
-#: bookings/models.py:257
+#: bookings/models.py:311
 #, python-format
 msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
-#: bookings/models.py:299 bookings/models.py:321
+#: bookings/models.py:353 bookings/models.py:376
 msgid "périodicité"
 msgstr "periodicity"
 
-#: bookings/models.py:300
+#: bookings/models.py:354
 msgid "périodicités"
 msgstr "periodicities"
 
-#: bookings/models.py:308
+#: bookings/models.py:362
 msgid "occurrence de réservation"
 msgstr "booking occurrence"
 
-#: bookings/models.py:309
+#: bookings/models.py:363
 msgid "occurrences de réservation"
 msgstr "booking occurrences"
 
-#: bookings/models.py:311
+#: bookings/models.py:365
 msgid "valide"
 msgstr "valid"
 
-#: bookings/models.py:336
+#: bookings/models.py:392
 #, python-format
 msgid "%(booking)s (%(resources)s) "
 msgstr ""
 
-#: bookings/models.py:379
+#: bookings/models.py:443
 msgid "verrou de ressource"
 msgstr "resource lock"
 
-#: bookings/models.py:380
+#: bookings/models.py:444
 msgid "verrous de ressource"
 msgstr "resource locks"
 
-#: bookings/models.py:388
+#: bookings/models.py:452
 #, python-format
 msgid "[Verrou] %(reason)s (%(resources)s) "
 msgstr "[Lock] %(reason)s (%(resources)s) "
+
+#: bookings/models.py:460
+msgid "paragraphe"
+msgstr "paragraph"
+
+#: bookings/models.py:461
+msgid "paragraphes"
+msgstr "paragraphs"
+
+#: bookings/models.py:463
+msgid "titre"
+msgstr "title"
+
+#: bookings/models.py:464
+msgid "contenu"
+msgstr "content"
+
+#: bookings/models.py:465
+msgid "ordre"
+msgstr "order"
 
 #: bookings/templates/bookings/booking_delete.html:6
 msgid "supprimer la réservation"
@@ -249,12 +409,12 @@ msgstr "delete booking"
 #: bookings/templates/bookings/booking_delete.html:14
 #: bookings/templates/bookings/booking_edit.html:14
 #: bookings/templates/bookings/booking_new.html:14
-#: bookings/templates/bookings/occurrence_edit.html:24
+#: bookings/templates/bookings/occurrence_edit.html:28
 msgid "Annuler"
 msgstr "Cancel"
 
 #: bookings/templates/bookings/booking_delete.html:17
-#: bookings/templates/bookings/booking_detail.html:22
+#: bookings/templates/bookings/booking_detail.html:23
 #: bookings/templates/bookings/booking_edit.html:17
 #: bookings/templates/bookings/booking_new.html:17
 msgid "Informations"
@@ -268,15 +428,76 @@ msgstr ""
 "Are you sure you want to delete the following booking ? All the linked "
 "occurrences will be deleted as well."
 
-#: bookings/templates/bookings/booking_detail.html:58
+#: bookings/templates/bookings/booking_detail.html:60
+msgid "Éditer la fiche de location"
+msgstr "Edit booking form"
+
+#: bookings/templates/bookings/booking_detail.html:78
 #: bookings/templates/bookings/help.html:25
-#: bookings/templates/bookings/occurrence_edit.html:26
+#: bookings/templates/bookings/occurrence_edit.html:30
 msgid "Occurrences"
 msgstr ""
 
 #: bookings/templates/bookings/booking_edit.html:6
 msgid "modifier la réservation"
 msgstr "change booking"
+
+#: bookings/templates/bookings/booking_form.html:6
+#: bookings/templates/bookings/booking_form.html:19
+msgid "Fiche de location"
+msgstr "Booking form"
+
+#: bookings/templates/bookings/booking_form.html:27
+msgid "Contact"
+msgstr ""
+
+#: bookings/templates/bookings/booking_form.html:63
+msgid "Dates"
+msgstr ""
+
+#: bookings/templates/bookings/booking_form.html:87
+msgid "Ressources empruntées"
+msgstr "Booked resources"
+
+#: bookings/templates/bookings/booking_form.html:91
+msgid "Lieu"
+msgstr "Place"
+
+#: bookings/templates/bookings/booking_form.html:92
+msgid "Matériel"
+msgstr "Equipment"
+
+#: bookings/templates/bookings/booking_form.html:93
+msgid "Quantité départ"
+msgstr "Outgoing quantity"
+
+#: bookings/templates/bookings/booking_form.html:94
+msgid "Quantité retour"
+msgstr "Incoming quantity"
+
+#: bookings/templates/bookings/booking_form.html:95
+msgid "Frais de location"
+msgstr "Booking fee"
+
+#: bookings/templates/bookings/booking_form.html:96
+msgid "Caution"
+msgstr "Guarantee"
+
+#: bookings/templates/bookings/booking_form.html:97
+msgid "Carte d'étudiant"
+msgstr "Student card"
+
+#: bookings/templates/bookings/booking_form.html:108
+msgid "Oui"
+msgstr "Yes"
+
+#: bookings/templates/bookings/booking_form.html:108
+msgid "Non"
+msgstr "No"
+
+#: bookings/templates/bookings/booking_form.html:112
+msgid "Total"
+msgstr ""
 
 #: bookings/templates/bookings/booking_new.html:6
 msgid "Créer une réservation"
@@ -333,7 +554,7 @@ msgstr ""
 
 #: bookings/templates/bookings/help.html:34
 msgid "Exemple"
-msgstr ""
+msgstr "Example"
 
 #: bookings/templates/bookings/help.html:36
 msgid ""
@@ -364,11 +585,11 @@ msgstr "Are you sure you want to delete the following occurrence ?"
 msgid "Supprimer"
 msgstr "Delete"
 
-#: bookings/templates/bookings/occurrence_edit.html:18
+#: bookings/templates/bookings/occurrence_edit.html:22
 msgid "Édition de l'occurrence"
 msgstr "Editing occurrence"
 
-#: bookings/templates/bookings/occurrence_edit.html:36
+#: bookings/templates/bookings/occurrence_edit.html:40
 msgid "Enregistrer"
 msgstr "Save"
 
@@ -382,7 +603,7 @@ msgstr "Add"
 
 #: bookings/templates/bookings/occurrences_filter_list.html:7
 msgid "Résultats"
-msgstr ""
+msgstr "Results"
 
 #: bookings/templates/bookings/occurrences_filter_list.html:15
 #, python-format
@@ -457,7 +678,7 @@ msgstr "Reserved"
 msgid "Verrouillé"
 msgstr "Locked"
 
-#: bookings/templates/bookings/search.html:7 templates/navbar.html:29
+#: bookings/templates/bookings/search.html:7 templates/navbar.html:30
 msgid "Recherche"
 msgstr "Search"
 
@@ -466,40 +687,52 @@ msgstr "Search"
 msgid "Résultats pour %(query)s"
 msgstr "Results for %(query)s"
 
-#: bookings/views.py:255
+#: bookings/views.py:270
 msgid "Réservation créée avec succès"
 msgstr "Booking created successfully"
 
-#: bookings/views.py:390
+#: bookings/views.py:404
 msgid "Occurrence créée avec succès"
 msgstr "Occurrence created successfully"
 
-#: resa/settings.py:177
+#: resa/settings.py:179
 msgid "French"
 msgstr "French"
 
-#: resa/settings.py:178
+#: resa/settings.py:180
 msgid "English"
 msgstr "English"
 
-#: templates/navbar.html:47
+#: templates/navbar.html:49
 msgid "Jour"
 msgstr "Day"
 
-#: templates/navbar.html:50
+#: templates/navbar.html:52
 msgid "Mois"
 msgstr "Month"
 
-#: templates/navbar.html:53
+#: templates/navbar.html:55
 msgid "Année"
 msgstr "Year"
 
-#: templates/navbar.html:56
+#: templates/navbar.html:58
 msgid "Changer de date"
 msgstr "Change date"
 
-#~ msgid "récurrence"
-#~ msgstr "recurrence"
+#~ msgid "Quotidien"
+#~ msgstr "Daily"
+
+#~ msgid "Hebdomadaire"
+#~ msgstr "Weekly"
+
+#~ msgid "Mensuel"
+#~ msgstr "Monthly"
+
+#~ msgid "Annuel"
+#~ msgstr "Yearly"
+
+#~ msgid "propriétaire"
+#~ msgstr "owner"
 
 #~ msgid "récurrences"
 #~ msgstr "recurrences"
@@ -518,6 +751,3 @@ msgstr "Change date"
 
 #~ msgid "code barre"
 #~ msgstr "barcode"
-
-#~ msgid "Réservation par %(owner)s pour %(reason)s"
-#~ msgstr "Booking by %(owner)s for %(reason)s"
