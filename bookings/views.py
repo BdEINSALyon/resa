@@ -572,11 +572,11 @@ class SearchResultsListView(ListView):
                 if or_query is None:
                     or_query = q
                 else:
-                    or_query = or_query | q
+                    or_query |= q
             if query is None:
                 query = or_query
             else:
-                query = query & or_query
+                query &= or_query
         return query
 
     def dispatch(self, request, *args, **kwargs):
