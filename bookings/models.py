@@ -257,14 +257,29 @@ class Booking(models.Model):
         null=True,
         verbose_name=_('catégorie de réservation')
     )
-    owner = models.CharField(max_length=100, blank=True, verbose_name=_('propriétaire'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    contact_va = models.CharField(max_length=100, blank=True, verbose_name=_('numéro de carte VA'))
+    contact_first_name = models.CharField(max_length=300, verbose_name=_('prénom'))
+    contact_last_name = models.CharField(max_length=300, verbose_name=_('nom de famille'))
+    contact_email = models.EmailField(verbose_name=_('adresse mail'))
+    contact_phone = models.CharField(max_length=30, verbose_name=_('numéro de téléphone'))
+    contact_asso = models.CharField(max_length=150, verbose_name=_('association'), blank=True,
+                                    help_text=_("Uniquement si la réservation est faite au nom d'une association"))
+
+    @property
+    def owner(self):
+        return self.asso or self.contact_full_name
+
+    @property
+    def contact_full_name(self):
+        return '{} {}'.format(self.contact_first_name, self.contact_last_name)
 
     def __str__(self):
         return _('%(owner)s - %(reason)s') % {
             'reason': self.reason,
-            'owner': self.owner
+            'owner': self.contact_asso
         }
 
     def get_absolute_url(self):
