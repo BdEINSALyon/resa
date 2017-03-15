@@ -19,11 +19,65 @@
 <h1>{% trans 'Fiche de location' %}</h1>
 <h2>{{ category }}</h2>
 <h3>Informations diverses</h3>
-<ul>
-{% for info in category.required_infos.all %}
-    <li>{{ info.name }}</li>
-{% endfor %}
-</ul>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-list-alt"></span> {% trans 'Contact' %}
+                </h3>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-user"></span> {{ booking.contact_full_name }}
+                </div>
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-envelope"></span> {{ booking.contact_email }}
+                </div>
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-phone"></span> {{ booking.contact_phone }}
+                </div>
+                {% if booking.contact_asso %}
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-briefcase"></span> {{ booking.contact_asso }}
+                    </div>
+                {% endif %}
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
+                </div>
+                {% if booking.details %}
+                    <div class="list-group-item">
+                        <span class="glyphicon glyphicon-comment"></span> {{ booking.details|linebreaks }}
+                    </div>
+                {% endif %}
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-tag"></span> {{ booking.category }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-list-alt"></span> {% trans "Dates" %}
+                </h3>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-floppy-saved"></span> Réservation {{ occurrence.created_at|date:"SHORT_DATETIME_FORMAT" }}
+                </div>
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-log-out"></span> Départ {{ occurrence.start|date:"SHORT_DATETIME_FORMAT" }}
+                </div>
+                <div class="list-group-item">
+                    <span class="glyphicon glyphicon-log-in"></span> Retour {{ occurrence.end|date:"SHORT_DATETIME_FORMAT" }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% for paragraph in category.paragraphs.all %}
     <h3>{{ paragraph.order }}. {{ paragraph.title }}</h3>
     <p>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recurrence, \
-    OccurrenceResourceCount, Place, Paragraph, RequiredInfo
+    OccurrenceResourceCount, Place, Paragraph
 
 
 @admin.register(Resource)
@@ -74,9 +74,3 @@ class ParagraphAdmin(admin.ModelAdmin):
     search_fields = 'title', 'content'
     list_filter = 'category',
     list_editable = 'order', 'category'
-
-
-@admin.register(RequiredInfo)
-class RequiredInfoAdmin(admin.ModelAdmin):
-    list_display = 'name',
-    search_fields = 'name',
