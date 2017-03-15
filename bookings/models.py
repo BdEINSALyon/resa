@@ -448,10 +448,13 @@ class Paragraph(models.Model):
     title = models.CharField(max_length=500, verbose_name=_('titre'))
     content = models.TextField(verbose_name=_('contenu'))
     order = models.IntegerField(verbose_name=_('ordre'), default=0)
-    categories = models.ManyToManyField(
+    category = models.ForeignKey(
         to=ResourceCategory,
-        verbose_name=_('catégories'),
-        related_name='paragraphs'
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_('catégorie'),
+        related_name='paragraphs',
+        default=None
     )
 
     def __str__(self):
