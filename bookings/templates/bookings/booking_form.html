@@ -18,6 +18,12 @@
 <body>
 <h1>{% trans 'Fiche de location' %}</h1>
 <h2>{{ category }}</h2>
+<h3>Informations diverses</h3>
+<ul>
+{% for info in category.required_infos.all %}
+    <li>{{ info.name }}</li>
+{% endfor %}
+</ul>
 {% for paragraph in category.paragraphs.all %}
     <h3>{{ paragraph.order }}. {{ paragraph.title }}</h3>
     <p>
