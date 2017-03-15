@@ -24,9 +24,18 @@
                         </h3>
                     </div>
                     <div class="list-group">
-                        {% if booking.owner %}
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-user"></span> {{ booking.contact_full_name }}
+                        </div>
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-envelope"></span> {{ booking.contact_email }}
+                        </div>
+                        <div class="list-group-item">
+                            <span class="glyphicon glyphicon-phone"></span> {{ booking.contact_phone }}
+                        </div>
+                        {% if booking.contact_asso %}
                             <div class="list-group-item">
-                                <span class="glyphicon glyphicon-user"></span> {{ booking.owner }}
+                                <span class="glyphicon glyphicon-briefcase"></span> {{ booking.contact_asso }}
                             </div>
                         {% endif %}
                         <div class="list-group-item">

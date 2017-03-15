@@ -62,10 +62,10 @@ class OccurrenceResourceCountAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = 'reason', 'category', 'owner'
-    search_fields = 'reason', 'details', 'owner'
+    list_display = 'reason', 'category', 'contact_asso', 'contact_first_name', 'contact_last_name'
+    search_fields = 'reason', 'details', 'contact_asso', 'contact_first_name', 'contact_last_name'
     list_filter = 'category',
-    list_editable = 'category', 'owner'
+    list_editable = 'category', 'contact_asso', 'contact_first_name', 'contact_last_name'
 
 
 @admin.register(Paragraph)
