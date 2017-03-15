@@ -22,7 +22,7 @@
                 <div class="list-group">
                     {% for occurrence in occurrences_list %}
                         <a class="list-group-item"
-                           href="{% url 'bookings:occurrence-edit' booking_pk=occurrence.booking.pk pk=occurrence.pk %}">{{ occurrence }}</a>
+                           href="{% url 'bookings:booking-details' pk=occurrence.booking.pk %}">{{ occurrence }}</a>
                     {% endfor %}
                 </div>
             </div>
