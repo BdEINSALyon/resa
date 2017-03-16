@@ -66,6 +66,10 @@ class ResourceCategory(models.Model):
         verbose_name=_('fiche de location'),
         default=False
     )
+    public = models.BooleanField(
+        verbose_name=_('public'),
+        default=True
+    )
 
     def get_absolute_url(self):
         return reverse('bookings:resource-category-day', kwargs={'id': str(self.id)})
@@ -163,6 +167,11 @@ class Resource(models.Model):
     id_card_guarantee = models.BooleanField(
         verbose_name=_("carte d'étudiant ou carte d'identité"),
         default=False
+    )
+
+    public = models.BooleanField(
+        verbose_name=_('public'),
+        default=True
     )
 
     def is_countable(self):

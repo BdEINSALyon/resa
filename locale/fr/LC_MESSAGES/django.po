@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-16 00:30+0100\n"
+"POT-Creation-Date: 2017-03-16 01:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,8 +38,8 @@ msgstr ""
 msgid "Microsoft"
 msgstr ""
 
-#: account/models.py:36 bookings/models.py:52 bookings/models.py:120
-#: bookings/models.py:132 bookings/models.py:238
+#: account/models.py:36 bookings/models.py:52 bookings/models.py:124
+#: bookings/models.py:136 bookings/models.py:247
 msgid "nom"
 msgstr ""
 
@@ -215,185 +215,189 @@ msgstr ""
 msgid "fiche de location"
 msgstr ""
 
-#: bookings/models.py:117
+#: bookings/models.py:70 bookings/models.py:173
+msgid "public"
+msgstr ""
+
+#: bookings/models.py:121
 msgid "lieu"
 msgstr ""
 
-#: bookings/models.py:118
+#: bookings/models.py:122
 msgid "lieux"
 msgstr ""
 
-#: bookings/models.py:128
+#: bookings/models.py:132
 msgid "ressource"
 msgstr ""
 
-#: bookings/models.py:129 bookings/models.py:334 bookings/models.py:384
+#: bookings/models.py:133 bookings/models.py:343 bookings/models.py:393
 msgid "ressources"
 msgstr ""
 
-#: bookings/models.py:133
+#: bookings/models.py:137
 msgid "description"
 msgstr ""
 
-#: bookings/models.py:137 bookings/models.py:470
+#: bookings/models.py:141 bookings/models.py:479
 msgid "catégorie"
 msgstr ""
 
-#: bookings/models.py:139
+#: bookings/models.py:143
 msgid "disponible"
 msgstr ""
 
-#: bookings/models.py:143
+#: bookings/models.py:147
 msgid "quantité"
 msgstr ""
 
-#: bookings/models.py:154
+#: bookings/models.py:158
 msgid "frais de location"
 msgstr ""
 
-#: bookings/models.py:156 bookings/models.py:161
+#: bookings/models.py:160 bookings/models.py:165
 msgid "en centimes"
 msgstr ""
 
-#: bookings/models.py:159
+#: bookings/models.py:163
 msgid "caution"
 msgstr ""
 
-#: bookings/models.py:164
+#: bookings/models.py:168
 msgid "carte d'étudiant ou carte d'identité"
 msgstr ""
 
-#: bookings/models.py:234 bookings/models.py:258
+#: bookings/models.py:243 bookings/models.py:267
 msgid "catégorie de réservation"
 msgstr ""
 
-#: bookings/models.py:235
+#: bookings/models.py:244
 msgid "catégories de réservation"
 msgstr ""
 
-#: bookings/models.py:248 bookings/models.py:369
+#: bookings/models.py:257 bookings/models.py:378
 #: bookings/templates/bookings/booking_detail.html:9
 msgid "réservation"
 msgstr ""
 
-#: bookings/models.py:249
+#: bookings/models.py:258
 msgid "réservations"
 msgstr ""
 
-#: bookings/models.py:252
+#: bookings/models.py:261
 msgid "raison"
 msgstr "motif"
 
-#: bookings/models.py:253
+#: bookings/models.py:262
 msgid "détails"
 msgstr ""
 
-#: bookings/models.py:263
+#: bookings/models.py:272
 msgid "numéro de carte VA"
 msgstr ""
 
-#: bookings/models.py:264
+#: bookings/models.py:273
 msgid "prénom"
 msgstr ""
 
-#: bookings/models.py:265
+#: bookings/models.py:274
 msgid "nom de famille"
 msgstr ""
 
-#: bookings/models.py:266
+#: bookings/models.py:275
 msgid "adresse mail"
 msgstr ""
 
-#: bookings/models.py:267
+#: bookings/models.py:276
 msgid "numéro de téléphone"
 msgstr ""
 
-#: bookings/models.py:268
+#: bookings/models.py:277
 msgid "association"
 msgstr ""
 
-#: bookings/models.py:269
+#: bookings/models.py:278
 msgid "Uniquement si la réservation est faite au nom d'une association"
 msgstr ""
 
-#: bookings/models.py:280
+#: bookings/models.py:289
 #, python-format
 msgid "%(owner)s - %(reason)s"
 msgstr ""
 
-#: bookings/models.py:297
+#: bookings/models.py:306
 msgid "date et heure de début"
 msgstr ""
 
-#: bookings/models.py:298
+#: bookings/models.py:307
 msgid "date et heure de fin"
 msgstr ""
 
-#: bookings/models.py:304
+#: bookings/models.py:313
 #, python-format
 msgid "%(date)s de %(start)s à %(end)s"
 msgstr ""
 
-#: bookings/models.py:311
+#: bookings/models.py:320
 #, python-format
 msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
-#: bookings/models.py:353 bookings/models.py:376
+#: bookings/models.py:362 bookings/models.py:385
 msgid "périodicité"
 msgstr ""
 
-#: bookings/models.py:354
+#: bookings/models.py:363
 msgid "périodicités"
 msgstr ""
 
-#: bookings/models.py:362
+#: bookings/models.py:371
 msgid "occurrence de réservation"
 msgstr ""
 
-#: bookings/models.py:363
+#: bookings/models.py:372
 msgid "occurrences de réservation"
 msgstr ""
 
-#: bookings/models.py:365
+#: bookings/models.py:374
 msgid "valide"
 msgstr ""
 
-#: bookings/models.py:392
+#: bookings/models.py:401
 #, python-format
 msgid "%(booking)s (%(resources)s) "
 msgstr ""
 
-#: bookings/models.py:443
+#: bookings/models.py:452
 msgid "verrou de ressource"
 msgstr ""
 
-#: bookings/models.py:444
+#: bookings/models.py:453
 msgid "verrous de ressource"
 msgstr ""
 
-#: bookings/models.py:452
+#: bookings/models.py:461
 #, python-format
 msgid "[Verrou] %(reason)s (%(resources)s) "
 msgstr ""
 
-#: bookings/models.py:460
+#: bookings/models.py:469
 msgid "paragraphe"
 msgstr ""
 
-#: bookings/models.py:461
+#: bookings/models.py:470
 msgid "paragraphes"
 msgstr ""
 
-#: bookings/models.py:463
+#: bookings/models.py:472
 msgid "titre"
 msgstr ""
 
-#: bookings/models.py:464
+#: bookings/models.py:473
 msgid "contenu"
 msgstr ""
 
-#: bookings/models.py:465
+#: bookings/models.py:474
 msgid "ordre"
 msgstr ""
 
@@ -688,11 +692,11 @@ msgstr ""
 msgid "Résultats pour %(query)s"
 msgstr ""
 
-#: bookings/views.py:270
+#: bookings/views.py:284
 msgid "Réservation créée avec succès"
 msgstr ""
 
-#: bookings/views.py:404
+#: bookings/views.py:418
 msgid "Occurrence créée avec succès"
 msgstr ""
 

@@ -29,13 +29,27 @@ class ResourceCategoryDayView(ListView):
     template_name = 'bookings/resource_category_day.html'
     context_object_name = 'resource_list'
     category = None
+    decorators = []
 
     def dispatch(self, request, *args, **kwargs):
         self.category = get_object_or_404(ResourceCategory, pk=kwargs['id'])
+
+        if not self.category.public and len(self.decorators) == 0:
+            self.decorators.append(login_required)
+        elif len(self.decorators) > 0:
+            self.decorators.pop()
+
         return super(ResourceCategoryDayView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Resource.objects.filter(category=self.category, available=True)
+        resources = Resource.objects.filter(category=self.category, available=True)
+        if not self.request.user.is_authenticated():
+            resources = resources.filter(public=True)
+        return resources
+
+    @method_decorator(decorators)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ResourceCategoryDayView, self).get_context_data(**kwargs)
