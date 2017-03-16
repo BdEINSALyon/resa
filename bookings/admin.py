@@ -6,8 +6,8 @@ from .models import Resource, ResourceCategory, BookingCategory, Booking, Bookin
 
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = 'name', 'category', 'available', 'number', 'place', 'booking_fee', 'guarantee'
-    list_editable = 'available', 'number', 'place', 'booking_fee', 'guarantee'
+    list_display = 'name', 'category', 'available', 'number', 'place', 'booking_fee', 'guarantee', 'public'
+    list_editable = 'available', 'number', 'place', 'booking_fee', 'guarantee', 'public'
     list_display_links = 'name',
     search_fields = 'name',
     list_filter = 'category', 'available'
@@ -34,8 +34,8 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(ResourceCategory)
 class ResourceCategoryAdmin(admin.ModelAdmin):
-    list_display = 'name', 'parent', 'day_start', 'day_end', 'granularity', 'booking_form'
-    list_editable = 'parent', 'day_start', 'day_end', 'granularity', 'booking_form'
+    list_display = 'name', 'parent', 'day_start', 'day_end', 'granularity', 'booking_form', 'public'
+    list_editable = 'parent', 'day_start', 'day_end', 'granularity', 'booking_form', 'public'
     list_display_links = 'name',
     search_fields = 'name',
 
