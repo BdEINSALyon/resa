@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 
 # Create your models here.
@@ -12,7 +12,7 @@ class OAuthToken(models.Model):
     class Meta:
         verbose_name = _('Jeton OAuth')
 
-    user = models.ForeignKey(User, related_name='tokens', verbose_name=_('utilisateur'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='tokens', verbose_name=_('utilisateur'))
     service = models.ForeignKey('OAuthService', related_name='tokens', verbose_name=_('service'))
     auth_token = models.TextField()
     uuid = models.CharField(max_length=250, default='', blank=True)

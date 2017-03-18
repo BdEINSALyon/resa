@@ -1,9 +1,10 @@
 import requests
 from django.contrib.auth import models as auth_models
-from account import models as account_models
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-from account.providers import MicrosoftOAuthProvider
+from account import models as account_models
 
 
 class AzureGroup(models.Model):
@@ -15,6 +16,7 @@ class AzureGroup(models.Model):
         token = account_models.OAuthToken.objects.filter(user=user, service__name='microsoft').last()
         if token is None:
             return False
+        from account.providers import MicrosoftOAuthProvider
         result = requests.post(MicrosoftOAuthProvider.graph('/me/checkMemberGroups'), json={
             'groupIds': [self.azure_id]
         }, headers={
@@ -26,3 +28,42 @@ class AzureGroup(models.Model):
         else:
             return False
 
+    def __str__(self):
+        return '{} -> {}'.format(self.azure_id, self.group)
+
+
+class User(AbstractUser):
+    _is_staff = models.BooleanField(
+        _('staff status'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
+    _is_superuser = models.BooleanField(
+        _('superuser status'),
+        default=False,
+        help_text=_(
+            'Designates that this user has all permissions without '
+            'explicitly assigning them.'
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        self._is_staff = kwargs.get('is_staff', False)
+        self._is_superuser = kwargs.get('is_superuser', False)
+        super().__init__(*args, **kwargs)
+
+    @property
+    def is_staff(self):
+        return self._is_staff or self.groups.filter(name__icontains='admin').exists()
+
+    @is_staff.setter
+    def is_staff(self, is_staff):
+        self._is_staff = is_staff
+
+    @property
+    def is_superuser(self):
+        return self._is_superuser or self.groups.filter(name__icontains='admin').exists()
+
+    @is_superuser.setter
+    def is_superuser(self, is_superuser):
+        self._is_superuser = is_superuser

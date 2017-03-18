@@ -2,7 +2,7 @@ import random
 import string
 
 import requests
-from django.contrib.auth.models import User
+from permissions.models import User
 
 
 class OAuthProvider:

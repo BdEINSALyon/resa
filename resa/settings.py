@@ -202,6 +202,8 @@ LOGOUT_REDIRECT_URL = 'bookings:home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+AUTH_USER_MODEL = 'permissions.User'
+
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
