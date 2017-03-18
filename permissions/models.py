@@ -1,7 +1,10 @@
+import datetime
+
 import requests
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from account import models as account_models
@@ -22,9 +25,17 @@ class AzureGroup(models.Model):
         }, headers={
             'Authorization': 'Bearer {}'.format(token.auth_token)
         })
-        if result.status_code < 300 and self.azure_id in result.json()['value']:
-            user.groups.add(self.group)
-            return True
+        if result.status_code < 300:
+            if self.azure_id in result.json()['value']:
+                user.save()
+                self.group.save()
+                user.groups.add(self.group)
+                return True
+            else:
+                user.save()
+                self.group.save()
+                user.groups.remove(self.group)
+                return False
         else:
             return False
 
@@ -47,10 +58,21 @@ class User(AbstractUser):
         ),
     )
 
+    last_fetched_groups = models.DateTimeField(default=None, null=True)
+    azure_groups = models.ManyToManyField(to=AzureGroup, related_name='users')
+
     def __init__(self, *args, **kwargs):
         self._is_staff = kwargs.get('is_staff', False)
         self._is_superuser = kwargs.get('is_superuser', False)
         super().__init__(*args, **kwargs)
+
+        if self.id:
+            if not self.last_fetched_groups \
+                    or timezone.now() > self.last_fetched_groups + datetime.timedelta(minutes=1):
+                for group in AzureGroup.objects.all():
+                    group.check_user(self)
+                self.last_fetched_groups = timezone.now()
+                self.save()
 
     @property
     def is_staff(self):
