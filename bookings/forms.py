@@ -323,7 +323,7 @@ class BookingFormForm(forms.Form):
         self.fields['occurrence'] = forms.ModelChoiceField(
             queryset=queryset,
             required=True,
-            label=_('Occurrence')
+            label='',
         )
         self.Meta.fields.append('occurrence')
 

@@ -50,6 +50,7 @@
                 {% endblock information %}
             </div>
             {% if booking.occurrences.count > 0 and booking_form %}
+                <h3>Fiches de location</h3>
                 <form method="post">
                     {% csrf_token %}
                     {{ booking_form|crispy }}
