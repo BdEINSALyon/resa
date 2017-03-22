@@ -303,7 +303,18 @@ class BookingDetailView(DetailView, BaseBookingView):
 
     def get_context_data(self, **kwargs):
         context = super(BookingDetailView, self).get_context_data(**kwargs)
-        context['booking_form'] = BookingFormForm(booking=self.booking)
+        resource_requires_form = Resource.objects.filter(category__booking_form=True)
+
+        form_needed = BookingOccurrence \
+            .objects \
+            .filter(booking=self.booking) \
+            .filter(resources__in=resource_requires_form) \
+            .distinct() \
+            .exists()
+
+        if form_needed:
+            context['booking_form'] = BookingFormForm(booking=self.booking)
+
         return context
 
     @method_decorator(login_required)
