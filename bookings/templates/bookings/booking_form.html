@@ -142,7 +142,7 @@
 
     {% for booking in occurrence.bookings.all %}
         <tr>
-            <td>{{ booking.resource.place }}</td>
+            <td>{% if booking.resource.place %}{{ booking.resource.place }}{% endif %}</td>
             <td>{{ booking.resource.name }}</td>
             <td>{{ booking.count }}</td>
             <td></td>
