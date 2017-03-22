@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Resource, ResourceCategory, BookingCategory, Booking, BookingOccurrence, ResourceLock, Recurrence, \
+from .models import Resource, ResourceCategory, Booking, BookingOccurrence, ResourceLock, Recurrence, \
     OccurrenceResourceCount, Place, Paragraph
 from .forms import ResourceLockForm
 
@@ -40,11 +40,6 @@ class ResourceCategoryAdmin(admin.ModelAdmin):
     list_editable = 'day_start', 'day_end', 'granularity', 'booking_form', 'public'
     list_display_links = 'name',
     search_fields = 'name',
-
-
-@admin.register(BookingCategory)
-class BookingCategoryAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(BookingOccurrence)

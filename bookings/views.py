@@ -235,7 +235,7 @@ class BaseBookingView(ContextMixin):
 class BookingCreateView(CreateView):
     model = Booking
     fields = ['contact_va', 'contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
-              'reason', 'details', 'category']
+              'reason', 'details']
     template_name = 'bookings/booking_new.html'
     decorators = [login_required, permission_required('bookings.add_booking')]
     start = None
