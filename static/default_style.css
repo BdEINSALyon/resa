@@ -11,7 +11,7 @@ input.dropdown-form {
 }
 
 .inventory {
-    padding-bottom: 15rem;
+    padding-bottom: 6rem;
 }
 
 .pagebreak {
@@ -19,9 +19,15 @@ input.dropdown-form {
 }
 
 .signatures {
-    padding-bottom: 12rem;
+    padding-bottom: 6rem;
 }
 
 .signatures-bde {
-    padding-bottom: 8rem;
+    padding-bottom: 2rem;
+}
+
+@media print {
+    h1, h2, .row {
+        page-break-inside: avoid;
+    }
 }
