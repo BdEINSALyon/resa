@@ -279,7 +279,7 @@ class Booking(models.Model):
 
     @property
     def owner(self):
-        return self.asso or self.contact_full_name
+        return self.contact_asso or self.contact_full_name
 
     @property
     def contact_full_name(self):
@@ -288,7 +288,7 @@ class Booking(models.Model):
     def __str__(self):
         return _('%(owner)s - %(reason)s') % {
             'reason': self.reason,
-            'owner': self.contact_asso
+            'owner': self.owner
         }
 
     def get_absolute_url(self):
