@@ -26,6 +26,11 @@ input.dropdown-form {
     padding-bottom: 2rem;
 }
 
+.limit-height {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 @media print {
     h1, h2, .row {
         page-break-inside: avoid;

@@ -34,6 +34,7 @@ class ResourcesWidget(forms.widgets.Widget):
             format_html("""
               <input id="search" class="search form-control" placeholder="Rechercher" />
             """),
+            format_html('<div class="limit-height">'),
             format_html('<table class="table table-hover">'),
             format_html('<tbody class="list">'),
         ]
@@ -42,7 +43,7 @@ class ResourcesWidget(forms.widgets.Widget):
         if choices:
             output.append(choices)
 
-        output.append(format_html('</tbody></table></div>'))
+        output.append(format_html('</tbody></table></div></div>'))
 
         return mark_safe('\n'.join(output))
 
