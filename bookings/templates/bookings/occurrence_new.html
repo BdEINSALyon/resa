@@ -4,14 +4,20 @@
 
 {% block title %}{% trans 'Nouvelle occurrence' %}{% endblock %}
 
+{% block start_form %}
+    <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}" method="post">
+{% endblock start_form %}
+
 {% block occurrence_panel_body %}
     <div class="panel-body">
-        <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}" method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-success btn-block">
-                <span class="glyphicon glyphicon-plus"></span> {% trans 'Ajouter' %}
-            </button>
-        </form>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success btn-block">
+            <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
+        </button>
     </div>
 {% endblock %}
+
+{% block end_form %}
+    </form>
+{% endblock end_form %}

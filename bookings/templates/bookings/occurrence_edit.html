@@ -21,31 +21,38 @@
 
 {% block title %}{% trans "Édition de l'occurrence" %}{% endblock %}
 
+{% block start_form %}
+    <form action="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=object.pk %}" method="post">
+{% endblock start_form %}
+
 {% block occurrence_form %}
     <div class="panel-heading">
-        <a href="{% url 'bookings:booking-details' pk=booking.pk %}"
-           class="btn btn-xs btn-warning pull-right">
-            <span class="glyphicon glyphicon-remove"></span> {% trans 'Annuler' %}
-        </a>
+        <div class="btn-group pull-right">
+            <a href="{% url 'bookings:booking-details' pk=booking.pk %}"
+               class="btn btn-xs btn-warning">
+                <span class="glyphicon glyphicon-remove"></span> {% trans 'Annuler' %}
+            </a>
+            <button type="submit" class="btn btn-xs btn-success">
+                <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
+            </button>
+        </div>
         <h3 class="panel-title"><span class="glyphicon glyphicon-calendar"></span> {% trans 'Occurrences' %}
         </h3>
     </div>
     {% block occurrence_panel_body %}
         <div class="panel-body">
-            <form action="{% url 'bookings:occurrence-edit' booking_pk=booking.pk pk=object.pk %}" method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <div class="btn-group pull-right">
-                    <button type="submit" class="btn btn-success">
-                        <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
-                    </button>
-                    {% if perms.bookings.delete_bookingoccurrence %}
-                        <a href="{% url 'bookings:occurrence-delete' booking_pk=booking.pk pk=object.pk %}" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-trash"></span> Supprimer
-                        </a>
-                    {% endif %}
-                </div>
-            </form>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="btn-group pull-right">
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> {% trans 'Enregistrer' %}
+                </button>
+                {% if perms.bookings.delete_bookingoccurrence %}
+                    <a href="{% url 'bookings:occurrence-delete' booking_pk=booking.pk pk=object.pk %}" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Supprimer
+                    </a>
+                {% endif %}
+            </div>
         </div>
     {% endblock %}
 {% endblock %}
