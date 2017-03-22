@@ -330,7 +330,7 @@ class BookingUpdateView(UpdateView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_edit.html'
     fields = ['contact_va', 'contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
-              'reason', 'details', 'category']
+              'reason', 'details']
     decorators = [login_required, permission_required('bookings.change_booking')]
     booking = None
 
