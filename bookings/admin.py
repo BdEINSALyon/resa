@@ -70,7 +70,7 @@ class BookingAdmin(admin.ModelAdmin):
 
 @admin.register(Paragraph)
 class ParagraphAdmin(admin.ModelAdmin):
-    list_display = 'title', 'order', 'category'
+    list_display = 'title', 'order_form', 'order_public', 'category'
     search_fields = 'title', 'content'
     list_filter = 'category',
-    list_editable = 'order', 'category'
+    list_editable = 'order_form', 'order_public', 'category'

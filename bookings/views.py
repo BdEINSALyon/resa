@@ -16,8 +16,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from django.views.generic import FormView
-from django.views.generic.base import ContextMixin, TemplateView
+from django.views.generic.base import ContextMixin
 
 from bookings.forms import BookingOccurrenceForm, BookingOccurrenceUpdateForm, BookingFormForm
 from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount, Recurrence
@@ -56,6 +55,7 @@ class ResourceCategoryDayView(ListView):
 
         # Category
         context['category'] = self.category
+        context['paragraphs'] = self.category.paragraphs.filter(order_public__gt=0).order_by('order_public')
 
         # Date
         day = int(self.request.GET.get('day', dt.date.today().day))
@@ -652,7 +652,7 @@ class BookingFormView(DetailView):
 
         category = self.occurrence.resources.first().category
         context['category'] = category
-        context['paragraphs'] = category.paragraphs.order_by('order')
+        context['paragraphs'] = category.paragraphs.filter(order_form__gt=0).order_by('order_form')
 
         context['total'] = {
             'fee': sum(map(lambda x: x.fee, self.occurrence.bookings.all())),

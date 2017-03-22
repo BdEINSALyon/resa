@@ -213,16 +213,16 @@ class Resource(models.Model):
                 .filter(end__day__gte=day))
 
     def get_occurrences_period(self, start_p, end_p):
-        return BookingOccurrence.objects\
-            .filter(resources__exact=self)\
+        return BookingOccurrence.objects \
+            .filter(resources__exact=self) \
             .filter((Q(start__lte=start_p) & Q(end__gte=end_p))  # Commence avant et finit après la période
                     | (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p))  # Commence avant et finit pendant
                     | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p))  # Commence pendant et finit après
                     | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__lte=end_p) & Q(end__gt=start_p)))  # Commence et finit pendant
 
     def get_locks_period(self, start_p, end_p):
-        return ResourceLock.objects\
-            .filter(resources__exact=self)\
+        return ResourceLock.objects \
+            .filter(resources__exact=self) \
             .filter((Q(start__lte=start_p) & Q(end__gte=end_p))  # Commence avant et finit après la période
                     | (Q(start__lte=start_p) & Q(end__lte=end_p) & Q(end__gt=start_p))  # Commence avant et finit pendant
                     | (Q(start__gte=start_p) & Q(start__lt=end_p) & Q(end__gte=end_p))  # Commence pendant et finit après
@@ -471,7 +471,16 @@ class Paragraph(models.Model):
 
     title = models.CharField(max_length=500, verbose_name=_('titre'))
     content = models.TextField(verbose_name=_('contenu'))
-    order = models.IntegerField(verbose_name=_('ordre'), default=0)
+    order_form = models.IntegerField(
+        verbose_name=_('ordre sur le formulaire de location'),
+        default=0,
+        help_text=_('Laisser à 0 pour ne pas afficher sur le formulaire de location'),
+    )
+    order_public = models.IntegerField(
+        verbose_name=_('ordre dans l\'interface de réservation'),
+        default=0,
+        help_text=_('Laisser à 0 pour ne pas afficher sur l\'interface de réservation'),
+    )
     category = models.ForeignKey(
         to=ResourceCategory,
         null=True,
