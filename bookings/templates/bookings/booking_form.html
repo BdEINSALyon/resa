@@ -131,8 +131,8 @@
 <table class="table table-striped table-bordered">
     <tbody>
     <tr>
-        <th>{% trans 'Lieu' %}</th>
         <th>{% trans 'Matériel' %}</th>
+        <th>{% trans 'Lieu' %}</th>
         <th>{% trans 'Quantité départ' %}</th>
         <th>{% trans 'Quantité retour' %}</th>
         <th>{% trans 'Frais de location' %}</th>
@@ -142,8 +142,8 @@
 
     {% for booking in occurrence.bookings.all %}
         <tr>
-            <td>{% if booking.resource.place %}{{ booking.resource.place }}{% endif %}</td>
             <td>{{ booking.resource.name }}</td>
+            <td>{% if booking.resource.place %}{{ booking.resource.place }}{% endif %}</td>
             <td>{{ booking.count }}</td>
             <td></td>
             <td>{% widthratio booking.fee 100 1 %} €</td>
