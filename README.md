@@ -7,7 +7,8 @@ Attempt to remake GRR
 
 ```
 Resa - Manage and book resources
-Copyright (C) 2016 Gabriel AUGENDRE
+Copyright (C) 2016-2017 Gabriel AUGENDRE
+Copyright (C) 2016-2017 BdE INSA Lyon
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
