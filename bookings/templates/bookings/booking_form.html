@@ -164,7 +164,7 @@
     </div>
 
     <h2>{% trans 'Ressources empruntées' %}</h2>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered table-text-center">
         <tbody>
         <tr>
             <th>{% trans 'Matériel' %}</th>
@@ -189,13 +189,13 @@
             </tr>
         {% endfor %}
         <tr>
-            <td><strong>{% trans 'Total' %}</strong></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{% widthratio total.fee 100 1 %} €</td>
-            <td>{% widthratio total.guarantee 100 1 %} €</td>
-            <td></td>
+            <th><strong>{% trans 'Total' %}</strong></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>{% widthratio total.fee 100 1 %} €</th>
+            <th>{% widthratio total.guarantee 100 1 %} €</th>
+            <th></th>
         </tr>
         </tbody>
     </table>

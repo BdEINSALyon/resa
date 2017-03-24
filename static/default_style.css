@@ -36,3 +36,7 @@ input.dropdown-form {
         page-break-inside: avoid;
     }
 }
+
+.table-text-center td, .table-text-center th {
+    text-align: center;
+}
