@@ -35,6 +35,10 @@ input.dropdown-form {
     h1, h2, .row {
         page-break-inside: avoid;
     }
+    .total {
+        background-color: unset;
+        box-shadow: inset 0 0 0 1000px rgb(249, 249, 249);
+    }
 }
 
 .table-text-center td, .table-text-center th {
