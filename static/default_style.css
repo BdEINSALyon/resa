@@ -10,6 +10,10 @@ input.dropdown-form {
     padding: 1ex 1em;
 }
 
+.logo-title {
+    height: 1.5em;
+}
+
 .inventory {
     padding-bottom: 6rem;
 }
