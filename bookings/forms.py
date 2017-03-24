@@ -25,6 +25,7 @@ class BookingOccurrenceForm(forms.ModelForm):
         "widgetPositioning": {
             "vertical": "top"
         },
+        "locale": "fr",
     }
 
     picker_date_options = picker_options.copy()
