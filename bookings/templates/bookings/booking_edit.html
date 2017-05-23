@@ -1,11 +1,17 @@
 {% extends 'bookings/booking_detail.html' %}
 {% load i18n %}
 {% load crispy_forms_filters %}
+{% load static %}
 
 {% block title %}
     {% trans 'modifier la réservation' as title %}
     {{ title|capfirst }}
 {% endblock title %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'bookings/booking_edit.js' %}"></script>
+{% endblock javascript %}
 
 {% block information %}
     <div class="panel-heading">
