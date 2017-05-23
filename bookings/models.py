@@ -2,6 +2,7 @@ import datetime as dt
 import logging
 
 from django.contrib.humanize.templatetags.humanize import naturalday
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
@@ -144,7 +145,9 @@ class Resource(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    number = models.PositiveIntegerField(verbose_name=_('quantité'), default=1)
+    number = models.PositiveIntegerField(verbose_name=_('quantité'),
+                                         default=1,
+                                         validators=[MinValueValidator(1)])
 
     place = models.ForeignKey(
         to=Place,
