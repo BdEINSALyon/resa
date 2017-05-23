@@ -283,8 +283,8 @@ class StartEndPeriod(models.Model):
         abstract = True
         ordering = ['start', 'end']
 
-    start = models.DateTimeField(verbose_name=_('date et heure de début'))
-    end = models.DateTimeField(verbose_name=_('date et heure de fin'))
+    start = models.DateTimeField(verbose_name=_('début'))
+    end = models.DateTimeField(verbose_name=_('fin'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
