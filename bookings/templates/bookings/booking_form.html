@@ -171,6 +171,7 @@
         <tr>
             <th>{% trans 'Matériel' %}</th>
             <th>{% trans 'Lieu' %}</th>
+            <th>{% trans 'Quantité réservée' %}</th>
             <th>{% trans 'Quantité départ' %}</th>
             <th>{% trans 'Quantité retour' %}</th>
             <th>{% trans 'Frais de location' %}</th>
@@ -184,6 +185,7 @@
                 <td>{% if booking.resource.place %}{{ booking.resource.place }}{% endif %}</td>
                 <td>{{ booking.count }}</td>
                 <td></td>
+                <td></td>
                 <td>{% widthratio booking.fee 100 1 %} €</td>
                 <td>{% widthratio booking.guarantee 100 1 %} €</td>
                 <td>{% if booking.resource.id_card_guarantee %}{% trans 'Oui' %}{% else %}
@@ -192,6 +194,7 @@
         {% endfor %}
         <tr class="total">
             <th><strong>{% trans 'Total' %}</strong></th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
