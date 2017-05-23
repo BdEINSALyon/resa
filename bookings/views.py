@@ -220,7 +220,7 @@ class BaseBookingView(ContextMixin):
         context = super(BaseBookingView, self).get_context_data(**kwargs)
         page = self.request.GET.get('occ_page', 1)
 
-        occurrences = self.booking.get_occurrences()
+        occurrences = self.booking.get_occurrences().order_by('start')
         paginator = Paginator(occurrences, 10)
 
         try:
