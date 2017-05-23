@@ -22,6 +22,21 @@
         {% trans 'Fiche de location' %}
         <small>{{ category }}</small>
     </h1>
+
+    {% if booking.contact_asso %}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">
+                            <span class="glyphicon glyphicon-briefcase"></span> {{ booking.contact_asso }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <a href="javascript:if(window.print)window.print()" class="btn btn-lg btn-primary hidden-print">Imprimer</a>
     <div class="row">
         <div class="col-xs-6">
@@ -41,11 +56,6 @@
                     <div class="list-group-item">
                         <span class="glyphicon glyphicon-phone"></span> {{ booking.contact_phone }}
                     </div>
-                    {% if booking.contact_asso %}
-                        <div class="list-group-item">
-                            <span class="glyphicon glyphicon-briefcase"></span> {{ booking.contact_asso }}
-                        </div>
-                    {% endif %}
                     <div class="list-group-item">
                         <span class="glyphicon glyphicon-info-sign"></span> {{ booking.reason }}
                     </div>
