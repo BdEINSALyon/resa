@@ -4,6 +4,12 @@
 
 {% block title %}{% trans 'Supprimer une occurrence' %}{% endblock %}
 
+{% block start_form %}
+{% endblock start_form %}
+
+{% block end_form %}
+{% endblock end_form %}
+
 {% block occurrence_panel_body %}
     <div class="panel-body">
         <form action="{% url 'bookings:occurrence-delete' booking_pk=booking.pk pk=bookingoccurrence.pk %}" method="post">

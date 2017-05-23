@@ -565,6 +565,10 @@ class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):
     def delete(self, request, *args, **kwargs):
         return super(BookingOccurrenceDeleteView, self).delete(request, *args, **kwargs)
 
+    @method_decorator(decorators)
+    def post(self, request, *args, **kwargs):
+        return super(BookingOccurrenceDeleteView, self).post(request, *args, **kwargs)
+
 
 class SearchResultsListView(ListView):
     template_name = 'bookings/search.html'
