@@ -36,7 +36,7 @@ input.dropdown-form {
 }
 
 @media print {
-    h1, h2, .row {
+    h1, h2, .row, .no-break {
         page-break-inside: avoid;
     }
     .total {
