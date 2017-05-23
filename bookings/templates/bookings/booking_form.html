@@ -101,87 +101,6 @@
         </div>
     {% endfor %}
 
-    <div class="no-break">
-        <h2>{% trans 'État des lieux sortant' %}</h2>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Commentaires</h3>
-                    </div>
-                    <div class="panel-body inventory">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Étudiant</h3>
-                </div>
-                <div class="panel-body signatures">
-                    Signature étudiant :
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Permanencier BdE</h3>
-                </div>
-                <div class="panel-body signatures-bde">
-                    <p>Nom :</p>
-                    <p>Signature :</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="no-break">
-        <h2>{% trans 'État des lieux retour' %}</h2>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Commentaires</h3>
-                    </div>
-                    <div class="panel-body inventory">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Étudiant</h3>
-                </div>
-                <div class="panel-body signatures">
-                    Signature étudiant :
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Permanencier BdE</h3>
-                </div>
-                <div class="panel-body signatures-bde">
-                    <p>Nom :</p>
-                    <p>Signature :</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="no-break">
         <h2>{% trans 'Ressources empruntées' %}</h2>
@@ -223,6 +142,92 @@
             </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="no-break">
+        <h2>{% trans 'État des lieux sortant' %}</h2>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Commentaires</h3>
+                    </div>
+                    <div class="panel-body inventory">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+            <input type="checkbox" title="Caution payée"> Caution payée
+        </p>
+        <p>
+            <input type="checkbox" title="Location versée"> Location versée
+        </p>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Étudiant</h3>
+                    </div>
+                    <div class="panel-body signatures">
+                        Signature étudiant :
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Permanencier BdE</h3>
+                    </div>
+                    <div class="panel-body signatures-bde">
+                        <p>Nom :</p>
+                        <p>Signature :</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="no-break">
+        <h2>{% trans 'État des lieux retour' %}</h2>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Commentaires</h3>
+                    </div>
+                    <div class="panel-body inventory">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Étudiant</h3>
+                    </div>
+                    <div class="panel-body signatures">
+                        Signature étudiant :
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Permanencier BdE</h3>
+                    </div>
+                    <div class="panel-body signatures-bde">
+                        <p>Nom :</p>
+                        <p>Signature :</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
