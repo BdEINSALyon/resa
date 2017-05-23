@@ -15,7 +15,7 @@
             </div>
                 <div class="list-group">
                     {% for booking in booking_list %}
-                        <a class="list-group-item" href="{% url 'bookings:booking-details' pk=booking.pk %}">{{ booking }}</a>
+                        <a class="list-group-item" href="{% url 'bookings:booking-details' pk=booking.pk %}">{{ booking }}, réservation faite le {{ booking.created_at }}</a>
                     {% endfor %}
                 </div>
             </div>
