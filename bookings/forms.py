@@ -101,7 +101,7 @@ class BookingOccurrenceForm(forms.ModelForm):
         first_cat = next(iter(resources.keys())).category
         errors = []
 
-        for resource in resources.keys():
+        for resource, quantity in resources.items():
             if resource.category != first_cat:
                 errors.append(forms.ValidationError(
                     _('Toutes les ressources doivent être de la même catégorie'),
@@ -112,6 +112,11 @@ class BookingOccurrenceForm(forms.ModelForm):
                     _("%(res)s n'est pas disponible"),
                     code='not-available',
                     params={'res': str(resource)}
+                ))
+            if quantity < 0:
+                errors.append(forms.ValidationError(
+                    _('La quantité doit être un nombre positif'),
+                    code='negative-quantity'
                 ))
 
         if len(errors) > 0:

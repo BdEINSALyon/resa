@@ -413,7 +413,7 @@ class OccurrenceResourceCount(models.Model):
         on_delete=models.CASCADE,
         related_name='bookings'
     )
-    count = models.IntegerField(
+    count = models.PositiveIntegerField(
         default=1,
         blank=True
     )
