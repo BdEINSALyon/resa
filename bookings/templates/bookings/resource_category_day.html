@@ -226,7 +226,13 @@
 
                         {% for resource in resource_list %}
                             <th class="text-center active" {% if resource.is_countable %}colspan="2"{% endif %}>
-                                {{ resource.name }}
+                                {% if user.is_staff and perms.bookings.change_resource %}
+                                    <a href="{% url 'admin:bookings_resource_change' resource.id %}">
+                                        {{ resource.name }} <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                {% else %}
+                                    {{ resource.name }}
+                                {% endif %}
                             </th>
                         {% endfor %}
 
