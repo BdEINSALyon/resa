@@ -5,10 +5,11 @@ from bootstrap3_datetime.widgets import DateTimePicker
 from dateutil.relativedelta import relativedelta
 from django import forms
 from django.forms import DateTimeField
+from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
 from bookings.fields import ResourcesField
-from bookings.models import BookingOccurrence, Booking, Resource, Slot, ResourceLock
+from bookings.models import BookingOccurrence, Booking, Resource, Slot, ResourceLock, ResourceCategory
 
 log = logging.getLogger(__name__)
 
@@ -88,6 +89,8 @@ class BookingOccurrenceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.form_booking_id = kwargs.pop('booking_pk', None)
+        booking = get_object_or_404(Booking, pk=self.form_booking_id)
+
         resource = kwargs.get('initial', None) and kwargs.get("initial").get('resources')[0]
 
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
@@ -95,6 +98,11 @@ class BookingOccurrenceForm(forms.ModelForm):
         resources = Resource.objects.filter(available=True)
         if resource:
             resources = resources.filter(category=resource.category)
+
+        if booking.contact_asso:
+            resources = resources.exclude(category__type=ResourceCategory.STUDENT)
+        else:
+            resources = resources.exclude(category__type=ResourceCategory.ASSO)
 
         self.fields['resources'] = ResourcesField(
             label=BookingOccurrence._meta.get_field('resources').verbose_name.capitalize(),
