@@ -165,7 +165,8 @@ class Resource(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         default=None,
-        blank=True
+        blank=True,
+        verbose_name=_('lieu'),
     )
 
     booking_fee = models.PositiveIntegerField(
