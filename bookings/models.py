@@ -50,7 +50,18 @@ class ResourceCategory(models.Model):
         verbose_name_plural = _('catégories de ressource')
         ordering = ['name']
 
+    ASSO = 'A'
+    STUDENT = 'S'
+    INDIFFERENT = 'I'
+
+    TYPE_CHOICES = (
+        (ASSO, _('Réservé association')),
+        (STUDENT, _('Réservé étudiant')),
+        (INDIFFERENT, _('Indifférent')),
+    )
+
     name = models.CharField(max_length=150, verbose_name=_('nom'))
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES, verbose_name=_('type'), default=INDIFFERENT)
     parent = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
