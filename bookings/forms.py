@@ -87,13 +87,21 @@ class BookingOccurrenceForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        self.form_booking_id = kwargs.pop("booking_pk", None)
+        self.form_booking_id = kwargs.pop('booking_pk', None)
+        resource = kwargs.get('initial', None) and kwargs.get("initial").get('resources')[0]
+
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
+
+        resources = Resource.objects.filter(available=True)
+        if resource:
+            resources = resources.filter(category=resource.category)
+
         self.fields['resources'] = ResourcesField(
             label=BookingOccurrence._meta.get_field('resources').verbose_name.capitalize(),
-            choices=Resource.objects.filter(available=True),
+            choices=resources,
             occurrence=self.instance
         )
+
         self.Meta.fields.append('resources')
 
     def clean_resources(self):
