@@ -234,23 +234,32 @@ class BaseBookingView(ContextMixin):
 
 class BookingCreateView(CreateView):
     model = Booking
-    fields = ['contact_va', 'contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
+    fields = ['contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
               'reason', 'details']
     template_name = 'bookings/booking_new.html'
     decorators = [login_required, permission_required('bookings.add_booking')]
     start = None
     end = None
     booking = None
-    resource_id = None
+    resource = None
+
+    def get_form(self, form_class=None):
+        form = super(BookingCreateView, self).get_form(form_class=form_class)
+        type = self.resource.category.type
+        if type == ResourceCategory.ASSO:
+            form.fields['contact_asso'].required = True
+        elif type == ResourceCategory.STUDENT:
+            del form.fields['contact_asso']
+        return form
 
     def get_success_url(self):
         return reverse('bookings:occurrence-new', kwargs={'booking_pk': self.booking.pk}) \
                + '?start=' + str(self.start.isoformat()) \
                + '&end=' + str(self.end.isoformat()) \
-               + '&resource=' + str(self.resource_id)
+               + '&resource=' + str(self.resource.id)
 
     def dispatch(self, request, *args, **kwargs):
-        self.resource_id = str(self.request.GET.get('resource'))
+        self.resource = get_object_or_404(Resource, pk=self.request.GET.get('resource'))
 
         start = self.request.GET.get('start')
         end = self.request.GET.get('end')
@@ -271,7 +280,7 @@ class BookingCreateView(CreateView):
         context = super(BookingCreateView, self).get_context_data(**kwargs)
         context['start'] = self.start
         context['end'] = self.end
-        context['resource_id'] = self.resource_id
+        context['resource_id'] = self.resource.id
 
         return context
 
@@ -329,7 +338,7 @@ class BookingDetailView(DetailView, BaseBookingView):
 class BookingUpdateView(UpdateView, BaseBookingView):
     model = Booking
     template_name = 'bookings/booking_edit.html'
-    fields = ['contact_va', 'contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
+    fields = ['contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
               'reason', 'details']
     decorators = [login_required, permission_required('bookings.change_booking')]
     booking = None
