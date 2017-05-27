@@ -518,6 +518,9 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
         return super(BookingOccurrenceUpdateView, self).dispatch(request, *args, **kwargs)
 
+    def get_form(self, *args, form_class=BookingOccurrenceForm):
+        return self.form_class(*args, booking_pk=self.booking.id, instance=self.get_object())
+
     def get_success_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.kwargs.get('booking_pk'))})
 
