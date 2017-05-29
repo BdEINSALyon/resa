@@ -537,9 +537,11 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 
     @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
+        print('post')
         return super(BookingOccurrenceUpdateView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form):
+        print('form_valid')
         self.object = occurrence = form.save(commit=False)
         occurrence.save()
         OccurrenceResourceCount.objects.filter(occurrence=occurrence).delete()

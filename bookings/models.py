@@ -208,24 +208,22 @@ class Resource(models.Model):
         return self.name + ' - ' + self.category.name
 
     def get_occurrences(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
+        start_day = dt.datetime(year=year, month=month, day=day)
+        end_day = start_day + dt.timedelta(days=1)
+
         return (BookingOccurrence.objects
                 .filter(resources__exact=self)
-                .filter(start__year__lte=year)
-                .filter(end__year__gte=year)
-                .filter(start__month__lte=month)
-                .filter(end__month__gte=month)
-                .filter(start__day__lte=day)
-                .filter(end__day__gte=day))
+                .filter(start__lt=end_day)
+                .filter(end__gte=start_day))
 
     def get_locks(self, year=dt.date.today().year, month=dt.date.today().month, day=dt.date.today().day):
+        start_day = dt.datetime(year=year, month=month, day=day)
+        end_day = start_day + dt.timedelta(days=1)
+
         return (ResourceLock.objects
                 .filter(resources__exact=self)
-                .filter(start__year__lte=year)
-                .filter(end__year__gte=year)
-                .filter(start__month__lte=month)
-                .filter(end__month__gte=month)
-                .filter(start__day__lte=day)
-                .filter(end__day__gte=day))
+                .filter(start__lt=end_day)
+                .filter(end__gte=start_day))
 
     def get_occurrences_period(self, start_p, end_p):
         return BookingOccurrence.objects \
