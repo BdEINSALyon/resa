@@ -518,8 +518,14 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
         return super(BookingOccurrenceUpdateView, self).dispatch(request, *args, **kwargs)
 
-    def get_form(self, *args, form_class=BookingOccurrenceForm):
-        return self.form_class(*args, booking_pk=self.booking.id, instance=self.get_object())
+    def get_form(self, *args, form_class=BookingOccurrenceUpdateForm):
+        form = form_class(*args, booking_pk=self.booking.id, instance=self.get_object(), initial={
+            'ignore_impossible': False,
+            'recurrence_end': None,
+            'recurrence_type': BookingOccurrenceUpdateForm.NONE
+        })
+
+        return form
 
     def get_success_url(self):
         return reverse('bookings:booking-details', kwargs={'pk': str(self.kwargs.get('booking_pk'))})
@@ -537,11 +543,16 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 
     @method_decorator(decorators)
     def post(self, request, *args, **kwargs):
-        print('post')
-        return super(BookingOccurrenceUpdateView, self).post(request, *args, **kwargs)
+        form = self.get_form(request.POST)
+
+        if form.is_valid():
+            messages.success(request, _('Occurrence modifiée avec succès'))
+            return self.form_valid(form)
+
+        else:
+            return self.form_invalid(form)
 
     def form_valid(self, form):
-        print('form_valid')
         self.object = occurrence = form.save(commit=False)
         occurrence.save()
         OccurrenceResourceCount.objects.filter(occurrence=occurrence).delete()

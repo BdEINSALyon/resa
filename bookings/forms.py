@@ -91,7 +91,9 @@ class BookingOccurrenceForm(forms.ModelForm):
         self.form_booking_id = kwargs.pop('booking_pk', None)
         booking = get_object_or_404(Booking, pk=self.form_booking_id)
 
-        resource = kwargs.get('initial', None) and kwargs.get("initial").get('resources')[0]
+        resource = kwargs.get('initial', None) \
+                   and kwargs.get("initial").get('resources') \
+                   and kwargs.get("initial").get('resources')[0]
 
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
 
