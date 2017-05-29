@@ -84,28 +84,37 @@ var defaultDiacriticsRemovalMap = [
     {'base':'y','letters':/[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g},
     {'base':'z','letters':/[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g}
 ];
+
 var changes;
-function removeDiacritics (str) {
-    if(!changes) {
+
+var hasChangedMail = false;
+
+function removeDiacritics(str) {
+    if (!changes) {
         changes = defaultDiacriticsRemovalMap;
     }
-    for(var i=0; i<changes.length; i++) {
+    for (var i = 0; i < changes.length; i++) {
         str = str.replace(changes[i].letters, changes[i].base);
     }
     return str;
 }
 
 function updateMail() {
-    var firstName = $('#id_contact_first_name').val().replace(/ /g, '-');
-    var lastName = $('#id_contact_last_name').val().replace(/ /g, '-');
-    firstName = removeDiacritics(firstName);
-    lastName = removeDiacritics(lastName);
+    if (!hasChangedMail) {
+        var firstName = $('#id_contact_first_name').val().replace(/ /g, '-');
+        var lastName = $('#id_contact_last_name').val().replace(/ /g, '-');
+        firstName = removeDiacritics(firstName);
+        lastName = removeDiacritics(lastName);
 
-    var email = $('#id_contact_email');
-    email.val(firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@insa-lyon.fr');
+        var email = $('#id_contact_email');
+        email.val(firstName.toLowerCase() + '.' + lastName.toLowerCase() + '@insa-lyon.fr');
+    }
 }
 
 $('document').ready(function () {
     $('#id_contact_first_name').on('input', updateMail);
     $('#id_contact_last_name').on('input', updateMail);
+    $('#id_contact_email').on('input', function () {
+        hasChangedMail = true;
+    })
 });
