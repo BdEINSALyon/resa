@@ -521,14 +521,31 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
                         occurrences.sort()
                         locks.sort()
 
-                        for conflict in occurrences + locks:
+                        for occurrence in occurrences:
+                            if self.request.user.has_perm('bookings.change_bookingoccurrence'):
+                                link = occurrence.get_absolute_url()
+                            else:
+                                link = occurrence.booking.get_absolute_url()
+
                             messages.warning(
                                 self.request,
                                 mark_safe(_('Conflit : <a href="{link}" class="alert-link">{conflict}</a>'.format(
-                                    conflict=escape(str(conflict)),
-                                    link=conflict.get_absolute_url()
+                                    conflict=escape(str(occurrence)),
+                                    link=link
                                 )))
                             )
+
+                        for lock in locks:
+                            if self.request.user.has_perm('bookings.change_resourcelock'):
+                                messages.warning(
+                                    self.request,
+                                    mark_safe(_('Conflit : <a href="{link}" class="alert-link">{conflict}</a>'.format(
+                                        conflict=escape(str(lock)),
+                                        link=lock.get_absolute_url()
+                                    )))
+                                )
+                            else:
+                                messages.warning(self.request,_('Conflit : {conflict}'.format(conflict=str(lock))))
 
                 start_time += delta
                 end_time += delta
