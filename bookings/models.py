@@ -414,6 +414,9 @@ class BookingOccurrence(StartEndResources):
 
         return slots
 
+    def get_absolute_url(self):
+        return reverse('bookings:occurrence-edit', kwargs={'booking_pk': self.booking.pk, 'pk': self.pk})
+
 
 class OccurrenceResourceCount(models.Model):
     occurrence = models.ForeignKey(
@@ -455,6 +458,9 @@ class ResourceLock(StartEndResources):
             'resources': resources,
             'reason': self.reason
         }
+
+    def get_absolute_url(self):
+        return reverse('admin:bookings_resourcelock_change', args=[self.pk])
 
 
 class Paragraph(models.Model):

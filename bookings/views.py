@@ -4,6 +4,8 @@ import logging
 import re
 from collections import defaultdict
 
+from html import escape
+
 import dateutil.parser
 from dateutil.relativedelta import relativedelta
 from django.contrib import messages
@@ -14,6 +16,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.base import ContextMixin
@@ -436,7 +439,6 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         form = self.get_form(request.POST)
 
         if form.is_valid():
-            messages.success(request, _('Occurrence créée avec succès'))
             return self.form_valid(form)
 
         else:
@@ -463,7 +465,7 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
         elif recurrence_type == BookingOccurrenceForm.YEARLY:
             delta = relativedelta(years=1)
 
-        if not delta:
+        if not delta:  # If it's not a recurrence
             for resource, count in form.cleaned_data.get('resources').items():
                 occurrence.save()
                 OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
@@ -496,6 +498,37 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
                         if not occurrence.pk:
                             occurrence.save()
                         OccurrenceResourceCount.objects.create(occurrence=occurrence, resource=resource, count=count)
+                        messages.success(
+                            self.request,
+                            mark_safe(
+                                _('Occurrence créée : <a href="{link}" class="alert-link">{occurrence}</a>'.format(
+                                    occurrence=escape(str(occurrence)),
+                                    link=occurrence.get_absolute_url()
+                                ))
+                            )
+                        )
+                    else:
+                        occurrences = []
+                        locks = []
+                        for occurrence in resource.get_occurrences_period(start_time, end_time):
+                            if occurrence not in occurrences:
+                                occurrences.append(occurrence)
+
+                        for lock in resource.get_locks_period(start_time, end_time):
+                            if lock not in locks:
+                                locks.append(lock)
+
+                        occurrences.sort()
+                        locks.sort()
+
+                        for conflict in occurrences + locks:
+                            messages.warning(
+                                self.request,
+                                mark_safe(_('Conflit : <a href="{link}" class="alert-link">{conflict}</a>'.format(
+                                    conflict=escape(str(conflict)),
+                                    link=conflict.get_absolute_url()
+                                )))
+                            )
 
                 start_time += delta
                 end_time += delta
@@ -520,7 +553,6 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
 
     def get_form(self, *args, form_class=BookingOccurrenceUpdateForm):
         form = form_class(*args, booking_pk=self.booking.id, instance=self.get_object(), initial={
-            'ignore_impossible': False,
             'recurrence_end': None,
             'recurrence_type': BookingOccurrenceUpdateForm.NONE
         })
