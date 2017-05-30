@@ -259,52 +259,6 @@ class BookingOccurrenceForm(forms.ModelForm):
                 )
             )
 
-        # if self.cleaned_data.get('recurrence_type') != BookingOccurrenceForm.NONE \
-        #         and self.cleaned_data.get('start') \
-        #         and self.cleaned_data.get('end') \
-        #         and self.cleaned_data.get('recurrence_end')\
-        #         and self.cleaned_data.get('resources'):
-        #
-        #     recurrence_type = self.cleaned_data.get('recurrence_type')
-        #     delta = None
-        #     if recurrence_type == BookingOccurrenceForm.DAILY:
-        #         delta = relativedelta(days=1)
-        #     elif recurrence_type == BookingOccurrenceForm.WEEKLY:
-        #         delta = relativedelta(weeks=1)
-        #     elif recurrence_type == BookingOccurrenceForm.BI_WEEKLY:
-        #         delta = relativedelta(weeks=2)
-        #     elif recurrence_type == BookingOccurrenceForm.TRI_WEEKLY:
-        #         delta = relativedelta(weeks=3)
-        #     elif recurrence_type == BookingOccurrenceForm.QUAD_WEEKLY:
-        #         delta = relativedelta(weeks=4)
-        #     elif recurrence_type == BookingOccurrenceForm.MONTHLY:
-        #         delta = relativedelta(months=1)
-        #     elif recurrence_type == BookingOccurrenceForm.YEARLY:
-        #         delta = relativedelta(years=1)
-        #
-        #     start_time = self.cleaned_data.get('start')
-        #     end_time = self.cleaned_data.get('end')
-        #     recurr_end = self.cleaned_data.get('recurrence_end')
-        #
-        #     errors = []
-        #     while start_time.date() <= end_time.date() <= recurr_end:
-        #         for resource, count in self.cleaned_data.get('resources').items():
-        #             if resource.count_available(start_time, end_time) < count:
-        #                 errors.append(forms.ValidationError(
-        #                     _('%(res)s indisponible %(slot)s'),
-        #                     code='recur_conflict',
-        #                     params={
-        #                         'res': resource,
-        #                         'slot': Slot(start=start_time, end=end_time)
-        #                     }
-        #                 ))
-        #
-        #         start_time += delta
-        #         end_time += delta
-        #
-        #     if len(errors) > 0:
-        #         raise forms.ValidationError(errors)
-
         return self.cleaned_data
 
 
