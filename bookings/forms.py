@@ -202,7 +202,10 @@ class BookingOccurrenceForm(forms.ModelForm):
                         code='start-end-order'
                     )
 
-                if self.cleaned_data.get('recurrence_type') == BookingOccurrenceForm.NONE:
+                recurrence_type = self.cleaned_data.get('recurrence_type')
+
+                # Recurrence type as None should only exist when updating occurrence.
+                if recurrence_type is None or recurrence_type == BookingOccurrenceForm.NONE:
                     occurrences = []
                     locks = []
                     resources_errors = []
@@ -268,6 +271,9 @@ class BookingOccurrenceUpdateForm(BookingOccurrenceForm):
 
     recurrence_end = None
     recurrence_type = None
+
+    def clean(self):
+        return super(BookingOccurrenceUpdateForm, self).clean()
 
 
 class BookingFormForm(forms.Form):

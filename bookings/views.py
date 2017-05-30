@@ -565,16 +565,15 @@ class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     template_name = 'bookings/occurrence_edit.html'
     decorators = [login_required, permission_required('bookings.change_bookingoccurrence')]
     booking = None
+    object = None
 
     def dispatch(self, request, *args, **kwargs):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])
+        self.object = get_object_or_404(BookingOccurrence, pk=self.kwargs['pk'])
         return super(BookingOccurrenceUpdateView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, *args, form_class=BookingOccurrenceUpdateForm):
-        form = form_class(*args, booking_pk=self.booking.id, instance=self.get_object(), initial={
-            'recurrence_end': None,
-            'recurrence_type': BookingOccurrenceUpdateForm.NONE
-        })
+        form = form_class(*args, booking_pk=self.booking.id, instance=self.get_object())
 
         return form
 
