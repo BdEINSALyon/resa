@@ -244,6 +244,7 @@ class BookingCreateView(CreateView):
     start = None
     end = None
     booking = None
+    object = None
     resource = None
 
     def get_form(self, form_class=None):
