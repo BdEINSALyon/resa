@@ -422,6 +422,7 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
     def get_context_data(self, **kwargs):
         context = super(BookingOccurrenceCreateView, self).get_context_data(**kwargs)
         context['booking'] = self.booking
+        context['initial_resource'] = self.initial_resource
 
         return context
 
