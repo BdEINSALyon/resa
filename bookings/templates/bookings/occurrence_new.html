@@ -5,7 +5,7 @@
 {% block title %}{% trans 'Nouvelle occurrence' %}{% endblock %}
 
 {% block start_form %}
-    <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}?resource={{ initial_resource.pk }}" method="post">
+    <form action="{% url 'bookings:occurrence-new' booking_pk=booking.pk %}{% if initial_resource %}?resource={{ initial_resource.pk }}{% endif %}" method="post">
 {% endblock start_form %}
 
 {% block occurrence_panel_body %}
