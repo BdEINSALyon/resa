@@ -1,28 +1,19 @@
-import calendar
 import datetime as dt
 import logging
-import re
-from collections import defaultdict
-
-from html import escape
 
 import dateutil.parser
-from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage
-from django.db.models import Q
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django.views.generic.base import ContextMixin
 
-from bookings.forms import BookingOccurrenceForm, BookingOccurrenceUpdateForm, BookingFormForm
-from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence, OccurrenceResourceCount, Recurrence
+from bookings.forms import BookingFormForm
+from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence
 
 log = logging.getLogger(__name__)
 
