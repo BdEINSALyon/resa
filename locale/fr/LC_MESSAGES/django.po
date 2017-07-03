@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-26 16:05+0200\n"
+"POT-Creation-Date: 2017-07-03 14:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gabriel Augendre <gabriel@augendre.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,78 +113,62 @@ msgid ""
 "\"."
 msgstr ""
 
-#: bookings/forms.py:69
-msgid "Ignorer les dates impossibles"
-msgstr ""
-
-#: bookings/forms.py:71
-msgid ""
-"Lorsque cette option est sélectionnée, les demandes impossibles à satisfaire "
-"ne génèrent pas d'erreur. Pris en compte seulement si le type de périodicité "
-"est différent de \"Aucun\"."
-msgstr ""
-
-#: bookings/forms.py:123 bookings/forms.py:366
+#: bookings/forms.py:115 bookings/forms.py:316
 msgid "Toutes les ressources doivent être de la même catégorie"
 msgstr ""
 
-#: bookings/forms.py:128
+#: bookings/forms.py:120
 #, python-format
 msgid "%(res)s n'est pas disponible"
 msgstr ""
 
-#: bookings/forms.py:134
+#: bookings/forms.py:126
 msgid "La quantité doit être un nombre positif"
 msgstr ""
 
-#: bookings/forms.py:159
+#: bookings/forms.py:151
 #, python-format
 msgid ""
 "La réservation ne peut pas commencer avant %(time)s pour la catégorie %(cat)s"
 msgstr ""
 
-#: bookings/forms.py:181
+#: bookings/forms.py:173
 #, python-format
 msgid ""
 "La réservation ne peut pas se terminer après %(time)s pour la catégorie "
 "%(cat)s"
 msgstr ""
 
-#: bookings/forms.py:199
+#: bookings/forms.py:191
 msgid "La date de fin de périodicité doit se situer après la date de fin !"
 msgstr ""
 
-#: bookings/forms.py:209 bookings/forms.py:430
+#: bookings/forms.py:201 bookings/forms.py:380
 msgid "Le début doit être avant la fin !"
 msgstr ""
 
-#: bookings/forms.py:232
+#: bookings/forms.py:227
 #, python-format
 msgid "Seulement %(number)d %(name)s disponible !"
 msgstr ""
 
-#: bookings/forms.py:251 bookings/forms.py:455
+#: bookings/forms.py:246 bookings/forms.py:405
 #, python-format
 msgid "Conflit : %(conflict)s"
 msgstr ""
 
-#: bookings/forms.py:265
+#: bookings/forms.py:260
 msgid ""
 "Vous devez saisir une date de fin si vous souhaitez ajouter une périodicité."
 msgstr ""
 
-#: bookings/forms.py:303
-#, python-format
-msgid "%(res)s indisponible %(slot)s"
-msgstr ""
-
-#: bookings/forms.py:390
+#: bookings/forms.py:340
 #, python-format
 msgid ""
 "Le verrou ne peut pas commencer avant %(time)s pour la catégorie %(cat)s"
 msgstr ""
 
-#: bookings/forms.py:412
+#: bookings/forms.py:362
 #, python-format
 msgid ""
 "Le verrou ne peut pas se terminer après %(time)s pour la catégorie %(cat)s"
@@ -259,7 +243,7 @@ msgstr ""
 msgid "ressource"
 msgstr ""
 
-#: bookings/models.py:145 bookings/models.py:338 bookings/models.py:388
+#: bookings/models.py:145 bookings/models.py:336 bookings/models.py:386
 msgid "ressources"
 msgstr ""
 
@@ -267,7 +251,7 @@ msgstr ""
 msgid "description"
 msgstr ""
 
-#: bookings/models.py:153 bookings/models.py:483
+#: bookings/models.py:153 bookings/models.py:487
 msgid "catégorie"
 msgstr ""
 
@@ -295,141 +279,141 @@ msgstr ""
 msgid "carte d'étudiant ou carte d'identité"
 msgstr ""
 
-#: bookings/models.py:258 bookings/models.py:373
+#: bookings/models.py:256 bookings/models.py:371
 #: bookings/templates/bookings/booking_detail.html:9
 msgid "réservation"
-msgstr ""
+msgstr "modèle de réservation"
 
-#: bookings/models.py:259
+#: bookings/models.py:257
 msgid "réservations"
-msgstr ""
+msgstr "modèles de réservation"
 
-#: bookings/models.py:262
+#: bookings/models.py:260
 msgid "raison"
 msgstr "motif"
 
-#: bookings/models.py:263
+#: bookings/models.py:261
 msgid "détails"
 msgstr ""
 
-#: bookings/models.py:267
+#: bookings/models.py:265
 msgid "numéro de carte VA"
 msgstr ""
 
-#: bookings/models.py:268
+#: bookings/models.py:266
 msgid "prénom"
 msgstr ""
 
-#: bookings/models.py:269
+#: bookings/models.py:267
 msgid "nom de famille"
 msgstr ""
 
-#: bookings/models.py:270
+#: bookings/models.py:268
 msgid "adresse mail"
 msgstr ""
 
-#: bookings/models.py:271
+#: bookings/models.py:269
 msgid "numéro de téléphone"
 msgstr ""
 
-#: bookings/models.py:272
+#: bookings/models.py:270
 msgid "association"
 msgstr ""
 
-#: bookings/models.py:273
+#: bookings/models.py:271
 msgid "Uniquement si la réservation est faite au nom d'une association"
 msgstr ""
 
-#: bookings/models.py:284
+#: bookings/models.py:282
 #, python-format
 msgid "%(owner)s - %(reason)s"
 msgstr ""
 
-#: bookings/models.py:301
+#: bookings/models.py:299
 msgid "début"
 msgstr ""
 
-#: bookings/models.py:302
+#: bookings/models.py:300
 msgid "fin"
 msgstr ""
 
-#: bookings/models.py:308
+#: bookings/models.py:306
 #, python-format
 msgid "%(date)s de %(start)s à %(end)s"
 msgstr ""
 
-#: bookings/models.py:315
+#: bookings/models.py:313
 #, python-format
 msgid "%(start_date)s %(start_time)s - %(end_date)s %(end_time)s"
 msgstr ""
 
-#: bookings/models.py:357 bookings/models.py:380
+#: bookings/models.py:355 bookings/models.py:378
 msgid "périodicité"
 msgstr ""
 
-#: bookings/models.py:358
+#: bookings/models.py:356
 msgid "périodicités"
 msgstr ""
 
-#: bookings/models.py:366
+#: bookings/models.py:364
 msgid "occurrence de réservation"
-msgstr ""
+msgstr "réservation"
+
+#: bookings/models.py:365
+msgid "occurrences de réservation"
+msgstr "réservations"
 
 #: bookings/models.py:367
-msgid "occurrences de réservation"
-msgstr ""
-
-#: bookings/models.py:369
 msgid "valide"
 msgstr ""
 
-#: bookings/models.py:396
+#: bookings/models.py:394
 #, python-format
 msgid "%(booking)s (%(resources)s) "
 msgstr ""
 
-#: bookings/models.py:447
+#: bookings/models.py:448
 msgid "verrou de ressource"
 msgstr ""
 
-#: bookings/models.py:448
+#: bookings/models.py:449
 msgid "verrous de ressource"
 msgstr ""
 
-#: bookings/models.py:456
+#: bookings/models.py:457
 #, python-format
 msgid "[Verrou] %(reason)s (%(resources)s) "
 msgstr ""
 
-#: bookings/models.py:464
+#: bookings/models.py:468
 msgid "paragraphe"
 msgstr ""
 
-#: bookings/models.py:465
+#: bookings/models.py:469
 msgid "paragraphes"
 msgstr ""
 
-#: bookings/models.py:467
+#: bookings/models.py:471
 msgid "titre"
 msgstr ""
 
-#: bookings/models.py:468
+#: bookings/models.py:472
 msgid "contenu"
 msgstr ""
 
-#: bookings/models.py:470
+#: bookings/models.py:474
 msgid "ordre sur le formulaire de location"
 msgstr ""
 
-#: bookings/models.py:472
+#: bookings/models.py:476
 msgid "Laisser à 0 pour ne pas afficher sur le formulaire de location"
 msgstr ""
 
-#: bookings/models.py:475
+#: bookings/models.py:479
 msgid "ordre dans l'interface de réservation"
 msgstr ""
 
-#: bookings/models.py:477
+#: bookings/models.py:481
 msgid "Laisser à 0 pour ne pas afficher sur l'interface de réservation"
 msgstr ""
 
@@ -439,7 +423,7 @@ msgstr ""
 
 #: bookings/templates/bookings/booking_delete.html:14
 #: bookings/templates/bookings/booking_edit.html:20
-#: bookings/templates/bookings/booking_new.html:14
+#: bookings/templates/bookings/booking_new.html:20
 #: bookings/templates/bookings/occurrence_edit.html:33
 msgid "Annuler"
 msgstr ""
@@ -447,7 +431,7 @@ msgstr ""
 #: bookings/templates/bookings/booking_delete.html:17
 #: bookings/templates/bookings/booking_detail.html:23
 #: bookings/templates/bookings/booking_edit.html:23
-#: bookings/templates/bookings/booking_new.html:17
+#: bookings/templates/bookings/booking_new.html:23
 msgid "Informations"
 msgstr ""
 
@@ -456,6 +440,8 @@ msgid ""
 "Êtes-vous certain de vouloir supprimer la réservation suivante ? Toutes les "
 "occurrences liées seront supprimées."
 msgstr ""
+"Êtes-vous certain de vouloir supprimer le modèle de réservation suivant ? Toutes les "
+"réservations liées seront supprimées."
 
 #: bookings/templates/bookings/booking_detail.html:58
 msgid "Éditer la fiche de location"
@@ -465,11 +451,11 @@ msgstr ""
 #: bookings/templates/bookings/help.html:25
 #: bookings/templates/bookings/occurrence_edit.html:39
 msgid "Occurrences"
-msgstr ""
+msgstr "Réservations"
 
 #: bookings/templates/bookings/booking_edit.html:7
 msgid "modifier la réservation"
-msgstr ""
+msgstr "modifier le modèle de réservation"
 
 #: bookings/templates/bookings/booking_form.html:6
 #: bookings/templates/bookings/booking_form.html:22
@@ -540,9 +526,9 @@ msgstr ""
 msgid "État des lieux retour"
 msgstr ""
 
-#: bookings/templates/bookings/booking_new.html:6
+#: bookings/templates/bookings/booking_new.html:7
 msgid "Créer une réservation"
-msgstr ""
+msgstr "Créer un modèle de réservation"
 
 #: bookings/templates/bookings/help.html:7 templates/navbar.html:25
 msgid "Aide"
@@ -550,7 +536,7 @@ msgstr ""
 
 #: bookings/templates/bookings/help.html:8
 msgid "Réservation"
-msgstr ""
+msgstr "Modèle de réservation"
 
 #: bookings/templates/bookings/help.html:10
 msgid ""
@@ -564,6 +550,14 @@ msgid ""
 "                    ainsi qu'un \"propriétaire\".\n"
 "                "
 msgstr ""
+"\n"
+"                    Un modèle de réservation correspond par exemple à un évènement "
+"organisé par une asso. <br>\n"
+"                    On doit indiquer un motif, et on peut stocker des "
+"détails supplémentaires comme des\n"
+"                    informations de contact par exemple.\n"
+"                    ainsi qu'un \"propriétaire\".\n"
+"                "
 
 #: bookings/templates/bookings/help.html:17
 msgid "Propriétaire"
@@ -584,8 +578,8 @@ msgstr ""
 #: bookings/templates/bookings/help.html:27
 msgid ""
 "\n"
-"                    Les occurrences d'une réservation contiennent la date et "
-"l'heure de début et de fin de l'occurrence,\n"
+"                    Les réservations contiennent la date et "
+"l'heure de début et de fin de la réservation,\n"
 "                    ainsi que les ressources concernées.<br>\n"
 "                    Cette séparation permet de réserver plusieurs ressources "
 "à des instants différents pour le même\n"
@@ -602,25 +596,25 @@ msgid ""
 "\n"
 "                    Les 24 souhaitent faire leur AG de recrutement durant "
 "laquelle ils distribuent des crêpes. <br>\n"
-"                    Pour cela, on crée une réservation avec le motif \"AG de "
+"                    Pour cela, on crée un modèle de réservation avec le motif \"AG de "
 "recrutement\", on met \"24 heures\" en tant que\n"
 "                    propriétaire et on ajoute le numéro de téléphone de "
 "contact dans les détails. <br>\n"
-"                    Ensuite, on ajoute une occurrence avec une date de début "
+"                    Ensuite, on ajoute une réservation avec une date de début "
 "et de fin (par exemple le 2/11/2016\n"
 "                    de 19h à 22h) pour l'amphi qu'ils souhaitent, puis on "
-"ajoute une autre occurrence pour une crêpière\n"
+"ajoute une autre réservation pour une crêpière\n"
 "                    (par exemple du 2/11/2016 à 12h au 3/11/2016 à 12h).\n"
 "                "
 msgstr ""
 
 #: bookings/templates/bookings/occurrence_delete.html:5
 msgid "Supprimer une occurrence"
-msgstr ""
+msgstr "Supprimer une réservation"
 
 #: bookings/templates/bookings/occurrence_delete.html:17
 msgid "Êtes-vous certain de vouloir supprimer l'occurrence suivante ?"
-msgstr ""
+msgstr "Êtes-vous certain de vouloir supprimer la réservation suivante ?"
 
 #: bookings/templates/bookings/occurrence_delete.html:20
 msgid "Supprimer"
@@ -628,7 +622,7 @@ msgstr ""
 
 #: bookings/templates/bookings/occurrence_edit.html:22
 msgid "Édition de l'occurrence"
-msgstr ""
+msgstr "Édition de la réservation"
 
 #: bookings/templates/bookings/occurrence_edit.html:36
 #: bookings/templates/bookings/occurrence_edit.html:48
@@ -638,7 +632,7 @@ msgstr ""
 
 #: bookings/templates/bookings/occurrence_new.html:5
 msgid "Nouvelle occurrence"
-msgstr ""
+msgstr "Nouvelle réservation"
 
 #: bookings/templates/bookings/occurrences_filter_list.html:7
 msgid "Résultats"
@@ -726,13 +720,30 @@ msgstr ""
 msgid "Résultats pour %(query)s"
 msgstr ""
 
-#: bookings/views.py:294
-msgid "Réservation créée avec succès"
+#: bookings/views.py:298
+msgid "Modèle de réservation créé avec succès"
 msgstr ""
 
-#: bookings/views.py:439
-msgid "Occurrence créée avec succès"
+#: bookings/views.py:506
+#, python-brace-format
+msgid ""
+"Occurrence créée : <a href=\"{link}\" class=\"alert-link\">{occurrence}</a>"
 msgstr ""
+"Réservation créée : <a href=\"{link}\" class=\"alert-link\">{occurrence}</a>"
+
+#: bookings/views.py:534 bookings/views.py:544
+#, python-brace-format
+msgid "Conflit : <a href=\"{link}\" class=\"alert-link\">{conflict}</a>"
+msgstr ""
+
+#: bookings/views.py:550
+#, python-brace-format
+msgid "Conflit : {conflict}"
+msgstr ""
+
+#: bookings/views.py:599
+msgid "Occurrence modifiée avec succès"
+msgstr "Réservation modifiée avec succès"
 
 #: permissions/admin.py:19
 msgid "Personal info"
