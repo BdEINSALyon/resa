@@ -58,8 +58,7 @@ class User(AbstractUser):
         ),
     )
 
-    last_fetched_groups = models.DateTimeField(default=None, null=True)
-    azure_groups = models.ManyToManyField(to=AzureGroup, related_name='users')
+    last_fetched_groups = models.DateTimeField(default=None, null=True, blank=True)
 
     def __init__(self, *args, **kwargs):
         self._is_staff = kwargs.get('is_staff', False)

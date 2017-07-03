@@ -20,4 +20,5 @@ class UserAdmin(UserAdmin):
         (_('Permissions'), {'fields': ('is_active', '_is_staff', '_is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Autres'), {'fields': ('last_fetched_groups',)}),
     )
