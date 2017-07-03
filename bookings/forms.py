@@ -81,9 +81,11 @@ class BookingOccurrenceForm(forms.ModelForm):
         self.form_booking_id = kwargs.pop('booking_pk', None)
         booking = get_object_or_404(Booking, pk=self.form_booking_id)
 
-        resource = kwargs.get('initial', None) \
-                   and kwargs.get("initial").get('resources') \
-                   and kwargs.get("initial").get('resources')[0]
+        resource = (kwargs.get('initial', None)
+                    and kwargs.get('initial').get('resources')
+                    and kwargs.get('initial').get('resources')[0]) \
+                or (kwargs.get('instance', None)
+                    and kwargs.get('instance').resources.first())
 
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
 
@@ -267,17 +269,10 @@ class BookingOccurrenceForm(forms.ModelForm):
 
 class BookingOccurrenceUpdateForm(BookingOccurrenceForm):
     class Meta(BookingOccurrenceForm.Meta):
-        fields = ['start', 'end']
+        fields = ['start', 'end', 'resources']
 
     recurrence_end = None
     recurrence_type = None
-
-    def __init__(self, *args, **kwargs):
-        super(BookingOccurrenceUpdateForm, self).__init__(*args, **kwargs)
-
-        # Needed because all fields are filled successfully but not this one.
-        # Note this only happened at the FIRST occurrence loaded after the launch of the app.
-        self.initial['resources'] = kwargs.get('instance').resources.all()
 
     def clean(self):
         return super(BookingOccurrenceUpdateForm, self).clean()
@@ -293,10 +288,10 @@ class BookingFormForm(forms.Form):
 
         resource_requires_form = Resource.objects.filter(category__booking_form=True)
 
-        queryset = BookingOccurrence\
-            .objects\
-            .filter(booking=booking)\
-            .filter(resources__in=resource_requires_form)\
+        queryset = BookingOccurrence \
+            .objects \
+            .filter(booking=booking) \
+            .filter(resources__in=resource_requires_form) \
             .distinct()
 
         self.fields['occurrence'] = forms.ModelChoiceField(
