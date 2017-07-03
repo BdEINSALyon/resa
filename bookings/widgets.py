@@ -89,12 +89,20 @@ class ResourcesWidget(forms.widgets.Widget):
 
         res_id = 'resources_' + res_id
 
-        return format_html(
+        choice_html = format_html(
             '<tr>'
-            '<td class="name"><label for="{id}">{name}</label></td>'
+            '<td class="name"><label for="{id}">{name}',
+            name=name, id=res_id
+        )
+        if resource.is_countable():
+            choice_html += format_html(' (max {count})', count=resource.number)
+
+        choice_html += format_html(
+            '</label></td>'
             '<td class="category">{category}</td>'
             '<td>{field}</td>'
             '</tr>',
-            name=name, id=res_id, category=category,
-            field=field.render('resources_' + str(pk), value)
+            category=category, field=field.render('resources_' + str(pk), value)
         )
+
+        return choice_html
