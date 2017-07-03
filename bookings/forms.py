@@ -272,6 +272,13 @@ class BookingOccurrenceUpdateForm(BookingOccurrenceForm):
     recurrence_end = None
     recurrence_type = None
 
+    def __init__(self, *args, **kwargs):
+        super(BookingOccurrenceUpdateForm, self).__init__(*args, **kwargs)
+
+        # Needed because all fields are filled successfully but not this one.
+        # Note this only happened at the FIRST occurrence loaded after the launch of the app.
+        self.initial['resources'] = kwargs.get('instance').resources.all()
+
     def clean(self):
         return super(BookingOccurrenceUpdateForm, self).clean()
 
