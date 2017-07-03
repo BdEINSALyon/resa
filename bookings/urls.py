@@ -1,8 +1,12 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
-from bookings.views import ResourceCategoryDayView, BookingDetailView, BookingOccurrenceCreateView, BookingUpdateView, \
-    BookingOccurrenceUpdateView, BookingOccurrenceDeleteView, BookingDeleteView, BookingCreateView,\
-    SearchResultsListView, CountableOccurrencesList, BookingFormView
+
+from bookings.views.bookings import BookingDetailView, BookingUpdateView, BookingDeleteView, BookingCreateView
+from bookings.views.occurrences import BookingOccurrenceCreateView, BookingOccurrenceUpdateView, \
+    BookingOccurrenceDeleteView
+from bookings.views.other import ResourceCategoryDayView, SearchResultsListView, \
+    CountableOccurrencesList, BookingFormView
+
 
 urlpatterns = [
     url(r'^home$', TemplateView.as_view(template_name='bookings/home.html'), name='home'),
