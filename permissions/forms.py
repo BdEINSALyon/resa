@@ -3,10 +3,12 @@ import json
 from django import forms
 import requests
 from account.models import OAuthService
+from permissions.models import AzureGroup
 
 
 class AzureGroupForm(forms.ModelForm):
     class Meta:
+        model = AzureGroup
         fields = ('group', 'azure_id', 'azure_name')
 
     azure_id = forms.ChoiceField(choices=(('', 'Please enable Office 365 for this app'),))
@@ -29,16 +31,18 @@ class AzureGroupForm(forms.ModelForm):
         groups = data.get('value', [])
         form_data = []
         for group in groups:
-            form_data.append(({'id': group['id'], 'name': group['displayName']}, group['displayName']))
+            id_name = '{}_{}'.format(group['id'], group['displayName'])
+            form_data.append((id_name, group['displayName']))
         return form_data
 
     def __init__(self, *args, **kwargs):
         # receive a tuple/list for custom choices
         super(AzureGroupForm, self).__init__(*args, **kwargs)
         self.fields['azure_id'].choices = AzureGroupForm.get_groups()
+        self.initial['azure_id'] = "{}_{}".format(self.instance.azure_id, self.instance.azure_name)
 
     def clean(self):
         super().clean()
-        data = json.loads(self.cleaned_data.get('azure_id').replace('\\', '').replace("'", '"'))
-        self.cleaned_data['azure_id'] = data.get('id')
-        self.cleaned_data['azure_name'] = data.get('name')
+        data = self.cleaned_data.get('azure_id').split('_', maxsplit=1)
+        self.cleaned_data['azure_id'] = data[0]
+        self.cleaned_data['azure_name'] = data[1]
