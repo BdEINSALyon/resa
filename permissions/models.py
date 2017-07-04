@@ -11,8 +11,7 @@ from account import models as account_models
 
 
 class AzureGroup(models.Model):
-
-    group = models.ForeignKey(auth_models.Group)
+    group = models.ForeignKey(auth_models.Group, related_name='azure_groups')
     azure_id = models.CharField(max_length=100, choices=())
     azure_name = models.CharField(max_length=250, blank=True)
 
@@ -27,16 +26,7 @@ class AzureGroup(models.Model):
             'Authorization': 'Bearer {}'.format(token.auth_token)
         })
         if result.status_code < 300:
-            if self.azure_id in result.json()['value']:
-                user.save()
-                self.group.save()
-                user.groups.add(self.group)
-                return True
-            else:
-                user.save()
-                self.group.save()
-                user.groups.remove(self.group)
-                return False
+            return self.azure_id in result.json()['value']
         else:
             return False
 
@@ -69,8 +59,21 @@ class User(AbstractUser):
         if self.id:
             if not self.last_fetched_groups \
                     or timezone.now() > self.last_fetched_groups + datetime.timedelta(minutes=1):
-                for group in AzureGroup.objects.all():
-                    group.check_user(self)
+
+                for group in auth_models.Group.objects.all():
+                    res = False
+                    for g in group.azure_groups.all():
+                        res |= g.check_user(self)
+
+                    if res:
+                        self.save()
+                        group.save()
+                        self.groups.add(group)
+                    else:
+                        self.save()
+                        group.save()
+                        self.groups.remove(group)
+
                 self.last_fetched_groups = timezone.now()
                 self.save()
 
