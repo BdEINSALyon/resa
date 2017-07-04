@@ -14,6 +14,7 @@ class AzureGroup(models.Model):
 
     group = models.ForeignKey(auth_models.Group)
     azure_id = models.CharField(max_length=100, choices=())
+    azure_name = models.CharField(max_length=250, blank=True)
 
     def check_user(self, user):
         token = account_models.OAuthToken.objects.filter(user=user, service__name='microsoft').last()
@@ -40,7 +41,7 @@ class AzureGroup(models.Model):
             return False
 
     def __str__(self):
-        return '{} -> {}'.format(self.azure_id, self.group)
+        return '{} -> {}'.format(self.azure_name, self.group)
 
 
 class User(AbstractUser):
