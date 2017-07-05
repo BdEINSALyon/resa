@@ -1,6 +1,7 @@
 import random
 import string
 
+import datetime
 import requests
 from permissions.models import User
 
@@ -44,8 +45,11 @@ class OAuthProvider:
         return {'client_id': self.app_id, 'response_type': 'code'}
 
     @staticmethod
-    def login_with_token(access_token, service):
+    def login_with_token(data, service):
         return None
+
+    def refresh_token(self, token):
+        return
 
 
 class MicrosoftOAuthProvider(OAuthProvider):
@@ -82,22 +86,21 @@ class MicrosoftOAuthProvider(OAuthProvider):
         return "{}{}".format(MicrosoftOAuthProvider.GRAPH_API, resource)
 
     @staticmethod
-    def login_with_token(access_token, service):
+    def login_with_token(data, service):
         graph_user = requests.get(
             MicrosoftOAuthProvider.graph('/me'),
             headers={
-                'Authorization': 'Bearer {}'.format(access_token)
+                'Authorization': 'Bearer {}'.format(data['access_token'])
             }).json()
 
         from account.models import OAuthToken
         try:
             token = OAuthToken.objects.get(uuid=graph_user['id'], service=service)
-            token.auth_token = access_token
-            token.save()
+            MicrosoftOAuthProvider._fill_token_with_data(token, data)
             return token.user
         except OAuthToken.DoesNotExist:
             token = OAuthToken(uuid=graph_user['id'], service=service)
-            token.auth_token = access_token
+            MicrosoftOAuthProvider._fill_token_with_data(token, data, save=False)
         try:
             user = User.objects.get(email=graph_user['mail'])
         except User.DoesNotExist:
@@ -112,3 +115,22 @@ class MicrosoftOAuthProvider(OAuthProvider):
         token.user = user
         token.save()
         return user
+
+    @staticmethod
+    def _fill_token_with_data(token, data, save=True):
+        token.auth_token = data['access_token']
+        token.auth_token_expiration = datetime.datetime.fromtimestamp(int(data['expires_on']))
+        token.not_before = datetime.datetime.fromtimestamp(int(data['not_before']))
+        token.refresh_token = data['refresh_token']
+        if save:
+            token.save()
+
+    def refresh_token(self, token):
+        request = requests.post(self.token_endpoint.replace('common', self.tenant), data={
+            'client_id': self.app_id,
+            'client_secret': self.app_secret,
+            'refresh_token': token.refresh_token,
+            'grant_type': 'refresh_token',
+            'resource': 'https://graph.microsoft.com/'
+        })
+        MicrosoftOAuthProvider._fill_token_with_data(token, request.json())

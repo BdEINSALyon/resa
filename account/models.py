@@ -17,8 +17,9 @@ class OAuthToken(models.Model):
     auth_token = models.TextField()
     uuid = models.CharField(max_length=250, default='', blank=True)
     auth_token_expiration = models.DateTimeField(null=True, blank=True)
-    renew_token = models.CharField(max_length=250, null=True, blank=True)
-    renew_token_expiration = models.DateTimeField(null=True, blank=True)
+    refresh_token = models.TextField(blank=True)
+    refresh_token_expiration = models.DateTimeField(null=True, blank=True)
+    not_before = models.DateTimeField(null=True, blank=True)
 
 
 class OAuthService(models.Model):

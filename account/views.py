@@ -43,7 +43,7 @@ class OAuthCallback(View):
         token = service.retrieve_token(code, request.build_absolute_uri(
                     reverse('oauth_callback', kwargs={"provider": provider})
                 ))
-        user = service.login_with_token(token['access_token'], oauth_service)
+        user = service.login_with_token(token, oauth_service)
         if user is not None:
             login(request, user)
         return shortcuts.redirect('/')

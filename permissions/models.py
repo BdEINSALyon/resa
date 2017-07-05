@@ -19,6 +19,12 @@ class AzureGroup(models.Model):
         token = account_models.OAuthToken.objects.filter(user=user, service__name='microsoft').last()
         if token is None:
             return False
+
+        if datetime.datetime.now() > token.auth_token_expiration:
+            from account.models import OAuthService
+            ms = OAuthService.objects.filter(name='microsoft').first().provider
+            ms.refresh_token(token)
+
         from account.providers import MicrosoftOAuthProvider
         result = requests.post(MicrosoftOAuthProvider.graph('/me/checkMemberGroups'), json={
             'groupIds': [self.azure_id]

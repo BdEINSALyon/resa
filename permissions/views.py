@@ -8,7 +8,7 @@ from account.models import OAuthToken
 
 
 def list_azure_groups(request):
-    token = OAuthToken.objects.filter(user=request.user).last()
+    token = OAuthToken.objects.filter(user=request.user, service__name='microsoft').last()
     if token is None:
         return ''
     r = requests.get('https://graph.microsoft.com/v1.0/groups',
