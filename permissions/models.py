@@ -57,7 +57,7 @@ class User(AbstractUser):
 
     last_fetched_groups = models.DateTimeField(default=None, null=True, blank=True,
                                                help_text='If older than 5 min, groups will be fetched from Azure '
-                                                         'next time the user makes a request?')
+                                                         'next time the user makes a request.')
 
     def __init__(self, *args, **kwargs):
         self._is_staff = kwargs.get('is_staff', False)
