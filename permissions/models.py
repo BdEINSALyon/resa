@@ -55,7 +55,9 @@ class User(AbstractUser):
         ),
     )
 
-    last_fetched_groups = models.DateTimeField(default=None, null=True, blank=True)
+    last_fetched_groups = models.DateTimeField(default=None, null=True, blank=True,
+                                               help_text='If older than 5 min, groups will be fetched from Azure '
+                                                         'next time the user makes a request?')
 
     def __init__(self, *args, **kwargs):
         self._is_staff = kwargs.get('is_staff', False)
@@ -64,7 +66,7 @@ class User(AbstractUser):
 
         if self.id:
             if not self.last_fetched_groups \
-                    or timezone.now() > self.last_fetched_groups + datetime.timedelta(minutes=1):
+                    or timezone.now() > self.last_fetched_groups + datetime.timedelta(minutes=5):
 
                 for group in auth_models.Group.objects.all():
                     res = False
