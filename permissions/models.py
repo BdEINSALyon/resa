@@ -41,6 +41,13 @@ class AzureGroup(models.Model):
 
 
 class User(AbstractUser):
+    """
+    Represents a user in our app.
+    I implemented this class because I needed a custom behavior for is_staff and is_superuser.
+    This class also fetches Azure groups whenever it's needed so the user's permissions
+    are kept up to date.
+    """
+
     _is_staff = models.BooleanField(
         _('staff status'),
         default=False,
