@@ -49,42 +49,27 @@ class ResourceCategoryDayView(ListView):
         context['paragraphs'] = self.category.paragraphs.filter(order_public__gt=0).order_by('order_public')
 
         # Date
-        day = int(self.request.GET.get('day', dt.date.today().day))
-        month = int(self.request.GET.get('month', dt.date.today().month))
-        year = int(self.request.GET.get('year', dt.date.today().year))
-        while month > 12:
-            year += 1
-            month -= 12
+        day, month, year = self._extract_date()
         date = dt.date(day=day, month=month, year=year)
         context['date'] = date
 
         context['today'] = dt.date.today()
 
         # Month calendar
-        cal = calendar.Calendar()
-        days_in_month = cal.itermonthdates(year, month)
-        weeks = []
-        week_index = 0
-        for month_day in days_in_month:
-            weeks.append([])
-            weeks[week_index].append(month_day)
-            if month_day.weekday() == 6:
-                week_index += 1
+        weeks = self._construct_month_calendar(month, year)
         context['weeks'] = weeks
 
         # Booking occurrences
-        occurrences = {}
-        locks = {}
         resources = self.get_queryset()
-        for resource in resources:
-            occurrences[resource.id] = []
-            locks[resource.id] = []
-            for occurrence in resource.get_occurrences(year=year, month=month, day=day):
-                occurrences[resource.id].append(occurrence)
+        locks, occurrences = self._find_matching_occurrences_and_locks(day, month, resources, year)
 
-            for lock in resource.get_locks(year, month, day):
-                locks[resource.id].append(lock)
+        lines = self._construct_day_view(date, locks, occurrences, resources)
 
+        context['lines'] = lines
+
+        return context
+
+    def _construct_day_view(self, date, locks, occurrences, resources):
         lines = []
         already_seen = defaultdict(list)
         for slot in self.category.get_slots(date):
@@ -148,14 +133,13 @@ class ResourceCategoryDayView(ListView):
                         if occurrence not in already_seen[resource.id]:
                             already_seen[resource.id].append(occurrence)
 
-                            cell = {
+                            cells.append({
                                 'type': 'start',
                                 'rowspan': self.get_number_of_slots_for_period(occurrence, date),
                                 'occurrence': occurrence,
                                 'colspan': 1
-                            }
+                            })
 
-                            cells.append(cell)
                         else:
                             cells.append({
                                 'type': 'continue'
@@ -190,10 +174,43 @@ class ResourceCategoryDayView(ListView):
 
             line['cells'] = cells
             lines.append(line)
+        return lines
 
-        context['lines'] = lines
+    @staticmethod
+    def _find_matching_occurrences_and_locks(day, month, resources, year):
+        occurrences = {}
+        locks = {}
+        for resource in resources:
+            occurrences[resource.id] = []
+            locks[resource.id] = []
+            for occurrence in resource.get_occurrences(year=year, month=month, day=day):
+                occurrences[resource.id].append(occurrence)
 
-        return context
+            for lock in resource.get_locks(year, month, day):
+                locks[resource.id].append(lock)
+        return locks, occurrences
+
+    @staticmethod
+    def _construct_month_calendar(month, year):
+        cal = calendar.Calendar()
+        days_in_month = cal.itermonthdates(year, month)
+        weeks = []
+        week_index = 0
+        for month_day in days_in_month:
+            weeks.append([])
+            weeks[week_index].append(month_day)
+            if month_day.weekday() == 6:
+                week_index += 1
+        return weeks
+
+    def _extract_date(self):
+        day = int(self.request.GET.get('day', dt.date.today().day))
+        month = int(self.request.GET.get('month', dt.date.today().month))
+        year = int(self.request.GET.get('year', dt.date.today().year))
+        while month > 12:
+            year += 1
+            month -= 12
+        return day, month, year
 
     def get_number_of_slots_for_period(self, period, date):
         count = 0
@@ -210,25 +227,27 @@ class SearchResultsListView(ListView):
     query = None
     decorators = [login_required]
 
-    def normalize_query(self, query_string,
+    @staticmethod
+    def normalize_query(query_string,
                         findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                         normspace=re.compile(r'\s{2,}').sub):
         """ Splits the query string in invidual keywords, getting rid of unecessary spaces
             and grouping quoted words together.
             Example:
 
-            >>> normalize_query('  some random  words "with   quotes  " and   spaces')
+            >>> SearchResultsListView.normalize_query('  some random  words "with   quotes  " and   spaces')
             ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
 
         """
         return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)]
 
-    def get_query(self, query_string, search_fields):
+    @staticmethod
+    def get_query(query_string, search_fields):
         """Returns a query, that is a combination of Q objects. That combination
             aims to search keywords within a model by testing the given search fields.
         """
         query = None  # Query to search for every search term
-        terms = self.normalize_query(query_string)
+        terms = SearchResultsListView.normalize_query(query_string)
         for term in terms:
             or_query = None  # Query to search for a given term in each field
             for field_name in search_fields:
