@@ -84,8 +84,8 @@ class BookingOccurrenceForm(forms.ModelForm):
         resource = (kwargs.get('initial', None)
                     and kwargs.get('initial').get('resources')
                     and kwargs.get('initial').get('resources')[0]) \
-                or (kwargs.get('instance', None)
-                    and kwargs.get('instance').resources.first())
+                   or (kwargs.get('instance', None)
+                       and kwargs.get('instance').resources.first())
 
         super(BookingOccurrenceForm, self).__init__(*args, **kwargs)
 
@@ -288,11 +288,12 @@ class BookingFormForm(forms.Form):
 
         resource_requires_form = Resource.objects.filter(category__booking_form=True)
 
-        queryset = BookingOccurrence \
-            .objects \
-            .filter(booking=booking) \
-            .filter(resources__in=resource_requires_form) \
-            .distinct()
+        queryset = (BookingOccurrence
+                    .objects
+                    .filter(booking=booking)
+                    .filter(resources__in=resource_requires_form)
+                    .distinct()
+                    .order_by('start'))
 
         self.fields['occurrence'] = forms.ModelChoiceField(
             queryset=queryset,
