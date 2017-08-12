@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 
 class ResourceCategoryDayView(ListView):
-    template_name = 'bookings/resource_category_day.html'
+    template_name = 'bookings/resource/resource_category_day.html'
     context_object_name = 'resource_list'
     category = None
     decorators = []
@@ -287,7 +287,7 @@ class SearchResultsListView(ListView):
 
 
 class CountableOccurrencesList(ListView):
-    template_name = 'bookings/occurrences_filter_list.html'
+    template_name = 'bookings/occurrence/occurrences_filter_list.html'
     model = BookingOccurrence
     filter = None
     context_object_name = 'occurrences_list'
@@ -305,7 +305,7 @@ class CountableOccurrencesList(ListView):
 
 class BookingFormView(DetailView):
     model = BookingOccurrence
-    template_name = 'bookings/booking_form.html'
+    template_name = 'bookings/booking/booking_form.html'
     occurrence = None
 
     def dispatch(self, request, *args, **kwargs):

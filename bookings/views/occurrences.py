@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 
 class BookingOccurrenceCreateView(CreateView, BaseBookingView):
     form_class = BookingOccurrenceForm
-    template_name = 'bookings/occurrence_new.html'
+    template_name = 'bookings/occurrence/occurrence_new.html'
     decorators = [login_required, permission_required('bookings.add_bookingoccurrence')]
     booking = None
     object = None
@@ -194,7 +194,7 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
 class BookingOccurrenceUpdateView(UpdateView, BaseBookingView):
     model = BookingOccurrence
     form_class = BookingOccurrenceUpdateForm
-    template_name = 'bookings/occurrence_edit.html'
+    template_name = 'bookings/occurrence/occurrence_edit.html'
     decorators = [login_required, permission_required('bookings.change_bookingoccurrence')]
     booking = None
     object = None
@@ -249,7 +249,7 @@ class BookingOccurrenceDeleteView(DeleteView, BaseBookingView):
     model = BookingOccurrence
     decorators = [login_required, permission_required('bookings.delete_bookingoccurrence')]
     booking = None
-    template_name = 'bookings/occurrence_delete.html'
+    template_name = 'bookings/occurrence/occurrence_delete.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.booking = get_object_or_404(Booking, pk=self.kwargs['booking_pk'])

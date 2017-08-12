@@ -41,7 +41,7 @@ class BookingCreateView(CreateView):
     model = Booking
     fields = ['contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
               'reason', 'details']
-    template_name = 'bookings/booking_new.html'
+    template_name = 'bookings/booking/booking_new.html'
     decorators = [login_required, permission_required('bookings.add_booking')]
     start = None
     end = None
@@ -109,7 +109,7 @@ class BookingCreateView(CreateView):
 
 class BookingDetailView(DetailView, BaseBookingView):
     model = Booking
-    template_name = 'bookings/booking_detail.html'
+    template_name = 'bookings/booking/booking_detail.html'
     booking = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -143,7 +143,7 @@ class BookingDetailView(DetailView, BaseBookingView):
 
 class BookingUpdateView(UpdateView, BaseBookingView):
     model = Booking
-    template_name = 'bookings/booking_edit.html'
+    template_name = 'bookings/booking/booking_edit.html'
     fields = ['contact_first_name', 'contact_last_name', 'contact_email', 'contact_phone', 'contact_asso',
               'reason', 'details']
     decorators = [login_required, permission_required('bookings.change_booking')]
@@ -166,7 +166,7 @@ class BookingDeleteView(DeleteView, BaseBookingView):
     model = Booking
     decorators = [login_required, permission_required('bookings.delete_booking')]
     booking = None
-    template_name = 'bookings/booking_delete.html'
+    template_name = 'bookings/booking/booking_delete.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.booking = self.get_object()
