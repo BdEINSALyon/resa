@@ -115,6 +115,7 @@
                                             {% if cell.occurrence %}
                                                 <a href="{{ cell.occurrence.booking.get_absolute_url }}">
                                                     <strong>{{ cell.occurrence.booking.reason }}</strong>
+                                                    ({{ cell.occurrence.booking.owner }})
                                                 </a>
                                                 {% with occurrence=cell.occurrence %}
                                                     {% ifnotequal occurrence.start.date occurrence.end.date %}
