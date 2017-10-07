@@ -207,3 +207,6 @@ AUTH_USER_MODEL = 'permissions.User'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+ADHESION_APP_ID = os.getenv('ADHESION_APP_ID')
+ADHESION_APP_SECRET = os.getenv('ADHESION_APP_SECRET')

@@ -6,7 +6,7 @@ from bookings.views.occurrences import BookingOccurrenceCreateView, BookingOccur
     BookingOccurrenceDeleteView
 from bookings.views.other import ResourceCategoryDayView, SearchResultsListView, \
     CountableOccurrencesList, BookingFormView
-
+from bookings.views.api_va import api_va
 
 urlpatterns = [
     url(r'^home$', TemplateView.as_view(template_name='bookings/home.html'), name='home'),
@@ -30,6 +30,9 @@ urlpatterns = [
         name='search'),
     url(r'^occurrences$',
         CountableOccurrencesList.as_view(),
+        name='occurrences_filter'),
+    url(r'^api/va/(?P<va_key>c[0-9]+)$',
+        api_va,
         name='occurrences_filter'),
     url(r'^help$', TemplateView.as_view(template_name='bookings/help.html'), name='help')
 ]

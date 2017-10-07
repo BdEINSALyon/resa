@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django.views.generic.base import ContextMixin
 
+from bookings.adhesion import AdhesionAPI
 from bookings.forms import BookingFormForm
 from bookings.models import ResourceCategory, Resource, Booking, BookingOccurrence
 
@@ -52,6 +53,8 @@ class BookingCreateView(CreateView):
     def get_form(self, form_class=None):
         form = super(BookingCreateView, self).get_form(form_class=form_class)
         type = self.resource.category.type
+        va_info = AdhesionAPI.get_va('c586636323474')
+        print('va_info', va_info)
         if type == ResourceCategory.ASSO:
             form.fields['contact_asso'].required = True
         elif type == ResourceCategory.STUDENT:
