@@ -1,3 +1,4 @@
+import datetime
 import logging
 from html import escape
 
@@ -41,13 +42,14 @@ class BookingOccurrenceCreateView(CreateView, BaseBookingView):
             pass
 
         start = request.GET.get('start')
-        end = request.GET.get('end')
 
         if start is not None:
             self.start = dateutil.parser.parse(start)
-
-        if end is not None:
-            self.end = dateutil.parser.parse(end)
+            if self.initial_resource:
+                duration = self.initial_resource.category.default_duration
+                if duration == 0:
+                    duration = self.initial_resource.category.granularity
+                self.end = self.start + datetime.timedelta(minutes=duration)
 
         return super(BookingOccurrenceCreateView, self).dispatch(request, *args, **kwargs)
 
