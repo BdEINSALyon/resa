@@ -72,6 +72,7 @@ class ResourceCategory(models.Model):
     day_start = models.TimeField(verbose_name=_('début de journée'))
     day_end = models.TimeField(verbose_name=_('fin de journée'))
     granularity = models.PositiveIntegerField(verbose_name=_('granularité'), help_text=_('en minutes'))
+    default_duration = models.PositiveIntegerField(verbose_name=_('durée par défaut'), help_text=_('en minutes'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     booking_form = models.BooleanField(
