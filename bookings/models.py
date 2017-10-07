@@ -262,7 +262,6 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    contact_va = models.CharField(max_length=100, blank=True, verbose_name=_('numéro de carte VA'))
     contact_first_name = models.CharField(max_length=300, verbose_name=_('prénom'))
     contact_last_name = models.CharField(max_length=300, verbose_name=_('nom de famille'))
     contact_email = models.EmailField(verbose_name=_('adresse mail'))
