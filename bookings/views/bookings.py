@@ -53,8 +53,6 @@ class BookingCreateView(CreateView):
     def get_form(self, form_class=None):
         form = super(BookingCreateView, self).get_form(form_class=form_class)
         type = self.resource.category.type
-        va_info = AdhesionAPI.get_va('c586636323474')
-        print('va_info', va_info)
         if type == ResourceCategory.ASSO:
             form.fields['contact_asso'].required = True
         elif type == ResourceCategory.STUDENT:
