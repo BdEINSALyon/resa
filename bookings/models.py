@@ -158,8 +158,7 @@ class Resource(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     number = models.PositiveIntegerField(verbose_name=_('quantité'),
-                                         default=1,
-                                         validators=[MinValueValidator(1)])
+                                         default=1)
 
     place = models.ForeignKey(
         to=Place,
@@ -191,7 +190,7 @@ class Resource(models.Model):
     )
 
     def is_countable(self):
-        return self.number > 1
+        return self.number != 1
 
     def count_available(self, start_p, end_p, occurrence=None):
         occurrences = self.get_occurrences_period(start_p, end_p)
